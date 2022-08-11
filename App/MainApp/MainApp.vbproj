@@ -52,12 +52,6 @@
   <PropertyGroup>
     <BuildRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.root))</BuildRoot>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartAction>Program</StartAction>
-    <StartProgram>E:\Program Files\Autodesk\AutoCAD 2021\acad.exe</StartProgram>
-	<!-- use the booload.scr from target CreateAcadBootloadScript -->
-    <StartArguments>/b "$(BuildRoot)\bootload.scr"</StartArguments>
-  </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
