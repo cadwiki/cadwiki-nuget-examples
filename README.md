@@ -31,27 +31,27 @@ Set startup project as CadDevTools.
 ![NotFound](./App/screenshots/automated-debug-1-set-startup-project.png)  
 
 Click Green Start button on top middle menu of Visual Studio.  
-(./App/screenshots/automated-debug-2-start-debug.png)  
+![NotFound](./App/screenshots/automated-debug-2-start-debug.png)  
 
 The CadDevTools UserInterface will start.  
-(./App/screenshots/automated-debug-3-CadDevTools-UserInterface.png)  
+![NotFound](./App/screenshots/automated-debug-3-CadDevTools-UserInterface.png)  
 
 On the Right Side, Click 'Select CAD'.  
-(./App/screenshots/automated-debug-4-CadDevTools-SelectCAD.png)  
+![NotFound](./App/screenshots/automated-debug-4-CadDevTools-SelectCAD.png)  
 
 The box will be populated with a few locations of AutoCAD.  
 Choose an existing location or 'Browse' to a new location. 
-(./App/screenshots/automated-debug-5-CadDevTools-Select-AutoCAD-location.png)  
+![NotFound](./App/screenshots/automated-debug-5-CadDevTools-Select-AutoCAD-location.png)  
 
 Click Green Okay.  
-(./App/screenshots/automated-debug-6-CadDevTools-Newest.png)  
+![NotFound](./App/screenshots/automated-debug-6-CadDevTools-Newest.png)  
 
 On CadDevTools screen, Click 'Newest'.
-(./App/screenshots/automated-debug-7-CadDevTools-AutoCAD-Launch.png)    
+![NotFound](./App/screenshots/automated-debug-7-CadDevTools-AutoCAD-Launch.png)    
 
 This will load the most recently built .dll in the _v subfolder of the current .exe's bin folder.  
 AutoCAD will start and netload the dll for you.
-(./App/screenshots/automated-debug-8-CadDevTools-AutoCAD-netload.png)
+![NotFound](./App/screenshots/automated-debug-8-CadDevTools-AutoCAD-netload.png)
 
 ### Manual Debug steps
 Set startup project as MainApp
