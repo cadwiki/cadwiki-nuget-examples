@@ -8,14 +8,14 @@
   <Target Name="autoincrementAssemblyInfoVbFiles" BeforeTargets="Build">
     <Exec Command="echo target autoincrementAssemblyInfoVbFiles in buildThisFirst.vbproj." />
 	
-	<!-- Autoincrement -->
+	<!-- Autoincrement buildThisFirst AssemblyInfo-->
 	<ItemGroup>
       <AssemblyInfoFiles Include="$(BuildRoot)\buildThisFirst\**\AssemblyInfo.vb" />
     </ItemGroup>
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
       <Output TaskParameter="Assemblies" ItemName="buildThisFirstAssemblyIdentities" />
     </GetAssemblyIdentity>
-	<Exec Command="echo old version %(buildThisFirstAssemblyIdentities.Version)" />
+	<Exec Command="echo buildThisFirst old version: %(buildThisFirstAssemblyIdentities.Version)" />
 	<PropertyGroup>
 		<Pattern>(\d+)(.)(\d+)(.)(\d+)(.)(\d+)</Pattern>
 		<In>%(buildThisFirstAssemblyIdentities.Version)</In>
@@ -24,10 +24,11 @@
 		<Out3>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[5].Value)</Out3>
 		<Out4>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</Out4>
 	</PropertyGroup>
-	<Exec Command="echo new info: $(Out1).$(Out2).$(Out3).$(Out4)" />
-	
+
 	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevisionType="AutoIncrement" AssemblyRevisionFormat="000" />
 	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevisionType="AutoIncrement" AssemblyFileRevisionFormat="000" />
+	
+	<Exec Command="echo buildThisFirst autoincremented version: %(buildThisFirstAssemblyIdentities.Version)" />
 	<Exec Command="echo Assemblies that were autoincremented @(AssemblyInfoFiles)" />
 	
 	
@@ -56,20 +57,17 @@
 		<Output TaskParameter="Assemblies" ItemName="remainingAssemblyIdentities"/>
 	</GetAssemblyIdentity>
 	
-	<Exec Command="echo updated info: $(Out1).$(Out2).$(Out3).$(Out4)" />
 	<PropertyGroup>
       <buildThisFirstVersion>$([System.String]::Format('$(Out1).$(Out2).$(Out3).{0:000}', $([MSBuild]::Add($(Out4), 0))))</buildThisFirstVersion>
 	</PropertyGroup>
-	<Exec Command="echo newVersion: $(buildThisFirstVersion)" />
 	
-	
+	<Exec Command="echo buildThisFirst Assembly Version: $(buildThisFirstVersion)" />
 	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyVersion="$(buildThisFirstVersion)" />
 	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileVersion="$(buildThisFirstVersion)" />
 	
-	<Exec Command="echo Assemblies that were matched to buildThisFirst:" />
-	
 	<Message Text="@(AssemblyInfoFiles, '%0a')" Importance="high" />
-	<Exec Command="echo Updated the assemblies above to version $(Out1).$(Out2).$(Out3).$(Out4)" />
+	<Exec Command="echo all AssemblyInfo.vb files were matched to buildThisFirst AssemblyInfo.vb:" />
+
   </Target>
  
   <PropertyGroup>
