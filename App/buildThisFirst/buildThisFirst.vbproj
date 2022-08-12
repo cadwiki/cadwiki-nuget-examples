@@ -5,8 +5,8 @@
   <PropertyGroup>
     <BuildRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.root))</BuildRoot>
   </PropertyGroup>
-  <Target Name="autoincrementAssemblyInfoVbFiles" BeforeTargets="Build">
-    <Exec Command="echo target autoincrementAssemblyInfoVbFiles in buildThisFirst.vbproj." />
+  <Target Name="autoincrementBuildThisFirstAssemblyInfo" BeforeTargets="Build">
+    <Exec Command="echo target autoincrementBuildThisFirstAssemblyInfo in buildThisFirst.vbproj." />
 	
 	<!-- Autoincrement buildThisFirst AssemblyInfo-->
 	<ItemGroup>
@@ -28,10 +28,15 @@
 	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevisionType="AutoIncrement" AssemblyRevisionFormat="000" />
 	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevisionType="AutoIncrement" AssemblyFileRevisionFormat="000" />
 	
-	<Exec Command="echo buildThisFirst autoincremented version: %(buildThisFirstAssemblyIdentities.Version)" />
-	<Exec Command="echo Assemblies that were autoincremented @(AssemblyInfoFiles)" />
-	
-	
+	<Exec Command="echo buildThisFirst autoincremented version: " />
+	<Message Text="@(AssemblyInfoFiles, '%0a')" Importance="high" />
+  </Target>
+  
+  <Target Name="matchAssemblyInfoToBuildThisFirst" BeforeTargets="Build">
+  <Exec Command="echo target matchAssemblyInfoToBuildThisFirst in buildThisFirst.vbproj." />
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="buildThisFirstAssemblyIdentities" />
+    </GetAssemblyIdentity>
 	<PropertyGroup>
 		<Pattern>(\d+)(.)(\d+)(.)(\d+)(.)(\d+)</Pattern>
 		<In>%(buildThisFirstAssemblyIdentities.Version)</In>
@@ -50,7 +55,7 @@
     <Exec Command="echo FinalExcludes: $(FinalExcludes)" />
 	
 	<ItemGroup>
-      <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.vb" Exclude="$(FinalExcludes)" />
+      <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.vb" Exclude="$(BuildRoot)\**\buildThisFirst\**\AssemblyInfo.vb" />
     </ItemGroup>
     
 	<GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
