@@ -28,7 +28,7 @@ During the build, the .vbproj files will:
 
 ### Automated Debug steps
 Set startup project as CadDevTools.  
-(./App/screenshots/automated-debug-1-set-startup-project.png)  
+![NotFound](./App/screenshots/automated-debug-1-set-startup-project.png)  
 
 Click Green Start button on top middle menu of Visual Studio.  
 (./App/screenshots/automated-debug-2-start-debug.png)  
