@@ -32,7 +32,7 @@
 	<Message Text="@(AssemblyInfoFiles, '%0a')" Importance="high" />
   </Target>
   
-  <Target Name="matchAssemblyInfoToBuildThisFirst" BeforeTargets="Build">
+  <Target Name="matchAssemblyInfoToBuildThisFirst" BeforeTargets="autoincrementBuildThisFirstAssemblyInfo;Build">
     <Exec Command="echo target matchAssemblyInfoToBuildThisFirst in buildThisFirst.vbproj." />
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
       <Output TaskParameter="Assemblies" ItemName="buildThisFirstAssemblyIdentities" />
@@ -47,10 +47,10 @@
 	</PropertyGroup>
 	
 	<!-- Match to auto inc values -->
-
+    <Exec Command="echo buildThisFirst Assembly Version: $(Out1).$(Out2).$(Out3).$(Out4)" />
 
 	<PropertyGroup>
-	  <CommonFileExclusion>.**\DIRECTORY_NAME_TOKEN\**\*.cs</CommonFileExclusion>
+	  <CommonFileExclusion>$(BuildRoot)\**\DIRECTORY_NAME_TOKEN\**\AssemblyInfo.vb</CommonFileExclusion>
 	  <FinalExcludes>$(CommonFileExclusion.Replace('DIRECTORY_NAME_TOKEN', 'buildThisFirst'))</FinalExcludes>
 	</PropertyGroup>
 	  
@@ -71,10 +71,10 @@
 	</PropertyGroup>
 	
 	<Exec Command="echo buildThisFirst Assembly Version: $(buildThisFirstVersion)" />
-	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyVersion="$(buildThisFirstVersion)" />
-	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileVersion="$(buildThisFirstVersion)" />
+	<AssemblyInfo AssemblyInfoFiles="@(TheFiles)" AssemblyVersion="$(buildThisFirstVersion)" />
+	<AssemblyInfo AssemblyInfoFiles="@(TheFiles)" AssemblyFileVersion="$(buildThisFirstVersion)" />
 	
-	<Message Text="@(AssemblyInfoFiles, '%0a')" Importance="high" />
+	<Message Text="@(TheFiles, '%0a')" Importance="high" />
 	<Exec Command="echo all AssemblyInfo.vb files were matched to buildThisFirst AssemblyInfo.vb:" />
 
   </Target>
