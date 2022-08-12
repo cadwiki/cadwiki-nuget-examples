@@ -45,13 +45,14 @@ On the Right Side, Click 'Select CAD'.
 ![NotFound](./App/screenshots/automated-debug-4-CadDevTools-SelectCAD.png)  
 
 The box will be populated with a few locations of AutoCAD.  
-Choose an existing location or 'Browse' to a new location. 
+Choose an existing location or 'Browse' to a new location.
+Click Green Okay. 
 ![NotFound](./App/screenshots/automated-debug-5-CadDevTools-Select-AutoCAD-location.png)  
 
-Click Green Okay.  
+On CadDevTools screen, Click 'Newest'.
 ![NotFound](./App/screenshots/automated-debug-6-CadDevTools-Newest.png)  
 
-On CadDevTools screen, Click 'Newest'.
+AutoCAD will launch.  
 ![NotFound](./App/screenshots/automated-debug-7-CadDevTools-AutoCAD-Launch.png)    
 
 This will load the most recently built .dll in the _v subfolder of the current .exe's bin folder.  
