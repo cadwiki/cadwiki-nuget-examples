@@ -6,34 +6,58 @@
     <BuildRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.root))</BuildRoot>
   </PropertyGroup>
   <Target Name="autoincrementAssemblyInfoVbFiles" BeforeTargets="Build">
-    <Exec Command="echo buildThisFirst.vbproj target autoincrementAssemblyInfoVbFiles automatically updating all AssemblyInfo.vb with new autoincremented version number." />
-    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="MyAssemblyIdentities" />
-    </GetAssemblyIdentity>
+    <Exec Command="echo target autoincrementAssemblyInfoVbFiles in buildThisFirst.vbproj." />
+	
+	<!-- Autoincrement -->
 	<ItemGroup>
-      <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.vb" />
+      <AssemblyInfoFiles Include="$(BuildRoot)\buildThisFirst\**\AssemblyInfo.vb" />
     </ItemGroup>
-    <!-- Autoincrement -->
-	<Exec Command="echo %(MyAssemblyIdentities.Version)" />
-	<Exec Command="echo @(MyAssemblyIdentities)" />
-		<GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-			<Output TaskParameter="Assemblies" ItemName="myAssemblyInfo"/>
-		</GetAssemblyIdentity>
-		<PropertyGroup>
-			<Pattern>(\d+)(.)(\d+)(.)(\d+)(.)(\d+)</Pattern>
-			<In>%(myAssemblyInfo.Version)</In>
-			<Out1>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[1].Value)</Out1>
-			<Out2>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[3].Value)</Out2>
-			<Out3>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[5].Value)</Out3>
-			<Out4>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</Out4>
-		</PropertyGroup>
-	<Exec Command="echo Existing info: $(Out1).$(Out2).$(Out3).$(Out4)" />
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="thisMyAssemblyIdentities" />
+    </GetAssemblyIdentity>
+	
+	<PropertyGroup>
+		<Pattern>(\d+)(.)(\d+)(.)(\d+)(.)(\d+)</Pattern>
+		<In>%(AssemblyInfoFiles.Version)</In>
+		<Out1>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[1].Value)</Out1>
+		<Out2>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[3].Value)</Out2>
+		<Out3>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[5].Value)</Out3>
+		<Out4>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</Out4>
+	</PropertyGroup>
+	<Exec Command="echo new info: $(Out1).$(Out2).$(Out3).$(Out4)" />
+	
 	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevisionType="AutoIncrement" AssemblyRevisionFormat="000" />
 	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevisionType="AutoIncrement" AssemblyFileRevisionFormat="000" />
-	<Exec Command="echo Assemblies that were autoincremented:" />
+	<Exec Command="echo Assemblies that were autoincremented @(AssemblyInfoFiles)" />
+
+	
+	<!-- Match to auto inc values -->
+	<ItemGroup>
+      <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.vb" Exclude="@$(BuildRoot)\buildThisFirst\My Project\AssemblyInfo.vb" />
+    </ItemGroup>
+    
+	<GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+		<Output TaskParameter="Assemblies" ItemName="myAssemblyInfo"/>
+	</GetAssemblyIdentity>
+
+	<PropertyGroup>
+		<Pattern>(\d+)(.)(\d+)(.)(\d+)(.)(\d+)</Pattern>
+		<In>%(myAssemblyInfo.Version)</In>
+		<Out1>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[1].Value)</Out1>
+		<Out2>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[3].Value)</Out2>
+		<Out3>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[5].Value)</Out3>
+		<Out4>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</Out4>
+	</PropertyGroup>
+	<Exec Command="echo updated info: $(Out1).$(Out2).$(Out3).$(Out4)" />
+
+	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumber="$(Out3)" AssemblyRevision="$(Out4)" />
+	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumber="$(Out3)" AssemblyFileRevision="$(Out4)" />
+	
+	<Exec Command="echo Assemblies that were matched to buildThisFirst:" />
 	<Message Text="@(AssemblyInfoFiles, '%0a')" Importance="high" />
 	<Exec Command="echo Updated the assemblies above to version $(Out1).$(Out2).$(Out3).$(Out4)" />
   </Target>
+ 
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
