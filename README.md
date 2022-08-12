@@ -26,6 +26,8 @@ During the build, the .vbproj files will:
 1. copy all .dlls into the .\MainApp\bin\v_#.#.#.# folder that corresponds to the current build number.  
 1. create a bootload.scr file for netloading the new .dll into AutoCAD
 
+Always set build platform to x64 for .dlls that will be loaded into AutoCAD
+
 ### Automated Debug steps
 
 Click Build -> Rebuild solution in Visual Studio.  
