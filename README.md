@@ -38,7 +38,6 @@ The CadDevTools UserInterface will start.
 
 On the Right Side, Click 'Select CAD'.  
 ![NotFound](./App/screenshots/automated-debug-4-CadDevTools-SelectCAD.png)  
-
 The box will be populated with a few locations of AutoCAD.  
 Choose an existing location or 'Browse' to a new location. 
 ![NotFound](./App/screenshots/automated-debug-5-CadDevTools-Select-AutoCAD-location.png)  
