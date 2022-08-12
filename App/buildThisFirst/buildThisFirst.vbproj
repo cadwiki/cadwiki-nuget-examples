@@ -28,8 +28,8 @@
 			<Out4>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</Out4>
 		</PropertyGroup>
 	<Exec Command="echo Existing info: $(Out1).$(Out2).$(Out3).$(Out4)" />
-	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumber="$(Out3)" AssemblyRevision="$(Out4)" />
-	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumber="$(Out3)" AssemblyFileRevision="$(Out4)" />
+	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevisionType="AutoIncrement" AssemblyRevisionFormat="000" />
+	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevisionType="AutoIncrement" AssemblyFileRevisionFormat="000" />
 	<Exec Command="echo Assemblies that were autoincremented:" />
 	<Message Text="@(AssemblyInfoFiles, '%0a')" Importance="high" />
 	<Exec Command="echo Updated the assemblies above to version $(Out1).$(Out2).$(Out3).$(Out4)" />
