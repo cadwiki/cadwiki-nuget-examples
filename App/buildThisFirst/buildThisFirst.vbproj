@@ -33,7 +33,7 @@
   </Target>
   
   <Target Name="matchAssemblyInfoToBuildThisFirst" BeforeTargets="Build">
-  <Exec Command="echo target matchAssemblyInfoToBuildThisFirst in buildThisFirst.vbproj." />
+    <Exec Command="echo target matchAssemblyInfoToBuildThisFirst in buildThisFirst.vbproj." />
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
       <Output TaskParameter="Assemblies" ItemName="buildThisFirstAssemblyIdentities" />
     </GetAssemblyIdentity>
@@ -47,20 +47,24 @@
 	</PropertyGroup>
 	
 	<!-- Match to auto inc values -->
-	  <PropertyGroup>
-		<CommonFileExclusion>.**\DIRECTORY_NAME_TOKEN\**\*.cs</CommonFileExclusion>
-		<FinalExcludes>$(CommonFileExclusion.Replace('DIRECTORY_NAME_TOKEN', 'buildThisFirst'))</FinalExcludes>
-	  </PropertyGroup>
+
+
+	<PropertyGroup>
+	  <CommonFileExclusion>.**\DIRECTORY_NAME_TOKEN\**\*.cs</CommonFileExclusion>
+	  <FinalExcludes>$(CommonFileExclusion.Replace('DIRECTORY_NAME_TOKEN', 'buildThisFirst'))</FinalExcludes>
+	</PropertyGroup>
 	  
-    <Exec Command="echo FinalExcludes: $(FinalExcludes)" />
+    <CreateItem Include="$(BuildRoot)\**\AssemblyInfo.vb"
+              Exclude="$(FinalExcludes)">
+      <Output TaskParameter="Include" ItemName="TheFiles"/>
+    </CreateItem>
+	
+	<Exec Command="echo TheFiles: @(TheFiles)" />
 	
 	<ItemGroup>
-      <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.vb" Exclude="$(BuildRoot)\**\buildThisFirst\**\AssemblyInfo.vb" />
+      <AssemblyInfoFiles Include="@(TheFiles)" />
     </ItemGroup>
-    
-	<GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-		<Output TaskParameter="Assemblies" ItemName="remainingAssemblyIdentities"/>
-	</GetAssemblyIdentity>
+	
 	
 	<PropertyGroup>
       <buildThisFirstVersion>$([System.String]::Format('$(Out1).$(Out2).$(Out3).{0:000}', $([MSBuild]::Add($(Out4), 0))))</buildThisFirstVersion>
