@@ -6,14 +6,12 @@
     <BuildRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.root))</BuildRoot>
   </PropertyGroup>
   <Target Name="autoincrementBuildThisFirstAssemblyInfo" BeforeTargets="Build">
-    <Exec Command="echo target autoincrementBuildThisFirstAssemblyInfo in buildThisFirst.vbproj." />
-	
+    <Exec Command="echo target for auto incrementing AssemblyInfo.vb files" />
 	<!-- Autoincrement buildThisFirst AssemblyInfo-->
-
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
       <Output TaskParameter="Assemblies" ItemName="buildThisFirstAssemblyIdentities" />
     </GetAssemblyIdentity>
-	<Exec Command="echo buildThisFirst old version: %(buildThisFirstAssemblyIdentities.Version)" />
+	<Exec Command="echo project buildThisFirst current assembly version is: %(buildThisFirstAssemblyIdentities.Version)" />
 	<PropertyGroup>
 		<Pattern>(\d+)(.)(\d+)(.)(\d+)(.)(\d+)</Pattern>
 		<In>%(buildThisFirstAssemblyIdentities.Version)</In>
@@ -22,15 +20,14 @@
 		<Out3>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[5].Value)</Out3>
 		<Out4>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</Out4>
 	</PropertyGroup>
-	
 	<ItemGroup>
       <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.vb" />
     </ItemGroup>
 	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevisionType="AutoIncrement" AssemblyRevisionFormat="000" />
 	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevisionType="AutoIncrement" AssemblyFileRevisionFormat="000" />
-	
-	<Exec Command="echo buildThisFirst autoincremented version: " />
-	<Message Text="@(AssemblyInfoFiles, '%0a')" Importance="high" />
+	<Exec Command="echo target incremented assembly version for all assemblies in solution." />
+	<!-- print statement for debugging -->
+	<!-- <Message Text="@(AssemblyInfoFiles, '%0a')" Importance="high" /> -->
   </Target>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
