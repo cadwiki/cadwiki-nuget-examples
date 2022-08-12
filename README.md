@@ -27,6 +27,11 @@ During the build, the .vbproj files will:
 1. create a bootload.scr file for netloading the new .dll into AutoCAD
 
 ### Automated Debug steps
+
+Click Build -> Rebuild solution in Visual Studio.  
+This is done to ensure all the .dll's are ready for the CadDevTools project.  
+![NotFound](./App/screenshots/automated-debug-0-rebuild-solution.png)   
+
 Set startup project as CadDevTools.  
 ![NotFound](./App/screenshots/automated-debug-1-set-startup-project.png)  
 
@@ -38,6 +43,7 @@ The CadDevTools UserInterface will start.
 
 On the Right Side, Click 'Select CAD'.  
 ![NotFound](./App/screenshots/automated-debug-4-CadDevTools-SelectCAD.png)  
+
 The box will be populated with a few locations of AutoCAD.  
 Choose an existing location or 'Browse' to a new location. 
 ![NotFound](./App/screenshots/automated-debug-5-CadDevTools-Select-AutoCAD-location.png)  
@@ -52,6 +58,27 @@ This will load the most recently built .dll in the _v subfolder of the current .
 AutoCAD will start and netload the dll for you.
 ![NotFound](./App/screenshots/automated-debug-8-CadDevTools-AutoCAD-netload.png)
 
+
+### How to reload a .dll  
+Make sure AutoCAD is running with the dll netloaded.  
+Close CADDevTools UserInterface if it's open.  
+![NotFound](./App/screenshots/autocad-reload-a-dll-1-close-CadDevTools-Interface.png)  
+
+Detach Visual Studio.  
+![NotFound](./App/screenshots/autocad-reload-a-dll-2-deatch-all.png)
+
+Rebuild MainApp project.  
+![NotFound](./App/screenshots/autocad-reload-a-dll-3-rebuild-MainApp.png)  
+
+In AutoCAD, Click 'Reload Count:#'  
+![NotFound](./App/screenshots/autocad-reload-a-dll-4-click-ReloadCount.png)    
+
+The dll will be Reloaded with your new changes  
+![NotFound](./App/screenshots/autocad-reload-a-dll-5-dll-is-reloaded.png)   
+
+You can now reattach the debugger to AutoCAD to debug the Reloaded .dll  
+![NotFound](./App/screenshots/autocad-reload-a-dll-6-attach-to-process.png)  
+
 ### Manual Debug steps
 Set startup project as MainApp
 Goto MainApp->Properties->Debug
@@ -62,4 +89,4 @@ C:\Program Files\Autodesk\AutoCAD 2021\acad.exe
 Set Command line arguments to the bootload.scr created from the build process:
 /b "C:\..someWhere...\pathToRepoRoot\bootload.scr"
 
-Click Green Start button on top middle menu of Visual Studio
+Click Green Start button on top middle menu of Visual Studio  
