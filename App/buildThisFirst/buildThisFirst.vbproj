@@ -9,9 +9,7 @@
     <Exec Command="echo target autoincrementBuildThisFirstAssemblyInfo in buildThisFirst.vbproj." />
 	
 	<!-- Autoincrement buildThisFirst AssemblyInfo-->
-	<ItemGroup>
-      <AssemblyInfoFiles Include="$(BuildRoot)\buildThisFirst\**\AssemblyInfo.vb" />
-    </ItemGroup>
+
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
       <Output TaskParameter="Assemblies" ItemName="buildThisFirstAssemblyIdentities" />
     </GetAssemblyIdentity>
@@ -24,61 +22,16 @@
 		<Out3>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[5].Value)</Out3>
 		<Out4>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</Out4>
 	</PropertyGroup>
-
+	
+	<ItemGroup>
+      <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.vb" />
+    </ItemGroup>
 	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevisionType="AutoIncrement" AssemblyRevisionFormat="000" />
 	<AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevisionType="AutoIncrement" AssemblyFileRevisionFormat="000" />
 	
 	<Exec Command="echo buildThisFirst autoincremented version: " />
 	<Message Text="@(AssemblyInfoFiles, '%0a')" Importance="high" />
   </Target>
-  
-  <Target Name="matchAssemblyInfoToBuildThisFirst" BeforeTargets="autoincrementBuildThisFirstAssemblyInfo;Build">
-    <Exec Command="echo target matchAssemblyInfoToBuildThisFirst in buildThisFirst.vbproj." />
-    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="buildThisFirstAssemblyIdentities" />
-    </GetAssemblyIdentity>
-	<PropertyGroup>
-		<Pattern>(\d+)(.)(\d+)(.)(\d+)(.)(\d+)</Pattern>
-		<In>%(buildThisFirstAssemblyIdentities.Version)</In>
-		<Out1>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[1].Value)</Out1>
-		<Out2>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[3].Value)</Out2>
-		<Out3>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[5].Value)</Out3>
-		<Out4>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</Out4>
-	</PropertyGroup>
-	
-	<!-- Match to auto inc values -->
-    <Exec Command="echo buildThisFirst Assembly Version: $(Out1).$(Out2).$(Out3).$(Out4)" />
-
-	<PropertyGroup>
-	  <CommonFileExclusion>$(BuildRoot)\**\DIRECTORY_NAME_TOKEN\**\AssemblyInfo.vb</CommonFileExclusion>
-	  <FinalExcludes>$(CommonFileExclusion.Replace('DIRECTORY_NAME_TOKEN', 'buildThisFirst'))</FinalExcludes>
-	</PropertyGroup>
-	  
-    <CreateItem Include="$(BuildRoot)\**\AssemblyInfo.vb"
-              Exclude="$(FinalExcludes)">
-      <Output TaskParameter="Include" ItemName="TheFiles"/>
-    </CreateItem>
-	
-	<Exec Command="echo TheFiles: @(TheFiles)" />
-	
-	<ItemGroup>
-      <AssemblyInfoFiles Include="@(TheFiles)" />
-    </ItemGroup>
-	
-	
-	<PropertyGroup>
-      <buildThisFirstVersion>$([System.String]::Format('$(Out1).$(Out2).$(Out3).{0:000}', $([MSBuild]::Add($(Out4), 0))))</buildThisFirstVersion>
-	</PropertyGroup>
-	
-	<Exec Command="echo buildThisFirst Assembly Version: $(buildThisFirstVersion)" />
-	<AssemblyInfo AssemblyInfoFiles="@(TheFiles)" AssemblyVersion="$(buildThisFirstVersion)" />
-	<AssemblyInfo AssemblyInfoFiles="@(TheFiles)" AssemblyFileVersion="$(buildThisFirstVersion)" />
-	
-	<Message Text="@(TheFiles, '%0a')" Importance="high" />
-	<Exec Command="echo all AssemblyInfo.vb files were matched to buildThisFirst AssemblyInfo.vb:" />
-
-  </Target>
- 
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
