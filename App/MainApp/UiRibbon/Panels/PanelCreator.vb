@@ -15,6 +15,8 @@ Namespace UiRibbon.Panels
             ribbonTab.Panels.Add(infoRibbonPanel)
             Dim examplePanel As RibbonPanel = Example.CreateExamplePanel(blankButton)
             ribbonTab.Panels.Add(examplePanel)
+            Dim testPanel As RibbonPanel = Test.CreateTestsPanel(blankButton)
+            ribbonTab.Panels.Add(testPanel)
         End Sub
     End Class
 End Namespace

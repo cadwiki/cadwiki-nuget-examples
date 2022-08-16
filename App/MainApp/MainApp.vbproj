@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\NUnit.3.13.2\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.13.2\build\NUnit.props')" />
+  <Import Project="..\packages\NUnit.3.13.3\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Target Name="GetAssmeblyVersion" AfterTargets="PostBuildEvent">
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
@@ -150,17 +150,8 @@
       <HintPath>..\packages\AutoCAD2021.Base.1.0.0\lib\AdWindows.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="cadwiki.DllReloader, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\cadwiki.DllReloader.1.0.0\lib\net472\cadwiki.DllReloader.dll</HintPath>
-    </Reference>
-    <Reference Include="cadwiki.NetUtils, Version=1.0.810.19, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\cadwiki.DllReloader.1.0.0\lib\net472\cadwiki.NetUtils.dll</HintPath>
-    </Reference>
-    <Reference Include="cadwiki.WpfUi, Version=1.0.810.19, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\cadwiki.DllReloader.1.0.0\lib\net472\cadwiki.WpfUi.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=3.13.2.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.13.2\lib\net45\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.13.3.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.13.3\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -214,11 +205,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="RegressionTests\TestStrings.vb" />
     <Compile Include="UiRibbon\Panels\Example.vb" />
     <Compile Include="UiRibbon\Panels\Info.vb" />
     <Compile Include="UiRibbon\Panels\PanelCreator.vb" />
+    <Compile Include="UiRibbon\Panels\Test.vb" />
     <Compile Include="UiRibbon\Tabs\AppTab.vb" />
     <Compile Include="UiRibbon\Tabs\TabCreator.vb" />
+    <Compile Include="Workflows\NUnitTestRunner.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -250,6 +244,22 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\cadwiki-nuget\cadwiki-nuget\cadwiki.DllReloader\cadwiki.DllReloader.vbproj">
+      <Project>{f63b3063-2044-4f17-ac6c-ff343c56b03d}</Project>
+      <Name>cadwiki.DllReloader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\cadwiki-nuget\cadwiki-nuget\cadwiki.NetUtils\cadwiki.NetUtils.vbproj">
+      <Project>{3c1158da-4a90-4fc1-8ccc-6f1e4787a118}</Project>
+      <Name>cadwiki.NetUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\cadwiki-nuget\cadwiki-nuget\cadwiki.NUnitTestRunner\cadwiki.NUnitTestRunner.vbproj">
+      <Project>{20525de1-199c-417f-85a1-bda52f76edd1}</Project>
+      <Name>cadwiki.NUnitTestRunner</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\cadwiki-nuget\cadwiki-nuget\cadwiki.WpfUi\cadwiki.WpfUi.vbproj">
+      <Project>{94651d61-ebd0-4d0b-8358-79b14c1805f8}</Project>
+      <Name>cadwiki.WpfUi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.vbproj">
       <Project>{124e370c-0c3d-45a6-86f2-8eefc4276b6a}</Project>
       <Name>BusinessLogic</Name>
@@ -261,9 +271,9 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\NUnit.3.13.2\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.13.2\build\NUnit.props'))" />
     <Error Condition="!Exists('..\packages\MSBuild.Extension.Pack.1.9.1\build\net40\MSBuild.Extension.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.Extension.Pack.1.9.1\build\net40\MSBuild.Extension.Pack.targets'))" />
     <Error Condition="!Exists('..\packages\cadwiki.DllReloader.1.0.0\Build\cadwiki.DllReloader.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cadwiki.DllReloader.1.0.0\Build\cadwiki.DllReloader.targets'))" />
+    <Error Condition="!Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.13.3\build\NUnit.props'))" />
   </Target>
   <Import Project="..\packages\cadwiki.DllReloader.1.0.0\Build\cadwiki.DllReloader.targets" Condition="Exists('..\packages\cadwiki.DllReloader.1.0.0\Build\cadwiki.DllReloader.targets')" />
 </Project>
