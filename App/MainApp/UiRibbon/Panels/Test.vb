@@ -38,6 +38,8 @@ Namespace UiRibbon.Panels
             Dim allRegressionTestTypes As Type() = {allRegressionTests}
             Dim worflow As Workflows.NUnitTestRunner = New Workflows.NUnitTestRunner()
             worflow.Run(1, allRegressionTestTypes)
+            ' bug in GenericClickCommandHandler when only a single parameter is passed
+            ' using a temp integer value to work around the bug for now
             Dim uiRouter As UiRouter = New UiRouter(
                 "MainApp.Workflows.NUnitTestRunner", "Run", {1, allRegressionTestTypes},
                 App.AcadAppDomainDllReloader,
