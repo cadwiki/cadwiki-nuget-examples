@@ -154,7 +154,7 @@
       <HintPath>..\packages\cadwiki.DllReloader.1.0.0\lib\net472\cadwiki.DllReloader.dll</HintPath>
     </Reference>
     <Reference Include="cadwiki.NetUtils, Version=1.0.810.19, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\cadwiki.DllReloader.1.0.0\lib\net472\cadwiki.NetUtils.dll</HintPath>
+      <HintPath>..\packages\cadwiki.NUnitTestRunner.1.0.0\lib\net472\cadwiki.NetUtils.dll</HintPath>
     </Reference>
     <Reference Include="cadwiki.NUnitTestRunner, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\cadwiki.NUnitTestRunner.1.0.0\lib\net472\cadwiki.NUnitTestRunner.dll</HintPath>
