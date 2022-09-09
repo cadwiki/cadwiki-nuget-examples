@@ -32,55 +32,55 @@ Always set build platform to x64 for .dlls that will be loaded into AutoCAD
 
 Click Build -> Rebuild solution in Visual Studio.  
 This is done to ensure all the .dll's are ready for the CadDevTools project.  
-![NotFound](./App/screenshots/automated-debug-0-rebuild-solution.png)   
+![NotFound](./VbNetApp/screenshots/automated-debug-0-rebuild-solution.png)   
 
 Set startup project as CadDevTools.  
-![NotFound](./App/screenshots/automated-debug-1-set-startup-project.png)  
+![NotFound](./VbNetApp/screenshots/automated-debug-1-set-startup-project.png)  
 
 Click Green Start button on top middle menu of Visual Studio.  
-![NotFound](./App/screenshots/automated-debug-2-start-debug.png)  
+![NotFound](./VbNetApp/screenshots/automated-debug-2-start-debug.png)  
 
 The CadDevTools UserInterface will start.  
-![NotFound](./App/screenshots/automated-debug-3-CadDevTools-UserInterface.png)  
+![NotFound](./VbNetApp/screenshots/automated-debug-3-CadDevTools-UserInterface.png)  
 
 On the Right Side, Click 'Select CAD'.  
-![NotFound](./App/screenshots/automated-debug-4-CadDevTools-SelectCAD.png)  
+![NotFound](./VbNetApp/screenshots/automated-debug-4-CadDevTools-SelectCAD.png)  
 
 The box will be populated with a few locations of AutoCAD.  
 Choose an existing location or 'Browse' to a new location.
 Click Green Okay. 
-![NotFound](./App/screenshots/automated-debug-5-CadDevTools-Select-AutoCAD-location.png)  
+![NotFound](./VbNetApp/screenshots/automated-debug-5-CadDevTools-Select-AutoCAD-location.png)  
 
 On CadDevTools screen, Click 'Newest'.
-![NotFound](./App/screenshots/automated-debug-6-CadDevTools-Newest.png)  
+![NotFound](./VbNetApp/screenshots/automated-debug-6-CadDevTools-Newest.png)  
 
 AutoCAD will launch.  
-![NotFound](./App/screenshots/automated-debug-7-CadDevTools-AutoCAD-Launch.png)    
+![NotFound](./VbNetApp/screenshots/automated-debug-7-CadDevTools-AutoCAD-Launch.png)    
 
 This will load the most recently built .dll in the _v subfolder of the current .exe's bin folder.  
 AutoCAD will start and netload the dll for you.
-![NotFound](./App/screenshots/automated-debug-8-CadDevTools-AutoCAD-netload.png)
+![NotFound](./VbNetApp/screenshots/automated-debug-8-CadDevTools-AutoCAD-netload.png)
 
 
 ### How to reload a .dll  
 Make sure AutoCAD is running with the dll netloaded.  
 Close CADDevTools UserInterface if it's open.  
-![NotFound](./App/screenshots/autocad-reload-a-dll-1-close-CadDevTools-Interface.png)  
+![NotFound](./VbNetApp/screenshots/autocad-reload-a-dll-1-close-CadDevTools-Interface.png)  
 
 Detach Visual Studio.  
-![NotFound](./App/screenshots/autocad-reload-a-dll-2-deatch-all.png)
+![NotFound](./VbNetApp/screenshots/autocad-reload-a-dll-2-deatch-all.png)
 
 Rebuild MainApp project.  
-![NotFound](./App/screenshots/autocad-reload-a-dll-3-rebuild-MainApp.png)  
+![NotFound](./VbNetApp/screenshots/autocad-reload-a-dll-3-rebuild-MainApp.png)  
 
 In AutoCAD, Click 'Reload Count:#'  
-![NotFound](./App/screenshots/autocad-reload-a-dll-4-click-ReloadCount.png)    
+![NotFound](./VbNetApp/screenshots/autocad-reload-a-dll-4-click-ReloadCount.png)    
 
 The dll will be Reloaded with your new changes  
-![NotFound](./App/screenshots/autocad-reload-a-dll-5-dll-is-reloaded.png)   
+![NotFound](./VbNetApp/screenshots/autocad-reload-a-dll-5-dll-is-reloaded.png)   
 
 You can now reattach the debugger to AutoCAD to debug the Reloaded .dll  
-![NotFound](./App/screenshots/autocad-reload-a-dll-6-attach-to-process.png)  
+![NotFound](./VbNetApp/screenshots/autocad-reload-a-dll-6-attach-to-process.png)  
 
 ### Manual Debug steps
 Set startup project as MainApp
