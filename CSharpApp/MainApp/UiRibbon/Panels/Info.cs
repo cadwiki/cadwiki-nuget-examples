@@ -71,8 +71,9 @@ namespace MainApp.UiRibbon.Panels
             button.Size = RibbonItemSize.Standard;
             button.CommandHandler = new DllReloadClickCommandHandler();
             button.ToolTip = "Reload the " + exeName + " dll into AutoCAD";
+            object[] parameters = new object[] { };
 
-            var uiRouter = new UiRouter("BusinessLogic.Commands.HelloFromCadWiki", "Run", null, App.AcadAppDomainDllReloader, Assembly.GetExecutingAssembly());
+            var uiRouter = new UiRouter("BusinessLogic.Commands.HelloFromCadWiki", "Run", parameters, App.AcadAppDomainDllReloader, Assembly.GetExecutingAssembly());
             button.CommandParameter = uiRouter;
             return button;
         }
