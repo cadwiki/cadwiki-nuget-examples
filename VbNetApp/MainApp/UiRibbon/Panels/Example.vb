@@ -3,6 +3,7 @@ Option Infer Off
 Option Explicit On
 
 Imports System.Reflection
+Imports Autodesk.AutoCAD.ApplicationServices
 Imports Autodesk.Windows
 Imports cadwiki.DllReloader.AutoCAD.UiRibbon.Buttons
 
@@ -37,11 +38,14 @@ Namespace UiRibbon.Panels
             ribbonButton.Text = "Example - Run MyCommand"
             ribbonButton.Size = RibbonItemSize.Standard
             Dim uiRouter As UiRouter = New UiRouter(
-                "BusinessLogic.Commands.Example", "Run", Nothing,
+                "BusinessLogic.Commands",
+                "BusinessLogic.Commands.Example",
+                "Run",
+                Nothing,
                 App.AcadAppDomainDllReloader,
                 Assembly.GetExecutingAssembly())
             ribbonButton.CommandParameter = uiRouter
-            ribbonButton.CommandHandler = New GenericClickCommandHandler()
+            ribbonButton.CommandHandler = New GenericClickCommandHandler(Application.DocumentManager.MdiActiveDocument)
             ribbonButton.ToolTip = "Click to run MyCommand using the CommandHandler And Command Parameter bound to this UiRibbon button"
             Return ribbonButton
         End Function
@@ -52,11 +56,15 @@ Namespace UiRibbon.Panels
             ribbonButton.ShowText = True
             ribbonButton.Text = "Hello"
             ribbonButton.Size = RibbonItemSize.Standard
-            Dim uiRouter As UiRouter = New UiRouter("BusinessLogic.Commands.HelloFromCadWiki", "Run", Nothing,
+            Dim uiRouter As UiRouter = New UiRouter(
+                "BusinessLogic.Commands",
+                "BusinessLogic.Commands.HelloFromCadWiki",
+                "Run",
+                Nothing,
                 App.AcadAppDomainDllReloader,
                 Assembly.GetExecutingAssembly())
             ribbonButton.CommandParameter = uiRouter
-            ribbonButton.CommandHandler = New GenericClickCommandHandler()
+            ribbonButton.CommandHandler = New GenericClickCommandHandler(Application.DocumentManager.MdiActiveDocument)
             ribbonButton.ToolTip = "Click to run HelloFromCadWiki"
             Return ribbonButton
         End Function

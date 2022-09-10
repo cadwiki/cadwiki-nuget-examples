@@ -3,6 +3,7 @@ Option Infer Off
 Option Explicit On
 
 Imports System.Reflection
+Imports Autodesk.AutoCAD.ApplicationServices
 Imports Autodesk.Windows
 Imports cadwiki.DllReloader.AutoCAD.UiRibbon.Buttons
 
@@ -42,11 +43,14 @@ Namespace UiRibbon.Panels
             ' bug in GenericClickCommandHandler when only a single parameter is passed
             ' using a temp integer value to work around the bug for now
             Dim uiRouter As UiRouter = New UiRouter(
-                "MainApp.Workflows.NUnitTestRunner", "Run", {1, allRegressionTestTypes},
+                "MainApp.Workflows",
+                "MainApp.Workflows.NUnitTestRunner",
+                "Run",
+                {1, allRegressionTestTypes},
                 App.AcadAppDomainDllReloader,
                 Assembly.GetExecutingAssembly())
             ribbonButton.CommandParameter = uiRouter
-            ribbonButton.CommandHandler = New GenericClickCommandHandler()
+            ribbonButton.CommandHandler = New GenericClickCommandHandler(Application.DocumentManager.MdiActiveDocument)
             ribbonButton.ToolTip = "Runs regression tests from the current .dll"
             Return ribbonButton
         End Function
