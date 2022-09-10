@@ -195,19 +195,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IntegrationTests\WindowTestRunner2.xaml.cs">
-      <DependentUpon>WindowTestRunner2.xaml</DependentUpon>
-    </Compile>
     <Compile Include="My Project\MyNamespace.Static.1.Designer.cs" />
     <Compile Include="My Project\MyNamespace.Static.2.Designer.cs" />
     <Compile Include="My Project\MyNamespace.Static.3.Designer.cs" />
     <Compile Include="App.cs" />
     <Compile Include="CommandDrivers.cs" />
-    <Compile Include="IntegrationTests\NunitTestRunner.cs" />
-    <Compile Include="IntegrationTests\ObservableTestResults.cs" />
     <Compile Include="IntegrationTests\Tests.cs" />
-    <Compile Include="IntegrationTests\UiLogic.cs" />
-    <Compile Include="IntegrationTests\Utils.cs" />
     <Compile Include="My Project\AssemblyInfo.cs" />
     <Compile Include="My Project\Application.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -255,12 +248,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="IntegrationTests\WindowTestRunner2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">

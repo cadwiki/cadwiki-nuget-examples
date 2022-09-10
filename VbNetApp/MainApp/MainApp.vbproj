@@ -193,14 +193,7 @@
   <ItemGroup>
     <Compile Include="App.vb" />
     <Compile Include="CommandDrivers.vb" />
-    <Compile Include="IntegrationTests\NunitTestRunner.vb" />
-    <Compile Include="IntegrationTests\ObservableTestResults.vb" />
     <Compile Include="IntegrationTests\Tests.vb" />
-    <Compile Include="IntegrationTests\UiLogic.vb" />
-    <Compile Include="IntegrationTests\WindowTestRunner.xaml.vb">
-      <DependentUpon>WindowTestRunner.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="IntegrationTests\Utils.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -248,12 +241,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="IntegrationTests\WindowTestRunner.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.vbproj">
