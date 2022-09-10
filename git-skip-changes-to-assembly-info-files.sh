@@ -1,0 +1,11 @@
+#ignore AssemblyInfo changes in git
+git update-index --skip-worktree "CSharpApp\AcadInterop2021\My Project\AssemblyInfo.cs"
+git update-index --skip-worktree "CSharpApp\buildThisFirst\My Project\AssemblyInfo.cs"
+git update-index --skip-worktree "CSharpApp\BusinessLogic\My Project\AssemblyInfo.cs"
+git update-index --skip-worktree "CSharpApp\CadDevTools\My Project\AssemblyInfo.cs"
+git update-index --skip-worktree "CSharpApp\MainApp\My Project\AssemblyInfo.cs"
+git update-index --skip-worktree "VbNetApp\AcadInterop2021\My Project\AssemblyInfo.vb"
+git update-index --skip-worktree "VbNetApp\buildThisFirst\My Project\AssemblyInfo.vb"
+git update-index --skip-worktree "VbNetApp\BusinessLogic\My Project\AssemblyInfo.vb"
+git update-index --skip-worktree "VbNetApp\CadDevTools\My Project\AssemblyInfo.vb"
+git update-index --skip-worktree "VbNetApp\MainApp\My Project\AssemblyInfo.vb"
