@@ -53,4 +53,4 @@ using System.Windows;
 // <Assembly: AssemblyVersion("1.0.*")>
 
 [assembly: AssemblyVersion("1.0.0909.000")]
-[assembly: AssemblyFileVersion("1.0.0909.000"]
+[assembly: AssemblyFileVersion("1.0.0909.000")]
