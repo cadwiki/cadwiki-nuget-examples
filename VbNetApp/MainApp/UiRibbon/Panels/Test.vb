@@ -43,7 +43,7 @@ Namespace UiRibbon.Panels
             ' bug in GenericClickCommandHandler when only a single parameter is passed
             ' using a temp integer value to work around the bug for now
             Dim uiRouter As UiRouter = New UiRouter(
-                "MainApp.Workflows",
+                "MainApp",
                 "MainApp.Workflows.NUnitTestRunner",
                 "Run",
                 {1, allRegressionTestTypes},

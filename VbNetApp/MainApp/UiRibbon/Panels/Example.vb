@@ -38,7 +38,7 @@ Namespace UiRibbon.Panels
             ribbonButton.Text = "Example - Run MyCommand"
             ribbonButton.Size = RibbonItemSize.Standard
             Dim uiRouter As UiRouter = New UiRouter(
-                "BusinessLogic.Commands",
+                "BusinessLogic",
                 "BusinessLogic.Commands.Example",
                 "Run",
                 Nothing,
@@ -57,7 +57,7 @@ Namespace UiRibbon.Panels
             ribbonButton.Text = "Hello"
             ribbonButton.Size = RibbonItemSize.Standard
             Dim uiRouter As UiRouter = New UiRouter(
-                "BusinessLogic.Commands",
+                "BusinessLogic",
                 "BusinessLogic.Commands.HelloFromCadWiki",
                 "Run",
                 Nothing,
