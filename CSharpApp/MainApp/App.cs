@@ -10,8 +10,13 @@ namespace MainApp
     public class App : IExtensionApplication
     {
 
+        //start here 1 - AutoCADAppDomainDllReloader
+        //this variable handles routing the Ui clicks on a AutoCAD ribbon button to your methods found in an Assembly
         public static AutoCADAppDomainDllReloader AcadAppDomainDllReloader = new AutoCADAppDomainDllReloader();
 
+        //start here 2 - IExtensionApplication.Initialize
+        //once the AcadAppDomainDllReloader is configured with the current Assembly, it will be able to route Ui clicks
+        //to the correct method
         public void Initialize()
         {
             // This Event Handler allows the IExtensionApplication to Resolve any Assemblies
@@ -29,6 +34,8 @@ namespace MainApp
         }
 
 
+        //start here 3 - IExtensionApplication.Terminate
+        //add a call to terminate the AcadAppDomainDllReloader
         public void Terminate()
         {
             AcadAppDomainDllReloader.Terminate();
