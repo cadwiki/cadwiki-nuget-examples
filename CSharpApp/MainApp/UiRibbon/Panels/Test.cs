@@ -37,16 +37,11 @@ namespace MainApp.UiRibbon.Panels
 
             var allRegressionTests = typeof(RegressionTests.RegressionTests);
             var allRegressionTestTypes = new[] { allRegressionTests };
-            // for testing workflow object method call
-            // Dim worflow As Workflows.NUnitTestRunner = New Workflows.NUnitTestRunner()
-            // worflow.Run(1, allRegressionTestTypes)
-            // bug in GenericClickCommandHandler when only a single parameter is passed
-            // using a temp integer value to work around the bug for now
             var uiRouter = new UiRouter(
                 "MainApp",    
                 "MainApp.Workflows.NUnitTestRunner", 
                 "Run", 
-                new[] { (object)1, allRegressionTestTypes }, 
+                new[] { (allRegressionTestTypes) }, 
                 App.AcadAppDomainDllReloader, 
                 Assembly.GetExecutingAssembly()
             );

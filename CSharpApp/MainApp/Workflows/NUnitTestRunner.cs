@@ -6,7 +6,7 @@ namespace MainApp.Workflows
 {
     public class NUnitTestRunner
     {
-        public void Run(int num, Type[] regressionTestTypes)
+        public void Run(Type[] regressionTestTypes)
         {
             var doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
             var ed = doc.Editor;
