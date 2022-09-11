@@ -9,7 +9,7 @@ Imports cadwiki.NUnitTestRunner
 
 Namespace Workflows
     Public Class NUnitTestRunner
-        Public Sub Run(num As Integer, regressionTestTypes As Type())
+        Public Sub Run(regressionTestTypes As Type())
             Dim doc As Document = Application.DocumentManager.MdiActiveDocument
             Dim ed As Editor = doc.Editor
             Try
