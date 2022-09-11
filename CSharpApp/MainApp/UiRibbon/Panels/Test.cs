@@ -42,7 +42,14 @@ namespace MainApp.UiRibbon.Panels
             // worflow.Run(1, allRegressionTestTypes)
             // bug in GenericClickCommandHandler when only a single parameter is passed
             // using a temp integer value to work around the bug for now
-            var uiRouter = new UiRouter("MainApp.Workflows.NUnitTestRunner", "Run", new[] { (object)1, allRegressionTestTypes }, App.AcadAppDomainDllReloader, Assembly.GetExecutingAssembly());
+            var uiRouter = new UiRouter(
+                "MainApp",    
+                "MainApp.Workflows.NUnitTestRunner", 
+                "Run", 
+                new[] { (object)1, allRegressionTestTypes }, 
+                App.AcadAppDomainDllReloader, 
+                Assembly.GetExecutingAssembly()
+            );
             ribbonButton.CommandParameter = uiRouter;
             ribbonButton.CommandHandler = new GenericClickCommandHandler();
             ribbonButton.ToolTip = "Runs regression tests from the current .dll";

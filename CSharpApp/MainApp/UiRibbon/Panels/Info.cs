@@ -73,7 +73,14 @@ namespace MainApp.UiRibbon.Panels
             button.ToolTip = "Reload the " + exeName + " dll into AutoCAD";
             object[] parameters = new object[] { };
 
-            var uiRouter = new UiRouter("BusinessLogic.Commands.HelloFromCadWiki", "Run", parameters, App.AcadAppDomainDllReloader, Assembly.GetExecutingAssembly());
+            var uiRouter = new UiRouter(
+                "BusinessLogic",
+                "BusinessLogic.Commands.HelloFromCadWiki", 
+                "Run", 
+                parameters, 
+                App.AcadAppDomainDllReloader, 
+                Assembly.GetExecutingAssembly()
+            );
             button.CommandParameter = uiRouter;
             return button;
         }

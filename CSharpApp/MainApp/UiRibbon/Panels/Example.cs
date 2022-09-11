@@ -38,7 +38,13 @@ namespace MainApp.UiRibbon.Panels
             ribbonButton.ShowText = true;
             ribbonButton.Text = "Example - Run MyCommand";
             ribbonButton.Size = RibbonItemSize.Standard;
-            var uiRouter = new UiRouter("BusinessLogic.Commands.Example", "Run", null, App.AcadAppDomainDllReloader, Assembly.GetExecutingAssembly());
+            var uiRouter = new UiRouter(
+                "BusinessLogic",
+                "BusinessLogic.Commands.Example", 
+                "Run", 
+                null, 
+                App.AcadAppDomainDllReloader, 
+                Assembly.GetExecutingAssembly());
             ribbonButton.CommandParameter = uiRouter;
             ribbonButton.CommandHandler = new GenericClickCommandHandler();
             ribbonButton.ToolTip = "Click to run MyCommand using the CommandHandler And Command Parameter bound to this UiRibbon button";
@@ -52,7 +58,13 @@ namespace MainApp.UiRibbon.Panels
             ribbonButton.ShowText = true;
             ribbonButton.Text = "Hello";
             ribbonButton.Size = RibbonItemSize.Standard;
-            var uiRouter = new UiRouter("BusinessLogic.Commands.HelloFromCadWiki", "Run", null, App.AcadAppDomainDllReloader, Assembly.GetExecutingAssembly());
+            var uiRouter = new UiRouter(
+                "BusinessLogic",
+                "BusinessLogic.Commands.HelloFromCadWiki", 
+                "Run", 
+                null, 
+                App.AcadAppDomainDllReloader, 
+                Assembly.GetExecutingAssembly());
             ribbonButton.CommandParameter = uiRouter;
             ribbonButton.CommandHandler = new GenericClickCommandHandler();
             ribbonButton.ToolTip = "Click to run HelloFromCadWiki";
