@@ -256,7 +256,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\MSBuild.Extension.Pack.1.9.1\build\net40\MSBuild.Extension.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.Extension.Pack.1.9.1\build\net40\MSBuild.Extension.Pack.targets'))" />
     <Error Condition="!Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.13.3\build\NUnit.props'))" />
-    <Error Condition="!Exists('..\packages\cadwiki.DllReloader.1.0.2\build\cadwiki.DllReloader.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cadwiki.DllReloader.1.0.2\build\cadwiki.DllReloader.targets'))" />
+    <Error Condition="!Exists('..\packages\cadwiki.DllReloader.1.0.2\Build\cadwiki.DllReloader.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cadwiki.DllReloader.1.0.2\Build\cadwiki.DllReloader.targets'))" />
   </Target>
-  <Import Project="..\packages\cadwiki.DllReloader.1.0.2\build\cadwiki.DllReloader.targets" Condition="Exists('..\packages\cadwiki.DllReloader.1.0.2\build\cadwiki.DllReloader.targets')" />
+  <Import Project="..\packages\cadwiki.DllReloader.1.0.2\Build\cadwiki.DllReloader.targets" Condition="Exists('..\packages\cadwiki.DllReloader.1.0.2\Build\cadwiki.DllReloader.targets')" />
 </Project>
