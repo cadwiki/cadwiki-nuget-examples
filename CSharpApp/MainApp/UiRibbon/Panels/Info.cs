@@ -78,9 +78,9 @@ namespace MainApp.UiRibbon.Panels
             object[] parameters = new object[] { };
 
             var uiRouter = new UiRouter(
-                "BusinessLogic",
-                "BusinessLogic.Commands.HelloFromCadWiki", 
-                "Run", 
+                "assemblyName: not used by DllReloadClickCommandHandler",
+                "fullClassName: not used by DllReloadClickCommandHandler",
+                "methodName: not used by DllReloadClickCommandHandler", 
                 parameters, 
                 App.AcadAppDomainDllReloader, 
                 Assembly.GetExecutingAssembly()

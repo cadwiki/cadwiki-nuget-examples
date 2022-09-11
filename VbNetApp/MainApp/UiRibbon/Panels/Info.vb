@@ -72,9 +72,9 @@ Namespace UiRibbon.Panels
             button.ToolTip = "Reload the " + exeName + " dll into AutoCAD"
 
             Dim uiRouter As UiRouter = New UiRouter(
-                "BusinessLogic",
-                "BusinessLogic.Commands.HelloFromCadWiki",
-                "Run",
+                "assemblyName: not used by DllReloadClickCommandHandler",
+                "fullClassName: not used by DllReloadClickCommandHandler",
+                "methodName: not used by DllReloadClickCommandHandler",
                 Nothing,
                 App.AcadAppDomainDllReloader,
                 Assembly.GetExecutingAssembly())
