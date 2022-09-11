@@ -62,6 +62,10 @@ namespace MainApp.UiRibbon.Panels
             return versionNumber;
         }
 
+        //start here 4 - Reload button
+        //this button handles the logic of Reloading a dll into AutoCAD's current application domain
+        //once a new dll is reloaded, the AutoCADAppDomainDllReloader will
+        //route future Ui clicks to the newly reloaded dlls methods
         private static RibbonButton CreateReloadCountButton(string exeName)
         {
             var button = new RibbonButton();
