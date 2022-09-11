@@ -58,10 +58,6 @@ Namespace UiRibbon.Panels
             Return versionNumber
         End Function
 
-        'start here 4 - Reload button
-        'this button handles the logic of Reloading a dll into AutoCAD's current application domain
-        'once a new dll is reloaded, the AutoCADAppDomainDllReloader will
-        'route future Ui clicks to the newly reloaded dlls methods
         Private Shared Function CreateReloadCountButton(exeName As String) As RibbonButton
             Dim button As RibbonButton = New RibbonButton()
             button.Name = "ReloadCount"

@@ -56,10 +56,6 @@ Namespace UiRibbon.Panels
             ribbonButton.ShowText = True
             ribbonButton.Text = "Hello"
             ribbonButton.Size = RibbonItemSize.Standard
-            'start here 5 - UiRouter
-            'The UiRouter contains all the information necessary for the AutoCADAppDomainDllReloader to
-            'parse a dll in the current app domain, and call the method you want to call
-            'the AutoCADAppDomainDllReloader will call your method from the most recently reloaded dll
             Dim uiRouter As UiRouter = New UiRouter(
                 "BusinessLogic",
                 "BusinessLogic.Commands.HelloFromCadWiki",
@@ -67,11 +63,7 @@ Namespace UiRibbon.Panels
                 Nothing,
                 App.AcadAppDomainDllReloader,
                 Assembly.GetExecutingAssembly())
-            'start here 6 - RibbonButton CommandParameter = uiRouter
-            'the UiRouter is stored on the ribbonButton.CommandParameter
             ribbonButton.CommandParameter = uiRouter
-            'start here 7 - GenericClickCommandHandler
-            'the GenericClickCommandHandler handles all Execute calls by utilizing the CommandParameter above
             ribbonButton.CommandHandler = New GenericClickCommandHandler(Application.DocumentManager.MdiActiveDocument)
             ribbonButton.ToolTip = "Click to run HelloFromCadWiki"
             Return ribbonButton
