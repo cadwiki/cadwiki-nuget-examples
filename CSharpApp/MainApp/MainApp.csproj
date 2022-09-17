@@ -254,6 +254,10 @@
       <Project>{A06AB667-C065-0A57-04AA-4491A6B05FCA}</Project>
       <Name>BusinessLogic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Plugin\Plugin.csproj">
+      <Project>{43681bc6-bced-4e28-b76e-1a459973a146}</Project>
+      <Name>Plugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

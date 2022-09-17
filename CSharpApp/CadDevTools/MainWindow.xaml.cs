@@ -1,4 +1,5 @@
-﻿using cadwiki.NetUtils;
+﻿using cadwiki.DllReloader.AutoCAD;
+using cadwiki.NetUtils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,6 +17,8 @@ namespace CadDevTools
     {
         public MainWindow()
         {
+            AutoCADAppDomainDllReloader dllReloader = new AutoCADAppDomainDllReloader();
+            dllReloader.ClearIni();
             previousAutoCADLocationValue = noneValue;
 
             acadLocations = new List<string>() { @"C:\Program Files\Autodesk\AutoCAD 2021\acad.exe", @"C:\Program Files\Autodesk\AutoCAD 2022\acad.exe", @"E:\Program Files\Autodesk\AutoCAD 2021\acad.exe", @"E:\Program Files\Autodesk\AutoCAD 2022\acad.exe" };

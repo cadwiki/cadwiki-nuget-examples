@@ -90,7 +90,7 @@ namespace MainApp.UiRibbon.Panels
             var uiRouter = new UiRouter(
                 "Plugin",
                 "Plugin.MyCommands",
-                "MyCommand",
+                "MyCommand2",
                 null,
                 App.AcadAppDomainDllReloader,
                 Assembly.GetExecutingAssembly());
