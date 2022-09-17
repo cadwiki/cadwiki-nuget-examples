@@ -31,6 +31,7 @@
       <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.cs" />
     </ItemGroup>
 	
+	<!-- auto inc date string with + 1 from buildThisFirst current build revision  -->
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevision="$(Out6)" />
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevision="$(Out6)"/>
     
