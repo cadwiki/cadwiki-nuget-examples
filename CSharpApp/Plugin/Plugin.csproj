@@ -68,7 +68,7 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
-    <Reference Include="cadwiki.DllReloader, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="cadwiki.DllReloader, Version=1.0.3.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\cadwiki.DllReloader.1.0.3\lib\net472\cadwiki.DllReloader.dll</HintPath>
     </Reference>
     <Reference Include="cadwiki.NetUtils, Version=1.0.810.19, Culture=neutral, processorArchitecture=AMD64">
