@@ -4,6 +4,7 @@ git update-index --no-skip-worktree "CSharpApp\buildThisFirst\My Project\Assembl
 git update-index --no-skip-worktree "CSharpApp\BusinessLogic\My Project\AssemblyInfo.cs"
 git update-index --no-skip-worktree "CSharpApp\CadDevTools\My Project\AssemblyInfo.cs"
 git update-index --no-skip-worktree "CSharpApp\MainApp\My Project\AssemblyInfo.cs"
+git update-index --no-skip-worktree "CSharpApp\Plugin\Properties\AssemblyInfo.cs"
 git update-index --no-skip-worktree "VbNetApp\AcadInterop2021\My Project\AssemblyInfo.vb"
 git update-index --no-skip-worktree "VbNetApp\buildThisFirst\My Project\AssemblyInfo.vb"
 git update-index --no-skip-worktree "VbNetApp\BusinessLogic\My Project\AssemblyInfo.vb"
