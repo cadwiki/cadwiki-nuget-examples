@@ -28,9 +28,16 @@
       <Reference Include="Microsoft.VisualBasic" />
       <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.cs" />
     </ItemGroup>
+	<!-- hard coded version rev and version build -->
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumber="123" AssemblyRevision="123" />
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumber="123" AssemblyFileRevision="123"/>
+    
+	<!-- auto inc version rev and version build
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevisionType="AutoIncrement" AssemblyRevisionFormat="000" />
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevisionType="AutoIncrement" AssemblyFileRevisionFormat="000" />
-    <Exec Command="echo target incremented assembly version for all assemblies in solution." />
+    -->
+	
+	<Exec Command="echo target incremented assembly version for all assemblies in solution." />
     <!-- print statement for debugging -->
     <!-- <Message Text="@(AssemblyInfoFiles, '%0a')" Importance="high" /> -->
   </Target>
