@@ -29,8 +29,8 @@ namespace Plugin
         // context menu.
 
         // Modal Command with localized name
-        [CommandMethod("MyGroup", "MyCommand", "MyCommandLocal", CommandFlags.Modal)]
-        public void MyCommand() // This method can have any name
+        [CommandMethod("MyGroup2", "MyCommand2", "MyCommandLocal2", CommandFlags.Modal)]
+        public void MyCommand2() // This method can have any name
         {
             // Put your command code here
             Document doc = Application.DocumentManager.MdiActiveDocument;
@@ -44,7 +44,7 @@ namespace Plugin
         }
 
         // Modal Command with pickfirst selection
-        [CommandMethod("MyGroup", "MyPickFirst", "MyPickFirstLocal", CommandFlags.Modal | CommandFlags.UsePickSet)]
+        [CommandMethod("MyGroup2", "MyPickFirst", "MyPickFirstLocal", CommandFlags.Modal | CommandFlags.UsePickSet)]
         public void MyPickFirst() // This method can have any name
         {
             PromptSelectionResult result = Application.DocumentManager.MdiActiveDocument.Editor.GetSelection();
@@ -61,7 +61,7 @@ namespace Plugin
         }
 
         // Application Session Command with localized name
-        [CommandMethod("MyGroup", "MySessionCmd", "MySessionCmdLocal", CommandFlags.Modal | CommandFlags.Session)]
+        [CommandMethod("MyGroup2", "MySessionCmd", "MySessionCmdLocal", CommandFlags.Modal | CommandFlags.Session)]
         public void MySessionCmd() // This method can have any name
         {
             // Put your command code here
