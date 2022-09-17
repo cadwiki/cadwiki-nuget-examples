@@ -23,15 +23,20 @@
       <Out2>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[3].Value)</Out2>
       <Out3>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[5].Value)</Out3>
       <Out4>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</Out4>
+	  <Out5>$([System.Int32]::Parse($(Out4)))</Out5>
     </PropertyGroup>
     <ItemGroup>
       <Reference Include="Microsoft.VisualBasic" />
       <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.cs" />
     </ItemGroup>
-	<!-- hard coded version rev and version build -->
+	
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevision="$(Out5)" />
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevision="$(Out5)"/>
+    
+	<!-- hard coded version rev and version build 
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumber="123" AssemblyRevision="123" />
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumber="123" AssemblyFileRevision="123"/>
-    
+    -->
 	<!-- auto inc version rev and version build
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevisionType="AutoIncrement" AssemblyRevisionFormat="000" />
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevisionType="AutoIncrement" AssemblyFileRevisionFormat="000" />
