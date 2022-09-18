@@ -86,7 +86,7 @@ Namespace UiRibbon.Panels
             ribbonButton.Size = RibbonItemSize.Standard
             Dim uiRouter As UiRouter = New UiRouter(
                 "Plugin",
-                "Plugin.MyCommands",
+                "Plugin.Plugin.MyCommands",
                 "MyCommand2",
                 Nothing,
                 App.AcadAppDomainDllReloader,
