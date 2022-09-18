@@ -7,7 +7,7 @@
     </ProductVersion>
     <SchemaVersion>
     </SchemaVersion>
-    <ProjectGuid>{00000000-0000-0000-0000-000000000000}</ProjectGuid>
+    <ProjectGuid>{3C6CA07D-2819-404D-8087-74D7E87A3F09}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Plugin</RootNamespace>
     <AssemblyName>Plugin</AssemblyName>
