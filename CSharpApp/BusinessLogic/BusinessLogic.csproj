@@ -49,19 +49,19 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cadwiki.AutoCAD2021.Interop.Utilities, Version=1.0.909.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="cadwiki.AutoCAD2021.Interop.Utilities, Version=1.0.909.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cadwiki.DllReloader.1.0.3\lib\net472\cadwiki.AutoCAD2021.Interop.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="cadwiki.CadDevTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cadwiki.DllReloader.1.0.3\lib\net472\cadwiki.CadDevTools.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.DllReloader, Version=1.0.3.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="cadwiki.DllReloader, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cadwiki.DllReloader.1.0.3\lib\net472\cadwiki.DllReloader.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.NetUtils, Version=1.0.810.19, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="cadwiki.NetUtils, Version=1.0.917.19, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cadwiki.DllReloader.1.0.3\lib\net472\cadwiki.NetUtils.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.WpfUi, Version=1.0.810.19, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="cadwiki.WpfUi, Version=1.0.810.19, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cadwiki.DllReloader.1.0.3\lib\net472\cadwiki.WpfUi.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
