@@ -39,7 +39,7 @@
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevisionType="AutoIncrement" AssemblyRevisionFormat="000" />
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevisionType="AutoIncrement" AssemblyFileRevisionFormat="000" />
     -->
-	<Exec Command="echo target incremented assembly version for all assemblies in solution." />
+    <Exec Command="echo target incremented assembly version for all assemblies in solution." />
     <!-- print statement for debugging -->
     <!-- <Message Text="@(AssemblyInfoFiles, '%0a')" Importance="high" /> -->
   </Target>
@@ -157,6 +157,12 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Plugin\Plugin.vbproj">
+      <Project>{3c6ca07d-2819-404d-8087-74d7e87a3f09}</Project>
+      <Name>Plugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\packages\cadwiki.DllReloader.1.0.3\Build\cadwiki.DllReloader.targets" Condition="Exists('..\packages\cadwiki.DllReloader.1.0.3\Build\cadwiki.DllReloader.targets')" />
