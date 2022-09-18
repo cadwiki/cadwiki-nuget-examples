@@ -38,7 +38,9 @@ namespace Plugin
             if (doc != null)
             {
                 ed = doc.Editor;
-                ed.WriteMessage("Hello, this is your first command.");
+                ed.WriteMessage(Environment.NewLine);
+                ed.WriteMessage("MyCommand2 started");
+                ed.WriteMessage(Environment.NewLine);
 
             }
         }
