@@ -100,6 +100,9 @@
     <Reference Include="cadwiki.AutoCAD2021.Interop.Utilities, Version=1.0.909.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cadwiki.CadDevTools.1.0.0\lib\net472\cadwiki.AutoCAD2021.Interop.Utilities.dll</HintPath>
     </Reference>
+    <Reference Include="cadwiki.AutoCAD2022.Interop.Utilities, Version=1.0.909.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.CadDevTools.1.0.0\lib\net472\cadwiki.AutoCAD2022.Interop.Utilities.dll</HintPath>
+    </Reference>
     <Reference Include="cadwiki.CadDevTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cadwiki.CadDevTools.1.0.0\lib\net472\cadwiki.CadDevTools.dll</HintPath>
     </Reference>
