@@ -23,6 +23,11 @@
       <Out4>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</Out4>
       <Out5>$([System.Int32]::Parse($(Out4)))</Out5>
       <Out6>$([MSBuild]::Add($(Out5), 1))</Out6>
+	  <CurrentDate>$([System.DateTime]::Now.ToString(MMdd))</CurrentDate>
+    </PropertyGroup>
+	<!-- If current date does not match date found in assemblyInfo, this is the first build of the day, reset $Out6 to 1-->
+    <PropertyGroup Condition="!$(CurrentDate.Contains($(Out3)))">
+	  <Out6>$([System.Int32]::Parse(1))</Out6>
     </PropertyGroup>
     <ItemGroup>
       <Reference Include="Microsoft.VisualBasic" />
