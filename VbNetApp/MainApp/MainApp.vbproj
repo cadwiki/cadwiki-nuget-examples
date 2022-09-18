@@ -253,6 +253,10 @@
       <Project>{124e370c-0c3d-45a6-86f2-8eefc4276b6a}</Project>
       <Name>BusinessLogic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Plugin\Plugin.vbproj">
+      <Project>{3c6ca07d-2819-404d-8087-74d7e87a3f09}</Project>
+      <Name>Plugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
