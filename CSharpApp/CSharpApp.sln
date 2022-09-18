@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "buildThisFirst", "buildThis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin", "Plugin\Plugin.csproj", "{43681BC6-BCED-4E28-B76E-1A459973A146}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadDevTools", "CadDevTools\CadDevTools.csproj", "{DBBC1D83-49D0-49DF-856F-990E567B9546}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,14 @@ Global
 		{43681BC6-BCED-4E28-B76E-1A459973A146}.Release|Any CPU.Build.0 = Release|Any CPU
 		{43681BC6-BCED-4E28-B76E-1A459973A146}.Release|x64.ActiveCfg = Release|Any CPU
 		{43681BC6-BCED-4E28-B76E-1A459973A146}.Release|x64.Build.0 = Release|Any CPU
+		{DBBC1D83-49D0-49DF-856F-990E567B9546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBBC1D83-49D0-49DF-856F-990E567B9546}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBBC1D83-49D0-49DF-856F-990E567B9546}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DBBC1D83-49D0-49DF-856F-990E567B9546}.Debug|x64.Build.0 = Debug|Any CPU
+		{DBBC1D83-49D0-49DF-856F-990E567B9546}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBBC1D83-49D0-49DF-856F-990E567B9546}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBBC1D83-49D0-49DF-856F-990E567B9546}.Release|x64.ActiveCfg = Release|Any CPU
+		{DBBC1D83-49D0-49DF-856F-990E567B9546}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
