@@ -21,13 +21,25 @@
       <Out2>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[3].Value)</Out2>
       <Out3>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[5].Value)</Out3>
       <Out4>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</Out4>
+      <Out5>$([System.Int32]::Parse($(Out4)))</Out5>
+      <Out6>$([MSBuild]::Add($(Out5), 1))</Out6>
     </PropertyGroup>
     <ItemGroup>
-      <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.vb" />
+      <Reference Include="Microsoft.VisualBasic" />
+      <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.cs" />
     </ItemGroup>
+    <!-- auto inc date string with + 1 from buildThisFirst current build revision  -->
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevision="$(Out6)" />
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevision="$(Out6)" />
+    <!-- hard coded version rev and version build 
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumber="123" AssemblyRevision="123" />
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumber="123" AssemblyFileRevision="123"/>
+    -->
+    <!-- auto inc version rev and version build
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevisionType="AutoIncrement" AssemblyRevisionFormat="000" />
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevisionType="AutoIncrement" AssemblyFileRevisionFormat="000" />
-    <Exec Command="echo target incremented assembly version for all assemblies in solution." />
+    -->
+	<Exec Command="echo target incremented assembly version for all assemblies in solution." />
     <!-- print statement for debugging -->
     <!-- <Message Text="@(AssemblyInfoFiles, '%0a')" Importance="high" /> -->
   </Target>
@@ -75,14 +87,20 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cadwiki.DllReloader, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\cadwiki.DllReloader.1.0.2\lib\net472\cadwiki.DllReloader.dll</HintPath>
+    <Reference Include="cadwiki.AutoCAD2021.Interop.Utilities, Version=1.0.909.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.DllReloader.1.0.3\lib\net472\cadwiki.AutoCAD2021.Interop.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.NetUtils, Version=1.0.810.19, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\cadwiki.DllReloader.1.0.2\lib\net472\cadwiki.NetUtils.dll</HintPath>
+    <Reference Include="cadwiki.CadDevTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.DllReloader.1.0.3\lib\net472\cadwiki.CadDevTools.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.WpfUi, Version=1.0.810.19, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\cadwiki.DllReloader.1.0.2\lib\net472\cadwiki.WpfUi.dll</HintPath>
+    <Reference Include="cadwiki.DllReloader, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.DllReloader.1.0.3\lib\net472\cadwiki.DllReloader.dll</HintPath>
+    </Reference>
+    <Reference Include="cadwiki.NetUtils, Version=1.0.917.19, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.DllReloader.1.0.3\lib\net472\cadwiki.NetUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="cadwiki.WpfUi, Version=1.0.810.19, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.DllReloader.1.0.3\lib\net472\cadwiki.WpfUi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -141,11 +159,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <Import Project="..\packages\cadwiki.DllReloader.1.0.2\build\cadwiki.DllReloader.targets" Condition="Exists('..\packages\cadwiki.DllReloader.1.0.2\build\cadwiki.DllReloader.targets')" />
+  <Import Project="..\packages\cadwiki.DllReloader.1.0.3\Build\cadwiki.DllReloader.targets" Condition="Exists('..\packages\cadwiki.DllReloader.1.0.3\Build\cadwiki.DllReloader.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\cadwiki.DllReloader.1.0.2\build\cadwiki.DllReloader.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cadwiki.DllReloader.1.0.2\build\cadwiki.DllReloader.targets'))" />
+    <Error Condition="!Exists('..\packages\cadwiki.DllReloader.1.0.3\Build\cadwiki.DllReloader.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cadwiki.DllReloader.1.0.3\Build\cadwiki.DllReloader.targets'))" />
   </Target>
 </Project>
