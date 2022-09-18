@@ -6,40 +6,48 @@
     <BuildRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.root))</BuildRoot>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.vb</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <Target Name="autoincrementBuildThisFirstAssemblyInfo" BeforeTargets="Build">
-    <Exec Command="echo target for auto incrementing AssemblyInfo.vb files" />
+    <Exec Command="echo target for auto incrementing AssemblyInfo.cs files" />
     <!-- Autoincrement buildThisFirst AssemblyInfo-->
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
       <Output TaskParameter="Assemblies" ItemName="buildThisFirstAssemblyIdentities" />
     </GetAssemblyIdentity>
     <Exec Command="echo project buildThisFirst current assembly version is: %(buildThisFirstAssemblyIdentities.Version)" />
+	<!-- Parse ./buildThisFirst/My Project/AssemblyInfo.cs into variables below with regex-->
     <PropertyGroup>
       <Pattern>(\d+)(.)(\d+)(.)(\d+)(.)(\d+)</Pattern>
       <In>%(buildThisFirstAssemblyIdentities.Version)</In>
-      <Out1>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[1].Value)</Out1>
-      <Out2>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[3].Value)</Out2>
-      <Out3>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[5].Value)</Out3>
-      <Out4>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</Out4>
-      <Out5>$([System.Int32]::Parse($(Out4)))</Out5>
-      <Out6>$([MSBuild]::Add($(Out5), 1))</Out6>
+      <str_prevMajor>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[1].Value)</str_prevMajor>
+      <str_prevMinor>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[3].Value)</str_prevMinor>
+      <str_prevBuildNumber>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[5].Value)</str_prevBuildNumber>
+      <int_prevBuildNumber>$([System.Int32]::Parse($(str_prevBuildNumber)))</int_prevBuildNumber>
+	  <str_prevRevNumber>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</str_prevRevNumber>
+      <str_prevRevNumber>$([System.Int32]::Parse($(str_prevRevNumber)))</str_prevRevNumber>
+      <int_newRevNumber>$([MSBuild]::Add($(str_prevRevNumber), 1))</int_newRevNumber>
+	  <CurrentDate>$([System.DateTime]::Now.ToString(MMdd))</CurrentDate>
+	  <int_CurrentDate>$([System.Int32]::Parse($(CurrentDate)))</int_CurrentDate>
+    </PropertyGroup>
+	<!-- If int_CurrentDate does not match date found in assemblyInfo, this is the first build of the day, reset $int_newRevNumber to 1-->
+    <PropertyGroup Condition="$(int_CurrentDate) != $(int_prevBuildNumber)">
+	  <int_newRevNumber>$([System.Int32]::Parse(1))</int_newRevNumber>
     </PropertyGroup>
     <ItemGroup>
       <Reference Include="Microsoft.VisualBasic" />
       <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.cs" />
     </ItemGroup>
-    <!-- auto inc date string with + 1 from buildThisFirst current build revision  -->
-    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevision="$(Out6)" />
-    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevision="$(Out6)" />
+    <!-- auto inc date string with int_newRevNumber created above  -->
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(str_prevMajor)" AssemblyMinorVersion="$(str_prevMinor)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevision="$(int_newRevNumber)" />
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(str_prevMajor)" AssemblyFileMinorVersion="$(str_prevMinor)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevision="$(int_newRevNumber)" />
     <!-- hard coded version rev and version build 
-    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumber="123" AssemblyRevision="123" />
-    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumber="123" AssemblyFileRevision="123"/>
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(str_prevMajor)" AssemblyMinorVersion="$(str_prevMinor)" AssemblyBuildNumber="123" AssemblyRevision="123" />
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(str_prevMajor)" AssemblyFileMinorVersion="$(str_prevMinor)" AssemblyFileBuildNumber="123" AssemblyFileRevision="123"/>
     -->
     <!-- auto inc version rev and version build
-    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevisionType="AutoIncrement" AssemblyRevisionFormat="000" />
-    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(Out1)" AssemblyFileMinorVersion="$(Out2)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevisionType="AutoIncrement" AssemblyFileRevisionFormat="000" />
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(str_prevMajor)" AssemblyMinorVersion="$(str_prevMinor)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevisionType="AutoIncrement" AssemblyRevisionFormat="000" />
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(str_prevMajor)" AssemblyFileMinorVersion="$(str_prevMinor)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevisionType="AutoIncrement" AssemblyFileRevisionFormat="000" />
     -->
     <Exec Command="echo target incremented assembly version for all assemblies in solution." />
     <!-- print statement for debugging -->
