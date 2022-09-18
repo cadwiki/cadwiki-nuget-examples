@@ -36,8 +36,8 @@ Namespace Plugin
         ' * click the 'Show All Files' button in the Solution Explorer;
         ' * expand the tree node for myCommands.vb;
         ' * and double click on myCommands.resx
-        <CommandMethod("MyGroup", "MyCommand", "MyCommandLocal", CommandFlags.Modal)> _
-        Public Sub MyCommand() ' This method can have any name
+        <CommandMethod("MyGroup", "MyCommand2", "MyCommandLocal", CommandFlags.Modal)>
+        Public Sub MyCommand2() ' This method can have any name
             ' Put your command code here
         End Sub
 
