@@ -172,12 +172,6 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Plugin\Plugin.csproj">
-      <Project>{43681bc6-bced-4e28-b76e-1a459973a146}</Project>
-      <Name>Plugin</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\cadwiki.DllReloader.1.0.3\Build\cadwiki.DllReloader.targets" Condition="Exists('..\packages\cadwiki.DllReloader.1.0.3\Build\cadwiki.DllReloader.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
