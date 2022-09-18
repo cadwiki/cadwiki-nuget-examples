@@ -166,12 +166,6 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Plugin\Plugin.vbproj">
-      <Project>{3c6ca07d-2819-404d-8087-74d7e87a3f09}</Project>
-      <Name>Plugin</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\packages\cadwiki.DllReloader.1.0.3\Build\cadwiki.DllReloader.targets" Condition="Exists('..\packages\cadwiki.DllReloader.1.0.3\Build\cadwiki.DllReloader.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
