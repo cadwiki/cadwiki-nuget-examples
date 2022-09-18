@@ -153,6 +153,12 @@
       <HintPath>..\packages\AutoCAD2021.Base.1.0.0\lib\AdWindows.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="cadwiki.AutoCAD2021.Interop.Utilities, Version=1.0.909.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\cadwiki.DllReloader.1.0.3\lib\net472\cadwiki.AutoCAD2021.Interop.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="cadwiki.CadDevTools2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.DllReloader.1.0.3\lib\net472\cadwiki.CadDevTools2.dll</HintPath>
+    </Reference>
     <Reference Include="cadwiki.DllReloader, Version=1.0.3.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\cadwiki.DllReloader.1.0.3\lib\net472\cadwiki.DllReloader.dll</HintPath>
     </Reference>
