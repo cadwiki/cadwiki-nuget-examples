@@ -26,7 +26,7 @@
     </PropertyGroup>
     <ItemGroup>
       <Reference Include="Microsoft.VisualBasic" />
-      <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.cs" />
+      <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.vb" />
     </ItemGroup>
     <!-- auto inc date string with + 1 from buildThisFirst current build revision  -->
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(Out1)" AssemblyMinorVersion="$(Out2)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevision="$(Out6)" />
