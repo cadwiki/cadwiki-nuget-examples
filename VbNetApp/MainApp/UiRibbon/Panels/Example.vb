@@ -14,13 +14,14 @@ Namespace UiRibbon.Panels
             ribbonPanelSource.Title = "Example"
             Dim exampleButton As RibbonButton = ExampleButtons.CreateExampleButton()
             Dim helloButton As RibbonButton = ExampleButtons.CreatHelloButton()
+            Dim pluginButton As RibbonButton = ExampleButtons.CreatePluginButton()
             Dim row1 As RibbonRowPanel = New RibbonRowPanel()
             row1.IsTopJustified = True
             row1.Items.Add(exampleButton)
             row1.Items.Add(New RibbonRowBreak())
             row1.Items.Add(helloButton)
             row1.Items.Add(New RibbonRowBreak())
-            row1.Items.Add(blankButton)
+            row1.Items.Add(pluginButton)
             row1.Items.Add(New RibbonRowBreak())
             row1.Items.Add(blankButton)
             ribbonPanelSource.Items.Add(row1)
@@ -74,6 +75,26 @@ Namespace UiRibbon.Panels
             'the GenericClickCommandHandler handles all Execute calls by utilizing the CommandParameter above
             ribbonButton.CommandHandler = New GenericClickCommandHandler(Application.DocumentManager.MdiActiveDocument)
             ribbonButton.ToolTip = "Click to run HelloFromCadWiki"
+            Return ribbonButton
+        End Function
+
+        Public Shared Function CreatePluginButton() As RibbonButton
+            Dim ribbonButton As RibbonButton = New RibbonButton()
+            ribbonButton.Name = "Example - Run Plugin Method"
+            ribbonButton.ShowText = True
+            ribbonButton.Text = "Example - Run Plugin Method"
+            ribbonButton.Size = RibbonItemSize.Standard
+            Dim uiRouter As UiRouter = New UiRouter(
+                "Plugin",
+                "Plugin.MyCommands",
+                "MyCommand2",
+                Nothing,
+                App.AcadAppDomainDllReloader,
+                Assembly.GetExecutingAssembly()
+                )
+            ribbonButton.CommandParameter = uiRouter
+            ribbonButton.CommandHandler = New GenericClickCommandHandler()
+            ribbonButton.ToolTip = "Click to run MyCommand using the CommandHandler And Command Parameter bound to this UiRibbon button"
             Return ribbonButton
         End Function
 
