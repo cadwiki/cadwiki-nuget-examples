@@ -14,6 +14,7 @@
       <Output TaskParameter="Assemblies" ItemName="buildThisFirstAssemblyIdentities" />
     </GetAssemblyIdentity>
     <Exec Command="echo project buildThisFirst current assembly version is: %(buildThisFirstAssemblyIdentities.Version)" />
+	<!-- Parse ./buildThisFirst/My Project/AssemblyInfo.vb into variables below with regex-->
     <PropertyGroup>
       <Pattern>(\d+)(.)(\d+)(.)(\d+)(.)(\d+)</Pattern>
       <In>%(buildThisFirstAssemblyIdentities.Version)</In>
@@ -26,12 +27,8 @@
       <int_newRevNumber>$([MSBuild]::Add($(str_prevRevNumber), 1))</int_newRevNumber>
 	  <CurrentDate>$([System.DateTime]::Now.ToString(MMdd))</CurrentDate>
 	  <int_CurrentDate>$([System.Int32]::Parse($(CurrentDate)))</int_CurrentDate>
-	  
     </PropertyGroup>
-	<Exec Command="echo str_prevBuildNumber: $(str_prevBuildNumber)" />
-	<Exec Command="echo CurrentDate: $(CurrentDate)" />
-	<Exec Command="echo int_CurrentDate: $(int_CurrentDate)" />
-	<!-- If current date does not match date found in assemblyInfo, this is the first build of the day, reset $int_newRevNumber to 1-->
+	<!-- If int_CurrentDate does not match date found in assemblyInfo, this is the first build of the day, reset $int_newRevNumber to 1-->
     <PropertyGroup Condition="$(int_CurrentDate) != $(int_prevBuildNumber)">
 	  <int_newRevNumber>$([System.Int32]::Parse(1))</int_newRevNumber>
     </PropertyGroup>
@@ -39,7 +36,7 @@
       <Reference Include="Microsoft.VisualBasic" />
       <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.vb" />
     </ItemGroup>
-    <!-- auto inc date string with + 1 from buildThisFirst current build revision  -->
+    <!-- auto inc date string with int_newRevNumber created above  -->
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(str_prevMajor)" AssemblyMinorVersion="$(str_prevMinor)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevision="$(int_newRevNumber)" />
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(str_prevMajor)" AssemblyFileMinorVersion="$(str_prevMinor)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevision="$(int_newRevNumber)" />
     <!-- hard coded version rev and version build 
