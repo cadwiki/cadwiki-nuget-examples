@@ -39,7 +39,9 @@ Namespace Plugin
         <CommandMethod("MyGroup", "MyCommand2", "MyCommandLocal", CommandFlags.Modal)>
         Public Sub MyCommand2() ' This method can have any name
             ' Put your command code here
-            Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage("MyCommand2 started " + vbCrLf)
+            Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(vbCrLf)
+            Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage("MyCommand2 started.")
+            Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(vbCrLf)
         End Sub
 
         ' Modal Command with pickfirst selection
