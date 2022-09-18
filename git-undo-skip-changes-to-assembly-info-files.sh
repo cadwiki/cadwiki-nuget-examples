@@ -10,3 +10,4 @@ git update-index --no-skip-worktree "VbNetApp\buildThisFirst\My Project\Assembly
 git update-index --no-skip-worktree "VbNetApp\BusinessLogic\My Project\AssemblyInfo.vb"
 git update-index --no-skip-worktree "VbNetApp\CadDevTools\My Project\AssemblyInfo.vb"
 git update-index --no-skip-worktree "VbNetApp\MainApp\My Project\AssemblyInfo.vb"
+git update-index --no-skip-worktree "VbNetApp\Plugin\My Project\AssemblyInfo.vb"
