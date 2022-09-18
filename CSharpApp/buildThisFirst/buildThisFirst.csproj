@@ -16,7 +16,7 @@
       <Output TaskParameter="Assemblies" ItemName="buildThisFirstAssemblyIdentities" />
     </GetAssemblyIdentity>
     <Exec Command="echo project buildThisFirst current assembly version is: %(buildThisFirstAssemblyIdentities.Version)" />
-	<!-- Parse ./buildThisFirst/My Project/AssemblyInfo.cs into variables below with regex-->
+    <!-- Parse ./buildThisFirst/My Project/AssemblyInfo.cs into variables below with regex-->
     <PropertyGroup>
       <Pattern>(\d+)(.)(\d+)(.)(\d+)(.)(\d+)</Pattern>
       <In>%(buildThisFirstAssemblyIdentities.Version)</In>
@@ -24,15 +24,15 @@
       <str_prevMinor>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[3].Value)</str_prevMinor>
       <str_prevBuildNumber>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[5].Value)</str_prevBuildNumber>
       <int_prevBuildNumber>$([System.Int32]::Parse($(str_prevBuildNumber)))</int_prevBuildNumber>
-	  <str_prevRevNumber>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</str_prevRevNumber>
+      <str_prevRevNumber>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</str_prevRevNumber>
       <str_prevRevNumber>$([System.Int32]::Parse($(str_prevRevNumber)))</str_prevRevNumber>
       <int_newRevNumber>$([MSBuild]::Add($(str_prevRevNumber), 1))</int_newRevNumber>
-	  <CurrentDate>$([System.DateTime]::Now.ToString(MMdd))</CurrentDate>
-	  <int_CurrentDate>$([System.Int32]::Parse($(CurrentDate)))</int_CurrentDate>
+      <CurrentDate>$([System.DateTime]::Now.ToString(MMdd))</CurrentDate>
+      <int_CurrentDate>$([System.Int32]::Parse($(CurrentDate)))</int_CurrentDate>
     </PropertyGroup>
-	<!-- If int_CurrentDate does not match date found in assemblyInfo, this is the first build of the day, reset $int_newRevNumber to 1-->
+    <!-- If int_CurrentDate does not match date found in assemblyInfo, this is the first build of the day, reset $int_newRevNumber to 1-->
     <PropertyGroup Condition="$(int_CurrentDate) != $(int_prevBuildNumber)">
-	  <int_newRevNumber>$([System.Int32]::Parse(1))</int_newRevNumber>
+      <int_newRevNumber>$([System.Int32]::Parse(1))</int_newRevNumber>
     </PropertyGroup>
     <ItemGroup>
       <Reference Include="Microsoft.VisualBasic" />
