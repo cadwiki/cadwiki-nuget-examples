@@ -1,95 +1,76 @@
-﻿Imports System.ComponentModel
-Imports System.Diagnostics.CodeAnalysis
-Imports System.Reflection
-Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.Devices
-Imports Microsoft.VisualBasic.Logging
-
-#If _MyType <> "Empty" Then
+﻿#If _MyType <> "Empty" Then
 
 Namespace My
     ''' <summary>
-    '''     Module used to define the properties that are available in the My Namespace for WPF
+    ''' Module used to define the properties that are available in the My Namespace for WPF
     ''' </summary>
     ''' <remarks></remarks>
-    <HideModuleName>
+    <Global.Microsoft.VisualBasic.HideModuleName()> _
     Module MyWpfExtension
-        Private ReadOnly s_Computer As New ThreadSafeObjectProvider(Of Computer)
-        Private ReadOnly s_User As New ThreadSafeObjectProvider(Of User)
-        Private ReadOnly s_Windows As New ThreadSafeObjectProvider(Of MyWindows)
-        Private ReadOnly s_Log As New ThreadSafeObjectProvider(Of Log)
-
+        Private s_Computer As New ThreadSafeObjectProvider(Of Global.Microsoft.VisualBasic.Devices.Computer)
+        Private s_User As New ThreadSafeObjectProvider(Of Global.Microsoft.VisualBasic.ApplicationServices.User)
+        Private s_Windows As New ThreadSafeObjectProvider(Of MyWindows)
+        Private s_Log As New ThreadSafeObjectProvider(Of Global.Microsoft.VisualBasic.Logging.Log)
         ''' <summary>
-        '''     Returns the application object for the running application
+        ''' Returns the application object for the running application
         ''' </summary>
-        <SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>
-        Friend ReadOnly Property Application As Application
+        <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>  _
+        Friend ReadOnly Property Application() As Application
             Get
-                Return CType(System.Windows.Application.Current, Application)
+                Return CType(Global.System.Windows.Application.Current, Application)
             End Get
         End Property
-
         ''' <summary>
-        '''     Returns information about the host computer.
+        ''' Returns information about the host computer.
         ''' </summary>
-        <SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>
-        Friend ReadOnly Property Computer As Computer
+        <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>  _
+        Friend ReadOnly Property Computer() As Global.Microsoft.VisualBasic.Devices.Computer
             Get
                 Return s_Computer.GetInstance()
             End Get
         End Property
-
         ''' <summary>
-        '''     Returns information for the current user.  If you wish to run the application with the current
-        '''     Windows user credentials, call My.User.InitializeWithWindowsUser().
+        ''' Returns information for the current user.  If you wish to run the application with the current 
+        ''' Windows user credentials, call My.User.InitializeWithWindowsUser().
         ''' </summary>
-        <SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>
-        Friend ReadOnly Property User As User
+        <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>  _
+        Friend ReadOnly Property User() As Global.Microsoft.VisualBasic.ApplicationServices.User
             Get
                 Return s_User.GetInstance()
             End Get
         End Property
-
         ''' <summary>
-        '''     Returns the application log. The listeners can be configured by the application's configuration file.
+        ''' Returns the application log. The listeners can be configured by the application's configuration file.
         ''' </summary>
-        <SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>
-        Friend ReadOnly Property Log As Log
+        <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>  _
+        Friend ReadOnly Property Log() As Global.Microsoft.VisualBasic.Logging.Log
             Get
                 Return s_Log.GetInstance()
             End Get
         End Property
 
         ''' <summary>
-        '''     Returns the collection of Windows defined in the project.
+        ''' Returns the collection of Windows defined in the project.
         ''' </summary>
-        <SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>
-        Friend ReadOnly Property Windows As MyWindows
-            <DebuggerHidden>
+        <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>  _
+        Friend ReadOnly Property Windows() As MyWindows
+            <Global.System.Diagnostics.DebuggerHidden()> _
             Get
                 Return s_Windows.GetInstance()
             End Get
         End Property
-
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        <
-            MyGroupCollection _
-                ("System.Windows.Window",
-                    "Create__Instance__",
-                    "Dispose__Instance__",
-                    "My.MyWpfExtenstionModule.Windows")>
+        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Never)> _
+        <Global.Microsoft.VisualBasic.MyGroupCollection("System.Windows.Window", "Create__Instance__", "Dispose__Instance__", "My.MyWpfExtenstionModule.Windows")> _
         Friend NotInheritable Class MyWindows
-            <DebuggerHidden>
-            Private Shared Function Create__Instance__ (Of T As {New, Window})(Instance As T) As T
+            <Global.System.Diagnostics.DebuggerHidden()> _
+            Private Shared Function Create__Instance__(Of T As {New, Global.System.Windows.Window})(ByVal Instance As T) As T
                 If Instance Is Nothing Then
                     If s_WindowBeingCreated IsNot Nothing Then
                         If s_WindowBeingCreated.ContainsKey(GetType(T)) = True Then
-                            Throw _
-                                New InvalidOperationException(
-                                    "The window cannot be accessed via My.Windows from the Window constructor.")
+                            Throw New Global.System.InvalidOperationException("The window cannot be accessed via My.Windows from the Window constructor.")
                         End If
                     Else
-                        s_WindowBeingCreated = New Hashtable()
+                        s_WindowBeingCreated = New Global.System.Collections.Hashtable()
                     End If
                     s_WindowBeingCreated.Add(GetType(T), Nothing)
                     Return New T()
@@ -98,56 +79,43 @@ Namespace My
                     Return Instance
                 End If
             End Function
-
-            <SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")> _
-            <DebuggerHidden>
-            Private Sub Dispose__Instance__ (Of T As Window)(ByRef instance As T)
+            <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1822:MarkMembersAsStatic")>  _
+            <Global.System.Diagnostics.DebuggerHidden()> _
+            Private Sub Dispose__Instance__(Of T As Global.System.Windows.Window)(ByRef instance As T)
                 instance = Nothing
             End Sub
-
-            <DebuggerHidden> _
-            <EditorBrowsable(EditorBrowsableState.Never)>
+            <Global.System.Diagnostics.DebuggerHidden()> _
+            <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Never)> _
             Public Sub New()
                 MyBase.New()
             End Sub
-
-            <ThreadStatic> Private Shared s_WindowBeingCreated As Hashtable
-
-            <EditorBrowsable(EditorBrowsableState.Never)>
-            Public Overrides Function Equals(o As Object) As Boolean
+            <Global.System.ThreadStatic()> Private Shared s_WindowBeingCreated As Global.System.Collections.Hashtable
+            <Global.System.ComponentModel.EditorBrowsable(Global.System.ComponentModel.EditorBrowsableState.Never)> Public Overrides Function Equals(ByVal o As Object) As Boolean
                 Return MyBase.Equals(o)
             End Function
-
-            <EditorBrowsable(EditorBrowsableState.Never)>
-            Public Overrides Function GetHashCode() As Integer
+            <Global.System.ComponentModel.EditorBrowsable(Global.System.ComponentModel.EditorBrowsableState.Never)> Public Overrides Function GetHashCode() As Integer
                 Return MyBase.GetHashCode
             End Function
-
-            <SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")> _
-            <EditorBrowsable(EditorBrowsableState.Never)>
-            Friend Overloads Function [GetType]() As Type
+            <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1822:MarkMembersAsStatic")>  _
+            <Global.System.ComponentModel.EditorBrowsable(Global.System.ComponentModel.EditorBrowsableState.Never)> _
+            Friend Overloads Function [GetType]() As Global.System.Type
                 Return GetType(MyWindows)
             End Function
-
-            <EditorBrowsable(EditorBrowsableState.Never)>
-            Public Overrides Function ToString() As String
+            <Global.System.ComponentModel.EditorBrowsable(Global.System.ComponentModel.EditorBrowsableState.Never)> Public Overrides Function ToString() As String
                 Return MyBase.ToString
             End Function
         End Class
     End Module
 End Namespace
-
 Partial Class Application
-    Inherits Windows.Application
-
-    <SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")> _
-    <SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")>
-    Friend ReadOnly Property Info As AssemblyInfo
-        <DebuggerHidden>
+    Inherits Global.System.Windows.Application
+    <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")> _
+    <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1822:MarkMembersAsStatic")> _
+    Friend ReadOnly Property Info() As Global.Microsoft.VisualBasic.ApplicationServices.AssemblyInfo
+        <Global.System.Diagnostics.DebuggerHidden()> _
         Get
-            Return New AssemblyInfo(Assembly.GetExecutingAssembly())
+            Return New Global.Microsoft.VisualBasic.ApplicationServices.AssemblyInfo(Global.System.Reflection.Assembly.GetExecutingAssembly())
         End Get
     End Property
 End Class
-
 #End If

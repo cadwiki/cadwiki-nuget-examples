@@ -13,13 +13,14 @@ namespace MainApp.UiRibbon.Panels
             ribbonPanelSource.Title = "Example";
             var exampleButton = ExampleButtons.CreateExampleButton();
             var helloButton = ExampleButtons.CreatHelloButton();
+            var pluginButton = ExampleButtons.CreatePluginButton();
             var row1 = new RibbonRowPanel();
             row1.IsTopJustified = true;
             row1.Items.Add(exampleButton);
             row1.Items.Add(new RibbonRowBreak());
             row1.Items.Add(helloButton);
             row1.Items.Add(new RibbonRowBreak());
-            row1.Items.Add(blankButton);
+            row1.Items.Add(pluginButton);
             row1.Items.Add(new RibbonRowBreak());
             row1.Items.Add(blankButton);
             ribbonPanelSource.Items.Add(row1);
@@ -76,6 +77,26 @@ namespace MainApp.UiRibbon.Panels
             //the GenericClickCommandHandler handles all Execute calls by utilizing the CommandParameter above
             ribbonButton.CommandHandler = new GenericClickCommandHandler();
             ribbonButton.ToolTip = "Click to run HelloFromCadWiki";
+            return ribbonButton;
+        }
+
+        public static RibbonButton CreatePluginButton()
+        {
+            var ribbonButton = new RibbonButton();
+            ribbonButton.Name = "Example - Run Plugin Method";
+            ribbonButton.ShowText = true;
+            ribbonButton.Text = "Example - Run Plugin Method";
+            ribbonButton.Size = RibbonItemSize.Standard;
+            var uiRouter = new UiRouter(
+                "Plugin",
+                "Plugin.MyCommands",
+                "MyCommand2",
+                null,
+                App.AcadAppDomainDllReloader,
+                Assembly.GetExecutingAssembly());
+            ribbonButton.CommandParameter = uiRouter;
+            ribbonButton.CommandHandler = new GenericClickCommandHandler();
+            ribbonButton.ToolTip = "Click to run MyCommand using the CommandHandler And Command Parameter bound to this UiRibbon button";
             return ribbonButton;
         }
 
