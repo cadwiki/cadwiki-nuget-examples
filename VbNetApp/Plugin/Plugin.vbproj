@@ -99,7 +99,7 @@
     <Reference Include="cadwiki.NetUtils, Version=1.0.924.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\cadwiki.CadDevTools.1.0.2\lib\net472\cadwiki.NetUtils.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.NUnitTestRunner, Version=1.0.2.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="cadwiki.NUnitTestRunner, Version=1.0.3.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\cadwiki.CadDevTools.1.0.2\lib\net472\cadwiki.NUnitTestRunner.dll</HintPath>
     </Reference>
     <Reference Include="cadwiki.WpfUi, Version=1.0.810.19, Culture=neutral, processorArchitecture=MSIL">
