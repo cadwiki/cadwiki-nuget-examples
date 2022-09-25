@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using Autodesk.Windows;
+using Microsoft.VisualBasic;
 
 using NUnit.Framework;
 
@@ -24,11 +25,24 @@ namespace MainApp.IntegrationTests
         }
 
         [Test]
-        public void Test_1()
+        public void Test_Is1EqualTo1_ShouldPass()
         {
             Assert.AreEqual(1, 1, "Test failed");
         }
 
+
+        [Test]
+        public void Test_ClickUiRibbonHelloWorld_ShouldPass()
+        {
+            var ribbonControl = ComponentManager.Ribbon;
+            RibbonTab appTab = ribbonControl.FindTab("AppTab");
+            RibbonPanel examplePanel = appTab.FindPanel(UiRibbon.Panels.Example.Id);
+            RibbonItem item = examplePanel.FindItem(UiRibbon.Panels.ExampleButtons.HelloButtonId);
+            RibbonButton ribbonButton = (RibbonButton)item;
+            ribbonButton.CommandHandler.Execute(ribbonButton);
+
+            Assert.AreEqual(1, 1, "Test failed");
+        }
 
     }
 }

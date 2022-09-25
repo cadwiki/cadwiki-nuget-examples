@@ -36,7 +36,8 @@ namespace MainApp.UiRibbon.Panels
             ribbonButton.Text = "Regression Tests";
 
             var allRegressionTests = typeof(RegressionTests.RegressionTests);
-            var allRegressionTestTypes = new[] { allRegressionTests };
+            var allIntegrationTests = typeof(IntegrationTests.Tests);
+            var allRegressionTestTypes = new[] { allRegressionTests, allIntegrationTests };
             var uiRouter = new UiRouter(
                 "MainApp",    
                 "MainApp.Workflows.NUnitTestRunner", 

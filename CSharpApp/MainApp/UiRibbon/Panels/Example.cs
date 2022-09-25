@@ -7,10 +7,14 @@ namespace MainApp.UiRibbon.Panels
 {
     public class Example
     {
+        public static string Title = "Example";
+        public static string Id = "cadwiki.ExamplePanel";
+
         public static RibbonPanel CreateExamplePanel(RibbonButton blankButton)
         {
             var ribbonPanelSource = new RibbonPanelSource();
-            ribbonPanelSource.Title = "Example";
+            ribbonPanelSource.Title = Title;
+            ribbonPanelSource.Id = Id;
             var exampleButton = ExampleButtons.CreateExampleButton();
             var helloButton = ExampleButtons.CreatHelloButton();
             var pluginButton = ExampleButtons.CreatePluginButton();
@@ -52,10 +56,13 @@ namespace MainApp.UiRibbon.Panels
             return ribbonButton;
         }
 
+        public static string HelloButtonId = "Hello";
+
         public static RibbonButton CreatHelloButton()
         {
             var ribbonButton = new RibbonButton();
             ribbonButton.Name = "Hello";
+            ribbonButton.Id = HelloButtonId;
             ribbonButton.ShowText = true;
             ribbonButton.Text = "Hello";
             ribbonButton.Size = RibbonItemSize.Standard;
