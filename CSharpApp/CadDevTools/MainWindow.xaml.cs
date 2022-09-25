@@ -1,4 +1,5 @@
-﻿using System;
+﻿using cadwiki.NetUtils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,12 @@ namespace CadDevTools
         public MainWindow()
         {
             this.Hide();
-            var window = new cadwiki.CadDevTools.MainWindow();
+            string solutionDir = Paths.TryGetSolutionDirectoryPath();
+            string wildCardFileName = "*" + "MainApp.dll";
+            string mainAppDll = Paths.GetNewestDllInVsubfoldersOfSolutionDirectory(solutionDir, wildCardFileName);
+            cadwiki.CadDevTools.MainWindow.Dependencies dependencies = new cadwiki.CadDevTools.MainWindow.Dependencies();
+            dependencies.DllFilePathToNetload = mainAppDll;
+            Window window = new cadwiki.CadDevTools.MainWindow(dependencies);
             window.ShowDialog();
             this.Close();
         }
