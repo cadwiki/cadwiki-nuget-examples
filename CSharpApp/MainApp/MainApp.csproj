@@ -233,6 +233,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RegressionTests\TestStrings.cs" />
+    <Compile Include="UiRibbon\Panels\Class1.cs" />
     <Compile Include="UiRibbon\Panels\Example.cs" />
     <Compile Include="UiRibbon\Panels\Info.cs" />
     <Compile Include="UiRibbon\Panels\PanelCreator.cs" />

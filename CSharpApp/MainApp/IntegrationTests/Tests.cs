@@ -3,13 +3,27 @@ using Microsoft.VisualBasic;
 
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Linq;
 
 namespace MainApp.IntegrationTests
 {
     [TestFixture]
     public class Tests
     {
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr SendMessage(IntPtr hwnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
+
 
         [SetUp]
         public void Init()
@@ -43,9 +57,15 @@ namespace MainApp.IntegrationTests
             RibbonButton ribbonButton = (RibbonButton)item;
             //simulate a Ui click by calling Execute on the Ribbon button command handler
             ribbonButton.CommandHandler.Execute(ribbonButton);
-            IntPtr intPtr = WinGetHandle("Hello from Cadwiki v53");
+            Application.DoEvents();
+            IntPtr windowIntPtr = WinGetHandle("Hello from Cadwiki v53");
+
+            //https://p2p.wrox.com/c/37119-simulating-button-click-using-win32-api-net.html
+            var hwndChild = MainApp.UiRibbon.Panels.Class2.EnumAllWindows(windowIntPtr).FirstOrDefault();
+
             Assert.AreEqual(1, 1, "Test failed");
         }
+
 
 
         public static IntPtr WinGetHandle(string wName)
@@ -60,6 +80,7 @@ namespace MainApp.IntegrationTests
             }
             return hWnd;
         }
+
 
     }
 }
