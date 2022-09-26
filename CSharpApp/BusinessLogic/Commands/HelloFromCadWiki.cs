@@ -65,7 +65,7 @@ namespace BusinessLogic.Commands
             {
                 // Do whatever business logic is required with the user input here
                 var wpfWindow = new WindowCadWiki("This string was sent from the BusinessLogic project.");
-                wpfWindow.ShowDialog();
+                wpfWindow.Show();
                 return new Result();
             }
             catch (Exception ex)

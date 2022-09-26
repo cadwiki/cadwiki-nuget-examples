@@ -2,6 +2,8 @@
 using Microsoft.VisualBasic;
 
 using NUnit.Framework;
+using System;
+using System.Diagnostics;
 
 namespace MainApp.IntegrationTests
 {
@@ -39,9 +41,24 @@ namespace MainApp.IntegrationTests
             RibbonPanel examplePanel = appTab.FindPanel(UiRibbon.Panels.Example.Id);
             RibbonItem item = examplePanel.FindItem(UiRibbon.Panels.ExampleButtons.HelloButtonId);
             RibbonButton ribbonButton = (RibbonButton)item;
+            //simulate a Ui click by calling Execute on the Ribbon button command handler
             ribbonButton.CommandHandler.Execute(ribbonButton);
-
+            IntPtr intPtr = WinGetHandle("Hello from Cadwiki v53");
             Assert.AreEqual(1, 1, "Test failed");
+        }
+
+
+        public static IntPtr WinGetHandle(string wName)
+        {
+            IntPtr hWnd = IntPtr.Zero;
+            foreach (Process pList in Process.GetProcesses())
+            {
+                if (pList.MainWindowTitle.Contains(wName))
+                {
+                    hWnd = pList.MainWindowHandle;
+                }
+            }
+            return hWnd;
         }
 
     }
