@@ -67,9 +67,13 @@ namespace MainApp.IntegrationTests
             Callback myCallBack = new Callback(MainApp.UiRibbon.Panels.Class4.EnumChildGetValue);
             hWnd = MainApp.UiRibbon.Panels.Win32.FindWindow(null, "Hello from Cadwiki v53");
             var root = AutomationElement.FromHandle(windowIntPtr);
-            var elements = root.FindAll(TreeScope.Subtree, Condition.TrueCondition)
+            AutomationElementCollection elements = (AutomationElementCollection)root.FindAll(TreeScope.Subtree, Condition.TrueCondition)
                                 .Cast<AutomationElement>();
 
+            foreach (AutomationElement element in elements)
+            {
+                var test = element.ToString();
+            }
 
             Assert.AreEqual(1, 1, "Test failed");
         }
