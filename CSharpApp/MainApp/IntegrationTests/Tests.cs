@@ -9,19 +9,13 @@ using System.Windows.Automation;
 using static System.Windows.Automation.AutomationElement;
 using Application = System.Windows.Forms.Application;
 using Microsoft.Test.Input;
+using System.Drawing;
 
 namespace MainApp.IntegrationTests
 {
     [TestFixture]
     public class Tests
     {
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SendMessage(IntPtr hwnd, uint Msg, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
-
 
         [SetUp]
         public void Init()
@@ -56,36 +50,15 @@ namespace MainApp.IntegrationTests
             //simulate a Ui click by calling Execute on the Ribbon button command handler
             ribbonButton.CommandHandler.Execute(ribbonButton);
             Application.DoEvents();
-            IntPtr windowIntPtr = WinApiGetHandleFromUiTitle("Hello from Cadwiki v53");
-            var root = AutomationElement.FromHandle(windowIntPtr);
-            AutomationElementCollection elements = root.FindAll(TreeScope.Subtree, 
-                Condition.TrueCondition);
 
-            foreach (AutomationElement element in elements)
-            {
-                AutomationElementInformation current = element.Current;
-                ControlType controlType = current.ControlType;
-                String controlText = current.Name;
-                String controlName = current.AutomationId;
-                if (controlName.Equals("ButtonOk"))
-                {
-                    System.Windows.Point windowsPoint = element.GetClickablePoint();
-                    System.Drawing.Point drawingPoint = new System.Drawing.Point((int)windowsPoint.X, (int)windowsPoint.Y);
-
-                    // Move the mouse to the point. Then click
-                    Microsoft.Test.Input.Mouse.MoveTo(drawingPoint);
-                    Microsoft.Test.Input.Mouse.Click(MouseButton.Left);
-
-                }
-                var test = element.ToString();
-            }
+            IntPtr windowIntPtr = ProcessesGetHandleFromUiTitle("Hello from Cadwiki v53");
+            String controlName = "ButtonOk";
+            MicrosoftTestClickUiControl(windowIntPtr, controlName);
 
             Assert.AreEqual(1, 1, "Test failed");
         }
 
-        public delegate int Callback(int hWnd, int lParam);
-
-        public static IntPtr WinApiGetHandleFromUiTitle(string wName)
+        public IntPtr ProcessesGetHandleFromUiTitle(string wName)
         {
             IntPtr hWnd = IntPtr.Zero;
             foreach (Process pList in Process.GetProcesses())
@@ -98,6 +71,52 @@ namespace MainApp.IntegrationTests
             return hWnd;
         }
 
+        public Boolean MicrosoftTestClickUiControl(IntPtr windowIntPtr, string controlName)
+        {
+            AutomationElement element = GetElementByControlName(windowIntPtr, controlName);
+            if (element is null)
+            {
+                return false;
+            }
+            Point clickableSystemDrawingPoint = GetClickableSystemDrawingPointFromElement(element);
+            return MicrosoftTestClickPoint(clickableSystemDrawingPoint);
+        }
+
+        private AutomationElement GetElementByControlName(IntPtr windowIntPtr,
+            String controlNameToFind)
+        {
+            var root = AutomationElement.FromHandle(windowIntPtr);
+            AutomationElementCollection elementCollection = root.FindAll(TreeScope.Subtree, Condition.TrueCondition);
+
+            foreach (AutomationElement element in elementCollection)
+            {
+                AutomationElementInformation current = element.Current;
+                ControlType controlType = current.ControlType;
+                String controlText = current.Name;
+                String controlName = current.AutomationId;
+                if (controlName.Equals(controlNameToFind))
+                {
+                    return element;
+
+                }
+            }
+            return null;
+        }
+
+        private Point GetClickableSystemDrawingPointFromElement(AutomationElement element)
+        {
+            System.Windows.Point windowsPoint = element.GetClickablePoint();
+            System.Drawing.Point drawingPoint = new System.Drawing.Point((int)windowsPoint.X, (int)windowsPoint.Y);
+            return drawingPoint;
+        }
+
+        private Boolean MicrosoftTestClickPoint(Point clickableSystemDrawingPoint)
+        {
+            // Move the mouse to the point. Then click
+            Microsoft.Test.Input.Mouse.MoveTo(clickableSystemDrawingPoint);
+            Microsoft.Test.Input.Mouse.Click(MouseButton.Left);
+            return true;
+        }
 
     }
 }
