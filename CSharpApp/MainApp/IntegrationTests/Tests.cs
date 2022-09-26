@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq;
+using System.Windows.Automation;
 
 namespace MainApp.IntegrationTests
 {
@@ -65,15 +66,10 @@ namespace MainApp.IntegrationTests
             int hWnd;
             Callback myCallBack = new Callback(MainApp.UiRibbon.Panels.Class4.EnumChildGetValue);
             hWnd = MainApp.UiRibbon.Panels.Win32.FindWindow(null, "Hello from Cadwiki v53");
+            var root = AutomationElement.FromHandle(windowIntPtr);
+            var elements = root.FindAll(TreeScope.Subtree, Condition.TrueCondition)
+                                .Cast<AutomationElement>();
 
-            if(hWnd == 0)
-            {
-                MessageBox.Show("Please Start Calling Window Application");
-            }
-            else
-            {
-                MainApp.UiRibbon.Panels.Win32.EnumChildWindows(hWnd, myCallBack,0);
-            }
 
             Assert.AreEqual(1, 1, "Test failed");
         }
