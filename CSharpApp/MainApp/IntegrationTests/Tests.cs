@@ -3,15 +3,12 @@ using Microsoft.VisualBasic;
 
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Linq;
 using System.Windows.Automation;
+using static System.Windows.Automation.AutomationElement;
+using Application = System.Windows.Forms.Application;
+using Microsoft.Test.Input;
 
 namespace MainApp.IntegrationTests
 {
@@ -67,11 +64,25 @@ namespace MainApp.IntegrationTests
             Callback myCallBack = new Callback(MainApp.UiRibbon.Panels.Class4.EnumChildGetValue);
             hWnd = MainApp.UiRibbon.Panels.Win32.FindWindow(null, "Hello from Cadwiki v53");
             var root = AutomationElement.FromHandle(windowIntPtr);
-            AutomationElementCollection elements = (AutomationElementCollection)root.FindAll(TreeScope.Subtree, Condition.TrueCondition)
-                                .Cast<AutomationElement>();
+            AutomationElementCollection elements = root.FindAll(TreeScope.Subtree, 
+                Condition.TrueCondition);
 
             foreach (AutomationElement element in elements)
             {
+                AutomationElementInformation current = element.Current;
+                ControlType controlType = current.ControlType;
+                String controlText = current.Name;
+                String controlName = current.AutomationId;
+                if (controlName.Equals("ButtonOk"))
+                {
+                    System.Windows.Point windowsPoint = element.GetClickablePoint();
+                    System.Drawing.Point drawingPoint = new System.Drawing.Point((int)windowsPoint.X, (int)windowsPoint.Y);
+
+                    // Move the mouse to the point. Then click
+                    Microsoft.Test.Input.Mouse.MoveTo(drawingPoint);
+                    Microsoft.Test.Input.Mouse.Click(MouseButton.Left);
+
+                }
                 var test = element.ToString();
             }
 
