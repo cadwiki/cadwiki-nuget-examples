@@ -61,12 +61,24 @@ namespace MainApp.IntegrationTests
             IntPtr windowIntPtr = WinGetHandle("Hello from Cadwiki v53");
 
             //https://p2p.wrox.com/c/37119-simulating-button-click-using-win32-api-net.html
-            var hwndChild = MainApp.UiRibbon.Panels.Class2.EnumAllWindows(windowIntPtr).FirstOrDefault();
+
+            int hWnd;
+            Callback myCallBack = new Callback(MainApp.UiRibbon.Panels.Class4.EnumChildGetValue);
+            hWnd = MainApp.UiRibbon.Panels.Win32.FindWindow(null, "Hello from Cadwiki v53");
+
+            if(hWnd == 0)
+            {
+                MessageBox.Show("Please Start Calling Window Application");
+            }
+            else
+            {
+                MainApp.UiRibbon.Panels.Win32.EnumChildWindows(hWnd, myCallBack,0);
+            }
 
             Assert.AreEqual(1, 1, "Test failed");
         }
 
-
+        public delegate int Callback(int hWnd, int lParam);
 
         public static IntPtr WinGetHandle(string wName)
         {

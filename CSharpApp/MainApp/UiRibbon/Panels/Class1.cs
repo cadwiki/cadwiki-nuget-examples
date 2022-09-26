@@ -6,9 +6,45 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MainApp.UiRibbon.Panels
 {
+    public class Win32
+    {
+        [DllImport("User32.dll")]
+        public static extern Int32 FindWindow(String lpClassName, String lpWindowName);
+        [DllImport("User32.dll")]
+        public static extern Int32 SetForegroundWindow(int hWnd);
+        [DllImport("User32.dll")]
+        public static extern Boolean EnumChildWindows(int hWndParent, Delegate lpEnumFunc, int lParam);
+        [DllImport("User32.dll")]
+        public static extern Int32 GetWindowText(int hWnd, StringBuilder s, int nMaxCount);
+        [DllImport("User32.dll")]
+        public static extern Int32 GetWindowTextLength(int hwnd);
+        [DllImport("user32.dll", EntryPoint = "GetDesktopWindow")]
+        public static extern int GetDesktopWindow();
+    }
+
+
+    //https://www.c-sharpcorner.com/article/working-with-win32-api-in-net/
+    public class Class4
+    {
+
+        public static int EnumChildGetValue(int hWnd, int lParam)
+        {
+            StringBuilder formDetails = new StringBuilder(256);
+            int txtValue;
+            string editText = "";
+            txtValue = Win32.GetWindowText(hWnd, formDetails, 256);
+            editText = formDetails.ToString().Trim();
+            MessageBox.Show("Contains text of control: " + editText);
+            return 1;
+        }
+
+    }
+
+
 
     //https://p2p.wrox.com/c/37119-simulating-button-click-using-win32-api-net.html
     //class3
