@@ -56,13 +56,7 @@ namespace MainApp.IntegrationTests
             //simulate a Ui click by calling Execute on the Ribbon button command handler
             ribbonButton.CommandHandler.Execute(ribbonButton);
             Application.DoEvents();
-            IntPtr windowIntPtr = WinGetHandle("Hello from Cadwiki v53");
-
-            //https://p2p.wrox.com/c/37119-simulating-button-click-using-win32-api-net.html
-
-            int hWnd;
-            Callback myCallBack = new Callback(MainApp.UiRibbon.Panels.Class4.EnumChildGetValue);
-            hWnd = MainApp.UiRibbon.Panels.Win32.FindWindow(null, "Hello from Cadwiki v53");
+            IntPtr windowIntPtr = WinApiGetHandleFromUiTitle("Hello from Cadwiki v53");
             var root = AutomationElement.FromHandle(windowIntPtr);
             AutomationElementCollection elements = root.FindAll(TreeScope.Subtree, 
                 Condition.TrueCondition);
@@ -91,7 +85,7 @@ namespace MainApp.IntegrationTests
 
         public delegate int Callback(int hWnd, int lParam);
 
-        public static IntPtr WinGetHandle(string wName)
+        public static IntPtr WinApiGetHandleFromUiTitle(string wName)
         {
             IntPtr hWnd = IntPtr.Zero;
             foreach (Process pList in Process.GetProcesses())
