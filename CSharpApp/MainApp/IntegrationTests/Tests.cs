@@ -55,11 +55,19 @@ namespace MainApp.IntegrationTests
 
             IntPtr windowIntPtr = ProcessesGetHandleFromUiTitle("Hello from Cadwiki v53");
             String controlName = "ButtonOk";
-            Bitmap screenshot = PrintWindow(windowIntPtr);
-            screenshot.Save("C:\\Temp\\image.jpg", ImageFormat.Jpeg);
+            String screenshotPath = "C:\\Temp\\test.jpg";
+            ImageFormat format = ImageFormat.Jpeg;
+
+            PrintWindowToImage(windowIntPtr, screenshotPath, format);
             MicrosoftTestClickUiControl(windowIntPtr, controlName);
 
             Assert.AreEqual(1, 1, "Test failed");
+        }
+
+        public static void PrintWindowToImage(IntPtr windowIntPtr, string screenshotPath, ImageFormat format)
+        {
+            Bitmap screenshot = PrintWindow(windowIntPtr);
+            screenshot.Save(screenshotPath, format);
         }
 
         [DllImport("user32.dll")]
