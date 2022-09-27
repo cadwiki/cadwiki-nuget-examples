@@ -42,8 +42,10 @@ namespace MainApp.IntegrationTests
         }
 
 
+
+
         [Test]
-        public void Test_ClickUiRibbonHelloWorld_ShouldPass()
+        public void Test_ClickUiRibbonHelloWorld_ShouldAddScreenshotToPdf()
         {
             var ribbonControl = ComponentManager.Ribbon;
             RibbonTab appTab = ribbonControl.FindTab("AppTab");
@@ -61,10 +63,32 @@ namespace MainApp.IntegrationTests
             String controlName = "ButtonOk";;
             testEvidenceCreator.MicrosoftTestClickUiControl(windowIntPtr, controlName);
 
+            Assert.IsTrue(System.IO.File.Exists(evidence.Images[0].FilePath), "jpeg was not created.");
+
             Assert.AreEqual(1, 1, "Test failed");
         }
 
+        [Test]
+        public void Test_ClickUiRibbonHelloWorld_ShouldAddSecondScreenShotToPdf()
+        {
+            var ribbonControl = ComponentManager.Ribbon;
+            RibbonTab appTab = ribbonControl.FindTab("AppTab");
+            RibbonPanel examplePanel = appTab.FindPanel(UiRibbon.Panels.Example.Id);
+            RibbonItem item = examplePanel.FindItem(UiRibbon.Panels.ExampleButtons.HelloButtonId);
+            RibbonButton ribbonButton = (RibbonButton)item;
+            //simulate a Ui click by calling Execute on the Ribbon button command handler
+            ribbonButton.CommandHandler.Execute(ribbonButton);
+            Application.DoEvents();
 
+            var testEvidenceCreator = new TestEvidenceCreator();
+            IntPtr windowIntPtr = testEvidenceCreator.ProcessesGetHandleFromUiTitle("Hello from Cadwiki v53");
+            var evidence = new Evidence();
+            evidence.TakeJpegScreenshot(windowIntPtr, "Title");
+            String controlName = "ButtonOk"; ;
+            testEvidenceCreator.MicrosoftTestClickUiControl(windowIntPtr, controlName);
+
+            Assert.IsTrue(System.IO.File.Exists(evidence.Images[0].FilePath), "jpeg was not created.");
+        }
     }
 
 
