@@ -2,8 +2,8 @@
 A collection of sample projects and solutions to demonstrate how to use cadwiki nuget packages
 
 ## CSharpApp and VbNetApp  
-These are both AutoCAD IExtensionApplication written in .Net.
-They demonstate how to use the cadwiki.DllReloader to easily reload itself into a AutoCAD's current Application Domain.  
+These are both AutoCAD IExtensionApplications written in .Net.
+They demonstate how to use the cadwiki.DllReloader to easily reload a dll into a AutoCAD's current Application Domain.  
 The cadwiki.DllReloader makes seeing code changes in AutoCAD faster since you won't have to close and restart for each new dll build.  
 
 ### Before Building
@@ -83,13 +83,13 @@ You can now reattach the debugger to AutoCAD to debug the Reloaded .dll
 ![NotFound](./VbNetApp/screenshots/autocad-reload-a-dll-6-attach-to-process.png)  
 
 ### Manual Debug steps
-Set startup project as MainApp
-Goto MainApp->Properties->Debug
+Set startup project as MainApp  
+Goto MainApp->Properties->Debug  
 
-Set Startup program:
-C:\Program Files\Autodesk\AutoCAD 2021\acad.exe
+Set Startup program:  
+C:\Program Files\Autodesk\AutoCAD 2021\acad.exe  
 
-Set Command line arguments to the bootload.scr created from the build process:
-/b "C:\..someWhere...\pathToRepoRoot\bootload.scr"
+Set Command line arguments to the bootload.scr created from the build process:  
+/b "C:\..someWhere...\pathToRepoRoot\bootload.scr"  
 
 Click Green Start button on top middle menu of Visual Studio  
