@@ -1,9 +1,9 @@
 # cadwiki nuget examples
 A collection of sample projects and solutions to demonstrate how to use cadwiki nuget packages
 
-## App.sln  
-This is a AutoCAD IExtensionApplication written in vb.net.  
-It demonstates how to use the cadwiki.DllReloader to easily reload itself into a AutoCAD's current Application Domain.  
+## CSharpApp and VbNetApp  
+These are both AutoCAD IExtensionApplication written in .Net.
+They demonstate how to use the cadwiki.DllReloader to easily reload itself into a AutoCAD's current Application Domain.  
 The cadwiki.DllReloader makes seeing code changes in AutoCAD faster since you won't have to close and restart for each new dll build.  
 
 ### Before Building
@@ -12,16 +12,16 @@ Repath the interop references on the AcadInterop2021 project
 Autodesk.AutoCAD.Interop
 Autodesk.AutoCAD.Interop.Common
 
-This is probably where they are on standard installations of AutoCAD.
-If you installed to a custom drive (example 'E:\' instead of 'C:\') then repath to the custom path instead
-C:\Program Files\Autodesk\AutoCAD 2021\Autodesk.AutoCAD.Interop.dll
-C:\Program Files\Autodesk\AutoCAD 2021\Autodesk.AutoCAD.Interop.Common.dll
+This is probably where they are on standard installations of AutoCAD.  
+If you installed to a custom drive (example 'E:\' instead of 'C:\') then repath to the custom path instead  
+C:\Program Files\Autodesk\AutoCAD 2021\Autodesk.AutoCAD.Interop.dll  
+C:\Program Files\Autodesk\AutoCAD 2021\Autodesk.AutoCAD.Interop.Common.dll  
 
 ### Build steps
 Click Build -> Rebuild solution in Visual Studio
 
-During the build, the .vbproj files will:
-1. update all AssemblyInfo.vb files based on the buildThisFirst projects mblyInfo.vb file
+During the build, the .vbproj / .csproj files will automatically:
+1. update all AssemblyInfo.vb files based on the buildThisFirst projects AssemblyInfo.vb file
 1. create all .dlls
 1. copy all .dlls into the .\MainApp\bin\v_#.#.#.# folder that corresponds to the current build number.  
 1. create a bootload.scr file for netloading the new .dll into AutoCAD
