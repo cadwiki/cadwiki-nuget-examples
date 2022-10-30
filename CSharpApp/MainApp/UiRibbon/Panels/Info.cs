@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using Autodesk.Windows;
 using cadwiki.DllReloader.AutoCAD.UiRibbon.Buttons;
+using static cadwiki.DllReloader.AutoCAD.AcadAssemblyUtils;
 
 namespace MainApp.UiRibbon.Panels
 {
@@ -21,13 +22,13 @@ namespace MainApp.UiRibbon.Panels
             if (App.AcadAppDomainDllReloader.GetReloadCount() >= 1)
             {
                 exeName = Path.GetFileName(App.AcadAppDomainDllReloader.GetDllPath());
-                versionNumberStr = GenericClickCommandHandler.GetAssemblyVersionFromFullName(dllName);
+                versionNumberStr = GetAssemblyVersionFromFullName(dllName);
             }
             else
             {
                 string filePath = Assembly.GetExecutingAssembly().Location;
                 exeName = Path.GetFileName(filePath);
-                versionNumberStr = GenericClickCommandHandler.GetAssemblyVersionFromFullName(currentIExtensionAppAssembly.FullName);
+                versionNumberStr = GetAssemblyVersionFromFullName(currentIExtensionAppAssembly.FullName);
             }
             var versionNumber = CreateVersionNumberButton(versionNumberStr);
             var assemblyName = CreateAssemblyNameButton(exeName);

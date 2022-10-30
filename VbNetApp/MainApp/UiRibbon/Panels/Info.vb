@@ -6,6 +6,7 @@ Imports System.IO
 Imports System.Reflection
 Imports Autodesk.Windows
 Imports cadwiki.DllReloader.AutoCAD.UiRibbon.Buttons
+Imports cadwiki.DllReloader.AutoCAD.AcadAssemblyUtils
 
 Namespace UiRibbon.Panels
     Public Class Info
@@ -20,11 +21,11 @@ Namespace UiRibbon.Panels
             Dim exeName As String = ""
             If (App.AcadAppDomainDllReloader.GetReloadCount() >= 1) Then
                 exeName = Path.GetFileName(App.AcadAppDomainDllReloader.GetDllPath())
-                versionNumberStr = GenericClickCommandHandler.GetAssemblyVersionFromFullName(dllName)
+                versionNumberStr = GetAssemblyVersionFromFullName(dllName)
             Else
                 Dim filePath As String = Assembly.GetExecutingAssembly().Location
                 exeName = Path.GetFileName(filePath)
-                versionNumberStr = GenericClickCommandHandler.GetAssemblyVersionFromFullName(currentIExtensionAppAssembly.FullName)
+                versionNumberStr = GetAssemblyVersionFromFullName(currentIExtensionAppAssembly.FullName)
             End If
             Dim versionNumber As RibbonButton = CreateVersionNumberButton(versionNumberStr)
             Dim assemblyName As RibbonButton = CreateAssemblyNameButton(exeName)

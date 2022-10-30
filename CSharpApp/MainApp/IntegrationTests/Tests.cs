@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Windows;
 using System.Drawing.Imaging;
 using cadwiki.NUnitTestRunner.TestEvidence;
+using cadwiki.NUnitTestRunner.Creators;
 
 namespace MainApp.IntegrationTests
 {
@@ -59,7 +60,7 @@ namespace MainApp.IntegrationTests
             var testEvidenceCreator = new TestEvidenceCreator();
             IntPtr windowIntPtr = testEvidenceCreator.ProcessesGetHandleFromUiTitle("Hello from Cadwiki v53");
             var evidence = new Evidence();
-            evidence.TakeJpegScreenshot(windowIntPtr, "Title");
+            testEvidenceCreator.TakeJpegScreenshot(windowIntPtr, "Title");
             String controlName = "ButtonOk";;
             testEvidenceCreator.MicrosoftTestClickUiControl(windowIntPtr, controlName);
 
@@ -82,12 +83,12 @@ namespace MainApp.IntegrationTests
 
             var testEvidenceCreator = new TestEvidenceCreator();
             IntPtr windowIntPtr = testEvidenceCreator.ProcessesGetHandleFromUiTitle("Hello from Cadwiki v53");
-            var evidence = new Evidence();
-            evidence.TakeJpegScreenshot(windowIntPtr, "Title");
+            testEvidenceCreator.TakeJpegScreenshot(windowIntPtr, "Title");
             String controlName = "ButtonOk"; ;
             testEvidenceCreator.MicrosoftTestClickUiControl(windowIntPtr, controlName);
 
-            Assert.IsTrue(System.IO.File.Exists(evidence.Images[0].FilePath), "jpeg was not created.");
+            Assert.IsTrue(System.IO.File.Exists(testEvidenceCreator.GetEvidenceForCurrentTest()
+                .Images[0].FilePath), "jpeg was not created.");
         }
     }
 
