@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.VisualBasic;
 
 
@@ -6,7 +7,7 @@ namespace MainApp.Workflows
 {
     public class NUnitTestRunner
     {
-        public void Run(Type[] regressionTestTypes)
+        public async Task Run(Type[] regressionTestTypes)
         {
             var doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
             var ed = doc.Editor;
@@ -17,7 +18,7 @@ namespace MainApp.Workflows
                 var window = driver.GetWindow();
                 // https://forums.autodesk.com/t5/net/how-to-set-a-focus-to-autocad-main-window-from-my-form-of-c-net/td-p/4680059
                 Autodesk.AutoCAD.ApplicationServices.Core.Application.ShowModelessWindow(window);
-                driver.ExecuteTests();
+                await driver.ExecuteTestsAsync();
             }
             catch (Exception ex)
             {

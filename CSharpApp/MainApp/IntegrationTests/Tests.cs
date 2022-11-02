@@ -14,6 +14,8 @@ using System.Windows;
 using System.Drawing.Imaging;
 using cadwiki.NUnitTestRunner.TestEvidence;
 using cadwiki.NUnitTestRunner.Creators;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MainApp.IntegrationTests
 {
@@ -89,6 +91,32 @@ namespace MainApp.IntegrationTests
 
             Assert.IsTrue(System.IO.File.Exists(testEvidenceCreator.GetEvidenceForCurrentTest()
                 .Images[0].FilePath), "jpeg was not created.");
+        }
+
+        [Test]
+        public async Task<Object> Test_LongRunningBlockInsert_ShouldAddSecondScreenShotToPdf()
+        {
+            var doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
+            object[] parameters =
+            {
+                "_.LINE",
+                "0,0",
+                "1,1"
+            };
+            await DelayedWork();
+            //await doc.Editor.CommandAsync(parameters);
+            var testEvidenceCreator = new TestEvidenceCreator();
+            IntPtr windowIntPtr = testEvidenceCreator.ProcessesGetHandleFromUiTitle("AutoCAD");
+            testEvidenceCreator.TakeJpegScreenshot(windowIntPtr, "After draw line async");
+
+            Assert.IsTrue(System.IO.File.Exists(testEvidenceCreator.GetEvidenceForCurrentTest()
+                .Images[0].FilePath), "jpeg was not created.");
+            return null;
+        }
+
+        private async Task DelayedWork()
+        {
+            await Task.Delay(5000);
         }
     }
 
