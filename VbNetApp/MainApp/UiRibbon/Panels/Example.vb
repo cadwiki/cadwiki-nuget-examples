@@ -9,6 +9,9 @@ Imports cadwiki.DllReloader.AutoCAD.UiRibbon.Buttons
 
 Namespace UiRibbon.Panels
     Public Class Example
+        Public Shared Title As String = "Example"
+        Public Shared Id As String = "cadwiki.ExamplePanel"
+
         Public Shared Function CreateExamplePanel(blankButton As RibbonButton) As RibbonPanel
             Dim ribbonPanelSource As RibbonPanelSource = New RibbonPanelSource()
             ribbonPanelSource.Title = "Example"
@@ -31,7 +34,10 @@ Namespace UiRibbon.Panels
         End Function
     End Class
 
+
+
     Partial Public Class ExampleButtons
+        Public Shared HelloButtonId As String = "Hello"
         Shared Function CreateExampleButton() As RibbonButton
             Dim ribbonButton As RibbonButton = New RibbonButton()
             ribbonButton.Name = "Example - Run MyCommand"
