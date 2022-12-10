@@ -77,24 +77,26 @@ Namespace MainApp.IntegrationTests
             Await DelayedWork()
             Dim doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument
             Dim parameters As List(Of Object) = New List(Of Object)() From {
-    "_.LINE",
-    "0,0",
-    "1,1",
-    ""
-}
+                "_.LINE",
+                "0,0",
+                "1,1",
+                ""
+            }
 
-            Await Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.ExecuteInCommandContextAsync(Async Function(obj)
-                                                                                                                         Await doc.Editor.CommandAsync(parameters.ToArray())
-                                                                                                                     End Function, Nothing)
+            Await Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.
+                ExecuteInCommandContextAsync(Async Function(obj)
+                                                 Await doc.Editor.CommandAsync(parameters.ToArray())
+                                             End Function, Nothing)
 
             parameters = New List(Of Object)() From {
-    "_.ZOOM",
-    "EXTENTS"
-}
+                "_.ZOOM",
+                "EXTENTS"
+            }
 
-            Await Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.ExecuteInCommandContextAsync(Async Function(obj)
-                                                                                                                         Await doc.Editor.CommandAsync(parameters.ToArray())
-                                                                                                                     End Function, Nothing)
+            Await Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.
+                ExecuteInCommandContextAsync(Async Function(obj)
+                                                 Await doc.Editor.CommandAsync(parameters.ToArray())
+                                             End Function, Nothing)
 
             Dim testEvidenceCreator = New TestEvidenceCreator()
             Dim windowIntPtr As IntPtr = testEvidenceCreator.ProcessesGetHandleFromUiTitle("Autodesk AutoCAD")
