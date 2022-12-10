@@ -1,17 +1,8 @@
 ﻿Imports Autodesk.Windows
-Imports Microsoft.VisualBasic
 
 Imports NUnit.Framework
-Imports System
-Imports System.Windows.Automation
-Imports System.Windows.Automation.AutomationElement
-Imports Application = System.Windows.Forms.Application
-Imports Microsoft.Test.Input
-Imports System.Drawing.Imaging
 Imports cadwiki.NUnitTestRunner.TestEvidence
 Imports cadwiki.NUnitTestRunner.Creators
-Imports System.Threading.Tasks
-Imports System.Collections.Generic
 Imports System.IO
 
 Namespace MainApp.IntegrationTests
