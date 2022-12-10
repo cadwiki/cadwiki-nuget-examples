@@ -14,7 +14,8 @@ Namespace UiRibbon.Panels
 
         Public Shared Function CreateExamplePanel(blankButton As RibbonButton) As RibbonPanel
             Dim ribbonPanelSource As RibbonPanelSource = New RibbonPanelSource()
-            ribbonPanelSource.Title = "Example"
+            ribbonPanelSource.Title = Title
+            ribbonPanelSource.Id = Id
             Dim exampleButton As RibbonButton = ExampleButtons.CreateExampleButton()
             Dim helloButton As RibbonButton = ExampleButtons.CreatHelloButton()
             Dim pluginButton As RibbonButton = ExampleButtons.CreatePluginButton()
@@ -63,6 +64,7 @@ Namespace UiRibbon.Panels
             ribbonButton.ShowText = True
             ribbonButton.Text = "Hello"
             ribbonButton.Size = RibbonItemSize.Standard
+            ribbonButton.Id = HelloButtonId
             'start here 5 - UiRouter
             'The UiRouter contains all the information necessary for the AutoCADAppDomainDllReloader to
             'parse a dll in the current app domain, and call the method you want to call
