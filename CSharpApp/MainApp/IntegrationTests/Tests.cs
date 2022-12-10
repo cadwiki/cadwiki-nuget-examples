@@ -16,6 +16,7 @@ using cadwiki.NUnitTestRunner.TestEvidence;
 using cadwiki.NUnitTestRunner.Creators;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace MainApp.IntegrationTests
 {
@@ -34,8 +35,6 @@ namespace MainApp.IntegrationTests
         {
             Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument.SendStringToExecute("(vla-endundomark (vla-get-ActiveDocument (vlax-get-acad-object)))" + Constants.vbLf, true, false, false);
             Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument.SendStringToExecute("(command-s \"._undo\" \"back\" \"yes\")" + Constants.vbLf, true, false, false);
-
-
         }
 
         [Test]
@@ -63,9 +62,10 @@ namespace MainApp.IntegrationTests
             IntPtr windowIntPtr = testEvidenceCreator.ProcessesGetHandleFromUiTitle("Hello from Cadwiki v53");
             var evidence = new Evidence();
             testEvidenceCreator.TakeJpegScreenshot(windowIntPtr, "Title");
-            String controlName = "ButtonOk";;
+            String controlName = "ButtonOk";
             testEvidenceCreator.MicrosoftTestClickUiControl(windowIntPtr, controlName);
 
+            evidence = testEvidenceCreator.GetEvidenceForCurrentTest();
             Assert.IsTrue(System.IO.File.Exists(evidence.Images[0].FilePath), "jpeg was not created.");
 
             Assert.AreEqual(1, 1, "Test failed");
@@ -88,29 +88,48 @@ namespace MainApp.IntegrationTests
             testEvidenceCreator.TakeJpegScreenshot(windowIntPtr, "Title");
             String controlName = "ButtonOk"; ;
             testEvidenceCreator.MicrosoftTestClickUiControl(windowIntPtr, controlName);
-
-            Assert.IsTrue(System.IO.File.Exists(testEvidenceCreator.GetEvidenceForCurrentTest()
-                .Images[0].FilePath), "jpeg was not created.");
+            var evidence = testEvidenceCreator.GetEvidenceForCurrentTest();
+            Assert.IsTrue(System.IO.File.Exists(evidence.Images[0].FilePath), "jpeg was not created.");
         }
 
         [Test]
-        public async Task<Object> Test_LongRunningBlockInsert_ShouldAddSecondScreenShotToPdf()
+        public async Task<Object> Test_LongRunningLineDraw_ShouldAddSecondScreenShotToPdf()
         {
+            await DelayedWork();
             var doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
-            object[] parameters =
+            List<object> parameters = new List<object>()
             {
                 "_.LINE",
                 "0,0",
-                "1,1"
+                "1,1",
+                ""
             };
-            await DelayedWork();
-            //await doc.Editor.CommandAsync(parameters);
-            var testEvidenceCreator = new TestEvidenceCreator();
-            IntPtr windowIntPtr = testEvidenceCreator.ProcessesGetHandleFromUiTitle("AutoCAD");
-            testEvidenceCreator.TakeJpegScreenshot(windowIntPtr, "After draw line async");
 
-            Assert.IsTrue(System.IO.File.Exists(testEvidenceCreator.GetEvidenceForCurrentTest()
-                .Images[0].FilePath), "jpeg was not created.");
+            await Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.ExecuteInCommandContextAsync(
+                async (obj) =>
+                {
+                    await doc.Editor.CommandAsync(parameters.ToArray());
+                },
+            null);
+
+            parameters = new List<object>()
+            {
+                "_.ZOOM",
+                "EXTENTS"
+            };
+
+            await Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.ExecuteInCommandContextAsync(
+                async (obj) =>
+                {
+                    await doc.Editor.CommandAsync(parameters.ToArray());
+                },
+            null);
+
+            var testEvidenceCreator = new TestEvidenceCreator();
+            IntPtr windowIntPtr = testEvidenceCreator.ProcessesGetHandleFromUiTitle("Autodesk AutoCAD");
+            testEvidenceCreator.TakeJpegScreenshot(windowIntPtr, "After draw line async");
+            var evidence = testEvidenceCreator.GetEvidenceForCurrentTest();
+            Assert.IsTrue(System.IO.File.Exists(evidence.Images[0].FilePath), "jpeg was not created.");
             return null;
         }
 
