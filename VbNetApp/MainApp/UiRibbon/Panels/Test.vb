@@ -36,7 +36,8 @@ Namespace UiRibbon.Panels
             ribbonButton.Text = "Regression Tests"
 
             Dim allRegressionTests As Type = GetType(RegressionTests.RegressionTests)
-            Dim allRegressionTestTypes As Type() = {allRegressionTests}
+            Dim allIntegrationTests As Type = GetType(MainApp.IntegrationTests.Tests)
+            Dim allRegressionTestTypes As Type() = {allRegressionTests, allIntegrationTests}
             Dim uiRouter As UiRouter = New UiRouter(
                 "MainApp",
                 "MainApp.Workflows.NUnitTestRunner",
