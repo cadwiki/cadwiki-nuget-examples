@@ -54,7 +54,7 @@ Namespace Commands
             Try
                 'Do whatever business logic is required with the user input here
                 Dim wpfWindow As cadwiki.WpfUi.WindowCadWiki = New cadwiki.WpfUi.WindowCadWiki("This string was sent from the BusinessLogic project.")
-                wpfWindow.ShowDialog()
+                wpfWindow.Show()
                 Return New Result()
             Catch ex As Exception
                 Commands.AutoCADExceptions.Handle(ex)

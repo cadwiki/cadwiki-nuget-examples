@@ -14,8 +14,7 @@ Class MainWindow
         Dim dependencies As New cadwiki.CadDevTools.MainWindow.Dependencies()
         dependencies.DllFilePathToNetload = mainAppDll
         Dim window As Window = New cadwiki.CadDevTools.MainWindow(dependencies)
-        window.ShowDialog()
-        Me.Close()
+        window.Show()
     End Sub
 
 
