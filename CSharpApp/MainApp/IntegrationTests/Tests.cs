@@ -107,7 +107,7 @@ namespace MainApp.IntegrationTests
                 ""
             };
 
-            await DrawLine(doc, parameters);
+            await ExecuteInCommandContextAsync(parameters);
             await ZoomExtents();
 
             var testEvidenceCreator = new TestEvidenceCreator();
@@ -131,7 +131,7 @@ namespace MainApp.IntegrationTests
                 ""
             };
 
-            await DrawLine(doc, parameters);
+            await ExecuteInCommandContextAsync(parameters);
             await ZoomExtents();
 
             var testEvidenceCreator = new TestEvidenceCreator();
@@ -142,24 +142,20 @@ namespace MainApp.IntegrationTests
             return null;
         }
 
-        private static async Task DrawLine(Document doc, List<object> parameters)
-        {
-            await Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.ExecuteInCommandContextAsync(
-                async (obj) =>
-                {
-                    await doc.Editor.CommandAsync(parameters.ToArray());
-                },
-            null);
-        }
-
         private static async Task ZoomExtents()
         {
-            var doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
+
             List<object> parameters = new List<object>()
             {
                 "_.ZOOM",
                 "EXTENTS"
             };
+            await ExecuteInCommandContextAsync(parameters);
+        }
+
+        private static async Task ExecuteInCommandContextAsync(List<object> parameters)
+        {
+            var doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
             await Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.ExecuteInCommandContextAsync(
                 async (obj) =>
                 {
