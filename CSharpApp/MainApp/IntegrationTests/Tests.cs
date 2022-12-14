@@ -28,17 +28,14 @@ namespace MainApp.IntegrationTests
         [SetUp]
         public void Init()
         {
-            Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument.SendStringToExecute("(vla-startundomark (vla-get-ActiveDocument (vlax-get-acad-object)))" + Constants.vbLf, true, false, false);
-            //cadwiki.AutoCAD2021.Base.Utilities.Commands.SendLispCommandStartUndoMark();
+            cadwiki.AutoCAD2021.Base.Utilities.Commands.SendLispCommandStartUndoMark();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument.SendStringToExecute("(vla-endundomark (vla-get-ActiveDocument (vlax-get-acad-object)))" + Constants.vbLf, true, false, false);
-            Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument.SendStringToExecute("(command-s \"._undo\" \"back\" \"yes\")" + Constants.vbLf, true, false, false);
-            //cadwiki.AutoCAD2021.Base.Utilities.Commands.SendLispCommandEndUndoMark();
-            //cadwiki.AutoCAD2021.Base.Utilities.Commands.SendLispCommandUndoBack();
+            cadwiki.AutoCAD2021.Base.Utilities.Commands.SendLispCommandEndUndoMark();
+            cadwiki.AutoCAD2021.Base.Utilities.Commands.SendLispCommandUndoBack();
         }
 
 
