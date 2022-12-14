@@ -98,7 +98,7 @@ namespace MainApp.IntegrationTests
         }
 
         [Test]
-        public async Task<Object> Test_LongRunningDiagonalLineDraw_ShouldAddScreenShotToPdf()
+        public async Task<Object> Test_LongRunningHorizontalLineDraw_ShouldAddScreenShotToPdf()
         {
             await DelayedWork();
             var doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
@@ -106,7 +106,31 @@ namespace MainApp.IntegrationTests
             {
                 "_.LINE",
                 "0,0",
-                "1,1",
+                "1,0",
+                ""
+            };
+
+            await DrawLine(doc, parameters);
+            await ZoomExtents();
+
+            var testEvidenceCreator = new TestEvidenceCreator();
+            IntPtr windowIntPtr = testEvidenceCreator.ProcessesGetHandleFromUiTitle("Autodesk AutoCAD");
+            testEvidenceCreator.TakeJpegScreenshot(windowIntPtr, "After draw line async");
+            var evidence = testEvidenceCreator.GetEvidenceForCurrentTest();
+            Assert.IsTrue(System.IO.File.Exists(evidence.Images[0].FilePath), "jpeg was not created.");
+            return null;
+        }
+
+        [Test]
+        public async Task<Object> Test_LongRunningVerticalLineDraw_ShouldAddScreenShotToPdf()
+        {
+            await DelayedWork();
+            var doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
+            List<object> parameters = new List<object>()
+            {
+                "_.LINE",
+                "0,0",
+                "0,1",
                 ""
             };
 
