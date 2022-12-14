@@ -17,6 +17,7 @@ using cadwiki.NUnitTestRunner.Creators;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Autodesk.AutoCAD.ApplicationServices;
 
 namespace MainApp.IntegrationTests
 {
@@ -93,7 +94,7 @@ namespace MainApp.IntegrationTests
         }
 
         [Test]
-        public async Task<Object> Test_LongRunningLineDraw_ShouldAddSecondScreenShotToPdf()
+        public async Task<Object> Test_LongRunningDiagonalLineDraw_ShouldAddScreenShotToPdf()
         {
             await DelayedWork();
             var doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
@@ -105,25 +106,8 @@ namespace MainApp.IntegrationTests
                 ""
             };
 
-            await Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.ExecuteInCommandContextAsync(
-                async (obj) =>
-                {
-                    await doc.Editor.CommandAsync(parameters.ToArray());
-                },
-            null);
-
-            parameters = new List<object>()
-            {
-                "_.ZOOM",
-                "EXTENTS"
-            };
-
-            await Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.ExecuteInCommandContextAsync(
-                async (obj) =>
-                {
-                    await doc.Editor.CommandAsync(parameters.ToArray());
-                },
-            null);
+            await DrawLine(doc, parameters);
+            await ZoomExtents();
 
             var testEvidenceCreator = new TestEvidenceCreator();
             IntPtr windowIntPtr = testEvidenceCreator.ProcessesGetHandleFromUiTitle("Autodesk AutoCAD");
@@ -131,6 +115,32 @@ namespace MainApp.IntegrationTests
             var evidence = testEvidenceCreator.GetEvidenceForCurrentTest();
             Assert.IsTrue(System.IO.File.Exists(evidence.Images[0].FilePath), "jpeg was not created.");
             return null;
+        }
+
+        private static async Task DrawLine(Document doc, List<object> parameters)
+        {
+            await Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.ExecuteInCommandContextAsync(
+                async (obj) =>
+                {
+                    await doc.Editor.CommandAsync(parameters.ToArray());
+                },
+            null);
+        }
+
+        private static async Task ZoomExtents()
+        {
+            var doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
+            List<object> parameters = new List<object>()
+            {
+                "_.ZOOM",
+                "EXTENTS"
+            };
+            await Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.ExecuteInCommandContextAsync(
+                async (obj) =>
+                {
+                    await doc.Editor.CommandAsync(parameters.ToArray());
+                },
+            null);
         }
 
         private async Task DelayedWork()
