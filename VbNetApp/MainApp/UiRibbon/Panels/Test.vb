@@ -46,7 +46,7 @@ Namespace UiRibbon.Panels
                 App.AcadAppDomainDllReloader,
                 Assembly.GetExecutingAssembly())
             ribbonButton.CommandParameter = uiRouter
-            ribbonButton.CommandHandler = New GenericClickCommandHandler(Application.DocumentManager.MdiActiveDocument)
+            ribbonButton.CommandHandler = New GenericClickCommandHandler()
             ribbonButton.ToolTip = "Runs regression tests from the current .dll"
             Return ribbonButton
         End Function

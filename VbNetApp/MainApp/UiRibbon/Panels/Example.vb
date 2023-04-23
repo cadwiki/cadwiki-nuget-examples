@@ -53,7 +53,7 @@ Namespace UiRibbon.Panels
                 App.AcadAppDomainDllReloader,
                 Assembly.GetExecutingAssembly())
             ribbonButton.CommandParameter = uiRouter
-            ribbonButton.CommandHandler = New GenericClickCommandHandler(Application.DocumentManager.MdiActiveDocument)
+            ribbonButton.CommandHandler = New GenericClickCommandHandler()
             ribbonButton.ToolTip = "Click to run MyCommand using the CommandHandler And Command Parameter bound to this UiRibbon button"
             Return ribbonButton
         End Function
@@ -81,7 +81,7 @@ Namespace UiRibbon.Panels
             ribbonButton.CommandParameter = uiRouter
             'start here 7 - GenericClickCommandHandler
             'the GenericClickCommandHandler handles all Execute calls by utilizing the CommandParameter above
-            ribbonButton.CommandHandler = New GenericClickCommandHandler(Application.DocumentManager.MdiActiveDocument)
+            ribbonButton.CommandHandler = New GenericClickCommandHandler()
             ribbonButton.ToolTip = "Click to run HelloFromCadWiki"
             Return ribbonButton
         End Function
