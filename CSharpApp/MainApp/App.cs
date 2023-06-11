@@ -25,7 +25,8 @@ namespace MainApp
             AppDomain.CurrentDomain.AssemblyResolve += AutoCADAppDomainDllReloader.AssemblyResolve;
             var iExtensionAppAssembly = Assembly.GetExecutingAssembly();
             var iExtensionAppVersion = cadwiki.NetUtils.AssemblyUtils.GetVersion(iExtensionAppAssembly);
-            AcadAppDomainDllReloader.Configure(iExtensionAppAssembly, true);
+            AcadAppDomainDllReloader.Configure(iExtensionAppAssembly);
+            AcadAppDomainDllReloader.Reload(iExtensionAppAssembly);
             var doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
             doc.Editor.WriteMessage(Constants.vbLf + "App " + iExtensionAppVersion.ToString() + " initialized...");
             doc.Editor.WriteMessage(Constants.vbLf);
