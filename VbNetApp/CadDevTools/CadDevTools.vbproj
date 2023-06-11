@@ -156,7 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="cadwiki.CadDevTools">
-      <Version>1.1.5.938</Version>
+      <Version>1.1.6.920</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
