@@ -28,14 +28,14 @@ namespace MainApp.IntegrationTests
         [SetUp]
         public void Init()
         {
-            cadwiki.AutoCAD2021.Base.Utilities.Commands.SendLispCommandStartUndoMark();
+            cadwiki.AC.Utilities.Commands.SendLispCommandStartUndoMark();
         }
 
         [TearDown]
         public void TearDown()
         {
-            cadwiki.AutoCAD2021.Base.Utilities.Commands.SendLispCommandEndUndoMark();
-            cadwiki.AutoCAD2021.Base.Utilities.Commands.SendLispCommandUndoBack();
+            cadwiki.AC.Utilities.Commands.SendLispCommandEndUndoMark();
+            cadwiki.AC.Utilities.Commands.SendLispCommandUndoBack();
         }
 
 
