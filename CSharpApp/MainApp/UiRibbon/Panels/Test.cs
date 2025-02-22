@@ -11,13 +11,14 @@ namespace MainApp.UiRibbon.Panels
         public static RibbonPanel CreateTestsPanel(RibbonButton blankButton)
         {
             var integrationTestsButton = CreateRegressionTestsButton();
+            var sampleButton = CreateSampleButton();
             var ribbonPanelSource = new RibbonPanelSource();
             ribbonPanelSource.Title = "Tests";
             var row1 = new RibbonRowPanel();
             row1.IsTopJustified = true;
             row1.Items.Add(integrationTestsButton);
             row1.Items.Add(new RibbonRowBreak());
-            row1.Items.Add(blankButton);
+            row1.Items.Add(sampleButton);
             row1.Items.Add(new RibbonRowBreak());
             row1.Items.Add(blankButton);
             row1.Items.Add(new RibbonRowBreak());
@@ -52,5 +53,26 @@ namespace MainApp.UiRibbon.Panels
             return ribbonButton;
         }
 
+
+        public static RibbonButton CreateSampleButton()
+        {
+            var ribbonButton = new RibbonButton();
+            ribbonButton.Name = "Sample";
+            ribbonButton.ShowText = true;
+            ribbonButton.Text = "Sample";
+
+            var uiRouter = new UiRouter(
+                "YourDllAssemblyName",
+                "YourClassName",
+                "YourPublicStaticRunMethod",
+                null,
+                App.AcadAppDomainDllReloader,
+                Assembly.GetExecutingAssembly()
+            );
+            ribbonButton.CommandParameter = uiRouter;
+            ribbonButton.CommandHandler = new GenericClickCommandHandler();
+            ribbonButton.ToolTip = "Sample command";
+            return ribbonButton;
+        }
     }
 }
