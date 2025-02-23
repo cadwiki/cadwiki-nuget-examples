@@ -28,7 +28,7 @@ namespace CadDevTools
             string wildCardFileName = "*" + "MainApp.dll";
             string mainAppDll = Paths.GetNewestDllInVsubfoldersOfSolutionDirectory(solutionDir, wildCardFileName);
             cadwiki.CadDevTools.MainWindow.Dependencies dependencies = new cadwiki.CadDevTools.MainWindow.Dependencies();
-            dependencies.DllFilePathToNetload = mainAppDll;
+            dependencies.DllFilePathsToNetloadCommaDelimited = mainAppDll;
             dependencies.AutoCADExePath = @"C:\Program Files\Autodesk\AutoCAD 2024\acad.exe";
             dependencies.AutoCADStartupSwitches = "/p VANILLA";
             dependencies.CustomDirectoryToSearchForDllsToLoadFrom = solutionDir;

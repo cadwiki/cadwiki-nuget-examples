@@ -38,7 +38,10 @@
     </PropertyGroup>
     <ItemGroup>
       <Reference Include="Microsoft.VisualBasic" />
+      <!-- Include multiple directories for AssemblyInfo.cs -->
       <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.cs" />
+      <AssemblyInfoFiles Include="$(BuildRoot)\cadwiki.AC\**\AssemblyInfo.cs" />
+      <AssemblyInfoFiles Include="$(BuildRoot)\cadwiki.AC.TestPlugin\**\AssemblyInfo.cs" />
     </ItemGroup>
     <!-- auto inc date string with int_newRevNumber created above  -->
     <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(str_prevMajor)" AssemblyMinorVersion="$(str_prevMinor)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevision="$(int_newRevNumber)" />
@@ -100,101 +103,101 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AcCoreMgd, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\AcCoreMgd.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcCoreMgd.dll</HintPath>
     </Reference>
     <Reference Include="AcCui, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\AcCui.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcCui.dll</HintPath>
     </Reference>
     <Reference Include="AcDbMgd, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\AcDbMgd.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcDbMgd.dll</HintPath>
     </Reference>
     <Reference Include="acdbmgdbrep, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\acdbmgdbrep.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\acdbmgdbrep.dll</HintPath>
     </Reference>
     <Reference Include="AcDx, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\AcDx.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcDx.dll</HintPath>
     </Reference>
     <Reference Include="AcMgd, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\AcMgd.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcMgd.dll</HintPath>
     </Reference>
     <Reference Include="AcMr, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\AcMr.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcMr.dll</HintPath>
     </Reference>
     <Reference Include="AcSeamless, Version=24.3.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\AcSeamless.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcSeamless.dll</HintPath>
     </Reference>
     <Reference Include="AcTcMgd, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\AcTcMgd.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcTcMgd.dll</HintPath>
     </Reference>
     <Reference Include="AcWindows, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\AcWindows.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcWindows.dll</HintPath>
     </Reference>
     <Reference Include="AdUIMgd, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\AdUIMgd.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AdUIMgd.dll</HintPath>
     </Reference>
     <Reference Include="AdUiPalettes, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\AdUiPalettes.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AdUiPalettes.dll</HintPath>
     </Reference>
     <Reference Include="AdWindows, Version=5.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\AdWindows.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AdWindows.dll</HintPath>
     </Reference>
     <Reference Include="Autodesk.AutoCAD.Interop, Version=24.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoCAD2022.Interop.Base.1.0.0\lib\Autodesk.AutoCAD.Interop.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Autodesk.AutoCAD.Interop.Common, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\Autodesk.AutoCAD.Interop.Common.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\Autodesk.AutoCAD.Interop.Common.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="cadwiki.AC, Version=4.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\cadwiki.AC.dll</HintPath>
+    <Reference Include="cadwiki.AC, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.AC.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.AC24.Interop, Version=4.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\cadwiki.AC24.Interop.dll</HintPath>
+    <Reference Include="cadwiki.AC24.Interop, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.AC24.Interop.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.AutoCAD2021.Interop.Utilities, Version=4.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\cadwiki.AutoCAD2021.Interop.Utilities.dll</HintPath>
+    <Reference Include="cadwiki.AutoCAD2021.Interop.Utilities, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.AutoCAD2021.Interop.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.AutoCAD2022.Interop.Utilities, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\cadwiki.AutoCAD2022.Interop.Utilities.dll</HintPath>
+    <Reference Include="cadwiki.AutoCAD2022.Interop.Utilities, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.AutoCAD2022.Interop.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.CadDevTools, Version=4.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\cadwiki.CadDevTools.dll</HintPath>
+    <Reference Include="cadwiki.CadDevTools, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.CadDevTools.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.DllReloader, Version=4.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\cadwiki.DllReloader.dll</HintPath>
+    <Reference Include="cadwiki.DllReloader, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.DllReloader.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.FileStore, Version=4.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\cadwiki.FileStore.dll</HintPath>
+    <Reference Include="cadwiki.FileStore, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.FileStore.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.MVVM, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\cadwiki.MVVM.dll</HintPath>
+    <Reference Include="cadwiki.MVVM, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.MVVM.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.NetUtils, Version=4.0.0.1, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\cadwiki.NetUtils.dll</HintPath>
+    <Reference Include="cadwiki.NetUtils, Version=4.0.0.2, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.NetUtils.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.NUnitTestRunner, Version=4.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\cadwiki.NUnitTestRunner.dll</HintPath>
+    <Reference Include="cadwiki.NUnitTestRunner, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.NUnitTestRunner.dll</HintPath>
     </Reference>
-    <Reference Include="cadwiki.WpfUi, Version=4.0.0.1, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\cadwiki.WpfUi.dll</HintPath>
+    <Reference Include="cadwiki.WpfUi, Version=4.0.0.2, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.WpfUi.dll</HintPath>
     </Reference>
     <Reference Include="Caliburn.Micro.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\Caliburn.Micro.Core.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\Caliburn.Micro.Core.dll</HintPath>
     </Reference>
     <Reference Include="Handlebars, Version=2.1.2.0, Culture=neutral, PublicKeyToken=22225d0bf33cd661, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\Handlebars.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\Handlebars.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.13.3.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\PdfSharp.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\PdfSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -205,7 +208,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
     <Reference Include="TestApiCore, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.1\lib\net48\TestApiCore.dll</HintPath>
+      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\TestApiCore.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -265,7 +268,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.13.3\build\NUnit.props'))" />
-    <Error Condition="!Exists('..\packages\cadwiki.CadDevTools.4.0.0.1\Build\cadwiki.CadDevTools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cadwiki.CadDevTools.4.0.0.1\Build\cadwiki.CadDevTools.targets'))" />
+    <Error Condition="!Exists('..\packages\cadwiki.CadDevTools.4.0.0.2\Build\cadwiki.CadDevTools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cadwiki.CadDevTools.4.0.0.2\Build\cadwiki.CadDevTools.targets'))" />
   </Target>
-  <Import Project="..\packages\cadwiki.CadDevTools.4.0.0.1\Build\cadwiki.CadDevTools.targets" Condition="Exists('..\packages\cadwiki.CadDevTools.4.0.0.1\Build\cadwiki.CadDevTools.targets')" />
+  <Import Project="..\packages\cadwiki.CadDevTools.4.0.0.2\Build\cadwiki.CadDevTools.targets" Condition="Exists('..\packages\cadwiki.CadDevTools.4.0.0.2\Build\cadwiki.CadDevTools.targets')" />
 </Project>
