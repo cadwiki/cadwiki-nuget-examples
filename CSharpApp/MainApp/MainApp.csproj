@@ -1,7 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\NUnit.3.13.3\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Target Name="GetAssmeblyVersion" AfterTargets="PostBuildEvent">
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
       <Output TaskParameter="Assemblies" ItemName="MyAssemblyIdentities" />
@@ -9,7 +6,6 @@
     <Exec Command="echo Assembly Info: @(MyAssemblyIdentities)" />
     <Exec Command="echo Version Number: %(MyAssemblyIdentities.Version)" />
   </Target>
-  <!-- this target places dlls into a separate subfolder so the cadwiki.DllReloader can consume them into AutoCAD without locking the .dlls that Visual Studio generates -->
   <Target Name="CopyAllDllsToBinSubFolder" AfterTargets="PostBuildEvent">
     <CallTarget Targets="GetAssmeblyVersion" />
     <Exec Command="echo Copying dlls after build into \bin subfolder for this version number" />
@@ -22,12 +18,10 @@
       <CopiedFiles Include="$(TargetDir)_v%(MyAssemblyIdentities.Version)\**\*.*;" />
     </ItemGroup>
     <Exec Command="echo @(CopiedFiles)..." />
-    <!-- touch all files to update time stamps -->
     <Touch Files="@(CopiedFiles)">
       <Output TaskParameter="TouchedFiles" ItemName="FilesTouched" />
     </Touch>
   </Target>
-  <!-- this target creates a simple bootload lisp script that the debugging options below will use when launching AutoCAD in debug mode -->
   <Target Name="CreateAcadBootloadScript" AfterTargets="PostBuildEvent">
     <Exec Command="echo creating AutoCAD $(BuildRoot)\bootload.scr that contains one LISP command call to netload the .dll below:" />
     <PropertyGroup>
@@ -45,7 +39,6 @@
     </ItemGroup>
     <WriteLinesToFile File="$(BuildRoot)\bootload.scr" Lines="@(CmdLine)" Overwrite="true" Encoding="Unicode" />
   </Target>
-  <!-- this target outputs all refernces to the command line for clarity when building -->
   <Target Name="PrintAllReferencesToCommandLine" DependsOnTargets="ResolveReferences" AfterTargets="PostBuildEvent">
     <ItemGroup>
       <MyReferencedAssemblies Include="@(ReferencePath)" />
@@ -53,171 +46,36 @@
     <Exec Command="echo Ref assemblies: @(MyReferencedAssemblies)" />
   </Target>
   <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <BuildRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.root))</BuildRoot>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DE897DA0-CE22-053A-2855-8ECA495D18D4}</ProjectGuid>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <OutputType>Library</OutputType>
-    <RootNamespace>MainApp</RootNamespace>
-    <AssemblyName>MainApp</AssemblyName>
-    <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
-  </PropertyGroup>
-  <PropertyGroup>
     <OptionCompare>Binary</OptionCompare>
-  </PropertyGroup>
-  <PropertyGroup>
     <OptionStrict>Off</OptionStrict>
-  </PropertyGroup>
-  <PropertyGroup>
     <OptionInfer>Off</OptionInfer>
+    <AssemblyTitle>MainApp</AssemblyTitle>
+    <Product>MainApp</Product>
+    <Copyright>Copyright ©  2022</Copyright>
+    <AssemblyVersion>1.0.0103.10</AssemblyVersion>
+    <FileVersion>1.0.0103.10</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DocumentationFile>bin\x64\Debug\MainApp.xml</DocumentationFile>
     <NoWarn>1591,41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Release\</OutputPath>
     <DocumentationFile>bin\x64\Release\MainApp.xml</DocumentationFile>
-    <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="AcCoreMgd, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcCoreMgd.dll</HintPath>
-    </Reference>
-    <Reference Include="AcCui, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcCui.dll</HintPath>
-    </Reference>
-    <Reference Include="AcDbMgd, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcDbMgd.dll</HintPath>
-    </Reference>
-    <Reference Include="acdbmgdbrep, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\acdbmgdbrep.dll</HintPath>
-    </Reference>
-    <Reference Include="AcDx, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcDx.dll</HintPath>
-    </Reference>
-    <Reference Include="AcMgd, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcMgd.dll</HintPath>
-    </Reference>
-    <Reference Include="AcMr, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcMr.dll</HintPath>
-    </Reference>
-    <Reference Include="AcSeamless, Version=24.3.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcSeamless.dll</HintPath>
-    </Reference>
-    <Reference Include="AcTcMgd, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcTcMgd.dll</HintPath>
-    </Reference>
-    <Reference Include="AcWindows, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AcWindows.dll</HintPath>
-    </Reference>
-    <Reference Include="AdUIMgd, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AdUIMgd.dll</HintPath>
-    </Reference>
-    <Reference Include="AdUiPalettes, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AdUiPalettes.dll</HintPath>
-    </Reference>
-    <Reference Include="AdWindows, Version=5.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\AdWindows.dll</HintPath>
-    </Reference>
-    <Reference Include="Autodesk.AutoCAD.Interop, Version=24.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoCAD2022.Interop.Base.1.0.0\lib\Autodesk.AutoCAD.Interop.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Autodesk.AutoCAD.Interop.Common, Version=24.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\Autodesk.AutoCAD.Interop.Common.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="cadwiki.AC, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.AC.dll</HintPath>
-    </Reference>
-    <Reference Include="cadwiki.AC24.Interop, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.AC24.Interop.dll</HintPath>
-    </Reference>
-    <Reference Include="cadwiki.AutoCAD2021.Interop.Utilities, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.AutoCAD2021.Interop.Utilities.dll</HintPath>
-    </Reference>
-    <Reference Include="cadwiki.AutoCAD2022.Interop.Utilities, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.AutoCAD2022.Interop.Utilities.dll</HintPath>
-    </Reference>
-    <Reference Include="cadwiki.CadDevTools, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.CadDevTools.dll</HintPath>
-    </Reference>
-    <Reference Include="cadwiki.DllReloader, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.DllReloader.dll</HintPath>
-    </Reference>
-    <Reference Include="cadwiki.FileStore, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.FileStore.dll</HintPath>
-    </Reference>
-    <Reference Include="cadwiki.MVVM, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.MVVM.dll</HintPath>
-    </Reference>
-    <Reference Include="cadwiki.NetUtils, Version=4.0.0.2, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.NetUtils.dll</HintPath>
-    </Reference>
-    <Reference Include="cadwiki.NUnitTestRunner, Version=4.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.NUnitTestRunner.dll</HintPath>
-    </Reference>
-    <Reference Include="cadwiki.WpfUi, Version=4.0.0.2, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\cadwiki.WpfUi.dll</HintPath>
-    </Reference>
-    <Reference Include="Caliburn.Micro.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\Caliburn.Micro.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Handlebars, Version=2.1.2.0, Culture=neutral, PublicKeyToken=22225d0bf33cd661, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\Handlebars.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=3.13.3.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\PdfSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="TestApiCore, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\cadwiki.CadDevTools.4.0.0.2\lib\net48\TestApiCore.dll</HintPath>
-    </Reference>
-    <Reference Include="UIAutomationClient" />
-    <Reference Include="UIAutomationTypes" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
@@ -228,81 +86,71 @@
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
     <Import Include="System.Threading.Tasks" />
+    <PackageReference Include="cadwiki.CadDevTools" Version="25.0.0.2" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
+    <PackageReference Include="PDFsharp" Version="6.2.4" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="Handlebars.Net" Version="2.1.6" />
+    <PackageReference Include="ILMerge.MSBuild.Tasks" Version="1.0.0.3" />
+    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="NUnit" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="My Project\MyNamespace.Static.1.Designer.cs" />
-    <Compile Include="My Project\MyNamespace.Static.2.Designer.cs" />
-    <Compile Include="My Project\MyNamespace.Static.3.Designer.cs" />
-    <Compile Include="App.cs" />
-    <Compile Include="CommandDrivers.cs" />
-    <Compile Include="IntegrationTests\Tests.cs" />
-    <Compile Include="My Project\AssemblyInfo.cs" />
-    <Compile Include="My Project\Application.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="RegressionTests\TestStrings.cs" />
-    <Compile Include="UiRibbon\Panels\Example.cs" />
-    <Compile Include="UiRibbon\Panels\Info.cs" />
-    <Compile Include="UiRibbon\Panels\PanelCreator.cs" />
-    <Compile Include="UiRibbon\Panels\Test.cs" />
-    <Compile Include="UiRibbon\Tabs\AppTab.cs" />
-    <Compile Include="UiRibbon\Tabs\TabCreator.cs" />
-    <Compile Include="Workflows\NUnitTestRunner.cs" />
+    <Reference Include="accoremgd">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcCoreMgd.dll</HintPath>
+    </Reference>
+    <Reference Include="AcCui">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcCui.dll</HintPath>
+    </Reference>
+    <Reference Include="Acdbmgd">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcDbMgd.dll</HintPath>
+    </Reference>
+    <Reference Include="acdbmgdbrep">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\acdbmgdbrep.dll</HintPath>
+    </Reference>
+    <Reference Include="AcDx">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcDx.dll</HintPath>
+    </Reference>
+    <Reference Include="acmgd">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcMgd.dll</HintPath>
+    </Reference>
+    <Reference Include="AcMr">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcMr.dll</HintPath>
+    </Reference>
+    <Reference Include="AcSeamless">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcSeamless.dll</HintPath>
+    </Reference>
+    <Reference Include="AcTcMgd">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcTcMgd.dll</HintPath>
+    </Reference>
+    <Reference Include="AcWindows">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcWindows.dll</HintPath>
+    </Reference>
+    <Reference Include="AdUIMgd">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AdUIMgd.dll</HintPath>
+    </Reference>
+    <Reference Include="AdUiPalettes">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AdUiPalettes.dll</HintPath>
+    </Reference>
+    <Reference Include="AdWindows">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AdWindows.dll</HintPath>
+    </Reference>
+    <Reference Include="Autodesk.AutoCAD.Interop">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\Autodesk.AutoCAD.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Autodesk.AutoCAD.Interop.Common">
+      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\Autodesk.AutoCAD.Interop.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>MainApp.My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="My Project\Application.myapp">
+    <None Update="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.cs</LastGenOutput>
     </None>
-    <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <CustomToolNamespace>MainApp.My</CustomToolNamespace>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
-      <Project>{A06AB667-C065-0A57-04AA-4491A6B05FCA}</Project>
-      <Name>BusinessLogic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Plugin\Plugin.csproj">
-      <Project>{43681bc6-bced-4e28-b76e-1a459973a146}</Project>
-      <Name>Plugin</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\MSBuild.Extension.Pack.1.9.1\build\net40\MSBuild.Extension.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.Extension.Pack.1.9.1\build\net40\MSBuild.Extension.Pack.targets'))" />
-    <Error Condition="!Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.13.3\build\NUnit.props'))" />
-    <Error Condition="!Exists('..\packages\cadwiki.CadDevTools.4.0.0.2\build\cadwiki.CadDevTools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cadwiki.CadDevTools.4.0.0.2\build\cadwiki.CadDevTools.targets'))" />
-  </Target>
-  <Import Project="..\packages\cadwiki.CadDevTools.4.0.0.2\build\cadwiki.CadDevTools.targets" Condition="Exists('..\packages\cadwiki.CadDevTools.4.0.0.2\build\cadwiki.CadDevTools.targets')" />
 </Project>

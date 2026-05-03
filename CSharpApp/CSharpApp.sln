@@ -3,21 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainApp", "MainApp\MainApp.csproj", "{DE897DA0-CE22-053A-2855-8ECA495D18D4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{0E45F9FB-7F4C-0ED1-3835-A09F08620C81} = {0E45F9FB-7F4C-0ED1-3835-A09F08620C81}
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MainApp", "MainApp\MainApp.csproj", "{DE897DA0-CE22-053A-2855-8ECA495D18D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{A06AB667-C065-0A57-04AA-4491A6B05FCA}"
-	ProjectSection(ProjectDependencies) = postProject
-		{0E45F9FB-7F4C-0ED1-3835-A09F08620C81} = {0E45F9FB-7F4C-0ED1-3835-A09F08620C81}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "buildThisFirst", "buildThisFirst\buildThisFirst.csproj", "{0E45F9FB-7F4C-0ED1-3835-A09F08620C81}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin", "Plugin\Plugin.csproj", "{43681BC6-BCED-4E28-B76E-1A459973A146}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadDevTools", "CadDevTools\CadDevTools.csproj", "{DBBC1D83-49D0-49DF-856F-990E567B9546}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CadDevTools", "CadDevTools\CadDevTools.csproj", "{DBBC1D83-49D0-49DF-856F-990E567B9546}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,17 +17,6 @@ Global
 		{DE897DA0-CE22-053A-2855-8ECA495D18D4}.Debug|x64.Build.0 = Debug|x64
 		{DE897DA0-CE22-053A-2855-8ECA495D18D4}.Release|x64.ActiveCfg = Release|x64
 		{DE897DA0-CE22-053A-2855-8ECA495D18D4}.Release|x64.Build.0 = Release|x64
-		{A06AB667-C065-0A57-04AA-4491A6B05FCA}.Debug|x64.ActiveCfg = Debug|x64
-		{A06AB667-C065-0A57-04AA-4491A6B05FCA}.Debug|x64.Build.0 = Debug|x64
-		{A06AB667-C065-0A57-04AA-4491A6B05FCA}.Release|x64.ActiveCfg = Release|x64
-		{A06AB667-C065-0A57-04AA-4491A6B05FCA}.Release|x64.Build.0 = Release|x64
-		{0E45F9FB-7F4C-0ED1-3835-A09F08620C81}.Debug|x64.ActiveCfg = Debug|x64
-		{0E45F9FB-7F4C-0ED1-3835-A09F08620C81}.Debug|x64.Build.0 = Debug|x64
-		{0E45F9FB-7F4C-0ED1-3835-A09F08620C81}.Release|x64.ActiveCfg = Release|x64
-		{43681BC6-BCED-4E28-B76E-1A459973A146}.Debug|x64.ActiveCfg = Debug|x64
-		{43681BC6-BCED-4E28-B76E-1A459973A146}.Debug|x64.Build.0 = Debug|x64
-		{43681BC6-BCED-4E28-B76E-1A459973A146}.Release|x64.ActiveCfg = Release|Any CPU
-		{43681BC6-BCED-4E28-B76E-1A459973A146}.Release|x64.Build.0 = Release|Any CPU
 		{DBBC1D83-49D0-49DF-856F-990E567B9546}.Debug|x64.ActiveCfg = Debug|x64
 		{DBBC1D83-49D0-49DF-856F-990E567B9546}.Debug|x64.Build.0 = Debug|x64
 		{DBBC1D83-49D0-49DF-856F-990E567B9546}.Release|x64.ActiveCfg = Release|Any CPU
