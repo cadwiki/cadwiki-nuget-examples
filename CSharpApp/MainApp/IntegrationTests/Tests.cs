@@ -8,7 +8,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Automation;
 using static System.Windows.Automation.AutomationElement;
 using Application = System.Windows.Forms.Application;
-using Microsoft.Test.Input;
 using System.Drawing;
 using System.Windows;
 using System.Drawing.Imaging;
@@ -42,7 +41,7 @@ namespace MainApp.IntegrationTests
         [Test]
         public void Test_Is1EqualTo1_ShouldPass()
         {
-            Assert.AreEqual(1, 1, "Test failed");
+            Assert.That(1, Is.EqualTo(1), "Test failed");
         }
 
 
@@ -68,9 +67,9 @@ namespace MainApp.IntegrationTests
             testEvidenceCreator.MicrosoftTestClickUiControl(windowIntPtr, controlName);
 
             evidence = testEvidenceCreator.GetEvidenceForCurrentTest();
-            Assert.IsTrue(System.IO.File.Exists(evidence.Images[0].FilePath), "jpeg was not created.");
+            Assert.That(System.IO.File.Exists(evidence.Images[0].FilePath) == true, "jpeg was not created.");
 
-            Assert.AreEqual(1, 1, "Test failed");
+            Assert.That(1, Is.EqualTo(1), "Test failed");
         }
 
         [Test]
@@ -91,7 +90,7 @@ namespace MainApp.IntegrationTests
             String controlName = "ButtonOk"; ;
             testEvidenceCreator.MicrosoftTestClickUiControl(windowIntPtr, controlName);
             var evidence = testEvidenceCreator.GetEvidenceForCurrentTest();
-            Assert.IsTrue(System.IO.File.Exists(evidence.Images[0].FilePath), "jpeg was not created.");
+            Assert.That(System.IO.File.Exists(evidence.Images[0].FilePath) == true, "jpeg was not created.");
         }
 
         [Test]
@@ -114,7 +113,7 @@ namespace MainApp.IntegrationTests
             IntPtr windowIntPtr = testEvidenceCreator.ProcessesGetHandleFromUiTitle("Autodesk AutoCAD");
             testEvidenceCreator.TakeJpegScreenshot(windowIntPtr, "After draw line async");
             var evidence = testEvidenceCreator.GetEvidenceForCurrentTest();
-            Assert.IsTrue(System.IO.File.Exists(evidence.Images[0].FilePath), "jpeg was not created.");
+            Assert.That(System.IO.File.Exists(evidence.Images[0].FilePath) == true, "jpeg was not created.");
             return null;
         }
 
@@ -138,7 +137,7 @@ namespace MainApp.IntegrationTests
             IntPtr windowIntPtr = testEvidenceCreator.ProcessesGetHandleFromUiTitle("Autodesk AutoCAD");
             testEvidenceCreator.TakeJpegScreenshot(windowIntPtr, "After draw line async");
             var evidence = testEvidenceCreator.GetEvidenceForCurrentTest();
-            Assert.IsTrue(System.IO.File.Exists(evidence.Images[0].FilePath), "jpeg was not created.");
+            Assert.That(System.IO.File.Exists(evidence.Images[0].FilePath) == true, "jpeg was not created.");
             return null;
         }
 

@@ -1,117 +1,127 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <UsingTask AssemblyFile="..\packages\MSBuild.Extension.Pack.1.9.1\tools\net40\MSBuild.ExtensionPack.dll" TaskName="AssemblyInfo" />
+
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <BuildRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.root))</BuildRoot>
-    <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
-    <LangVersion>9.0</LangVersion>
+
+    <!-- Target -->
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+
+    <!-- Build -->
     <OutputType>Library</OutputType>
-    <MyType>Windows</MyType>
-    <OptionExplicit>On</OptionExplicit>
-    <OptionCompare>Binary</OptionCompare>
-    <OptionStrict>Off</OptionStrict>
-    <OptionInfer>On</OptionInfer>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
+
+    <!-- Assembly info -->
+    <AssemblyTitle>MainApp</AssemblyTitle>
+    <Product>MainApp</Product>
+    <Copyright>Copyright © 2022</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+
+    <!-- Lang -->
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+
   </PropertyGroup>
-  <Target Name="autoincrementBuildThisFirstAssemblyInfo" BeforeTargets="Build">
-    <Exec Command="echo target for auto incrementing AssemblyInfo.cs files" />
-    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="buildThisFirstAssemblyIdentities" />
-    </GetAssemblyIdentity>
-    <Exec Command="echo project buildThisFirst current assembly version is: %(buildThisFirstAssemblyIdentities.Version)" />
-    <PropertyGroup>
-      <Pattern>(\d+)(.)(\d+)(.)(\d+)(.)(\d+)</Pattern>
-      <In>%(buildThisFirstAssemblyIdentities.Version)</In>
-      <str_prevMajor>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[1].Value)</str_prevMajor>
-      <str_prevMinor>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[3].Value)</str_prevMinor>
-      <str_prevBuildNumber>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[5].Value)</str_prevBuildNumber>
-      <int_prevBuildNumber>$([System.Int32]::Parse($(str_prevBuildNumber)))</int_prevBuildNumber>
-      <str_prevRevNumber>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups[7].Value)</str_prevRevNumber>
-      <str_prevRevNumber>$([System.Int32]::Parse($(str_prevRevNumber)))</str_prevRevNumber>
-      <int_newRevNumber>$([MSBuild]::Add($(str_prevRevNumber), 1))</int_newRevNumber>
-      <CurrentDate>$([System.DateTime]::Now.ToString(MMdd))</CurrentDate>
-      <int_CurrentDate>$([System.Int32]::Parse($(CurrentDate)))</int_CurrentDate>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(int_CurrentDate) != $(int_prevBuildNumber)">
-      <int_newRevNumber>$([System.Int32]::Parse(1))</int_newRevNumber>
-    </PropertyGroup>
-    <ItemGroup>
-      <Reference Include="Microsoft.VisualBasic" />
-      <AssemblyInfoFiles Include="$(BuildRoot)\**\AssemblyInfo.cs" />
-    </ItemGroup>
-    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyMajorVersion="$(str_prevMajor)" AssemblyMinorVersion="$(str_prevMinor)" AssemblyBuildNumberType="DateString" AssemblyBuildNumberFormat="MMdd" AssemblyRevision="$(int_newRevNumber)" />
-    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyFileMajorVersion="$(str_prevMajor)" AssemblyFileMinorVersion="$(str_prevMinor)" AssemblyFileBuildNumberType="DateString" AssemblyFileBuildNumberFormat="MMdd" AssemblyFileRevision="$(int_newRevNumber)" />
-    <Exec Command="echo target incremented assembly version for all assemblies in solution." />
-  </Target>
+
+  <!-- Debug -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>bin\x64\Debug\buildThisFirst.xml</DocumentationFile>
-    <NoWarn>1591,42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
   </PropertyGroup>
+
+  <!-- Release -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>bin\x64\Release\buildThisFirst.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
   </PropertyGroup>
+
+  <!-- ===================== -->
+  <!-- Post-build automation -->
+  <!-- ===================== -->
+
+  <Target Name="GetAssemblyVersion" AfterTargets="Build">
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyInfo" />
+    </GetAssemblyIdentity>
+
+    <PropertyGroup>
+      <AssemblyVersionNumber>%(AssemblyInfo.Version)</AssemblyVersionNumber>
+    </PropertyGroup>
+
+    <Message Text="Assembly Version: $(AssemblyVersionNumber)" Importance="high" />
+  </Target>
+
+  <Target Name="CopyVersionedOutput" AfterTargets="Build" DependsOnTargets="GetAssemblyVersion">
+
+    <PropertyGroup>
+      <VersionedDir>$(TargetDir)_v$(AssemblyVersionNumber)\</VersionedDir>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <AllOutputFiles Include="$(TargetDir)*.*" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(AllOutputFiles)" DestinationFolder="$(VersionedDir)" />
+
+    <ItemGroup>
+      <CopiedFiles Include="$(VersionedDir)**\*.*" />
+    </ItemGroup>
+
+  </Target>
+
+  <Target Name="CreateAcadBootloadScript" AfterTargets="Build" DependsOnTargets="GetAssemblyVersion">
+
+    <PropertyGroup>
+      <DllPath>$(TargetDir)_v$(AssemblyVersionNumber)\$(AssemblyName).dll</DllPath>
+      <EscapedDllPath>$([System.String]::Copy('$(DllPath)').Replace('\','\\'))</EscapedDllPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <CmdLine Include='(setvar "secureload" 0)' />
+      <CmdLine Include='(command "netload" "$(EscapedDllPath)")' />
+      <CmdLine Include='(setvar "secureload" 1)' />
+    </ItemGroup>
+
+    <WriteLinesToFile
+      File="$(ProjectDir)bootload.scr"
+      Lines="@(CmdLine)"
+      Overwrite="true"
+      Encoding="Unicode" />
+
+  </Target>
+
+  <!-- ===================== -->
+  <!-- Dependencies -->
+  <!-- ===================== -->
+
   <ItemGroup>
-    <Import Include="Microsoft.VisualBasic" />
-    <Import Include="System" />
-    <Import Include="System.Collections" />
-    <Import Include="System.Collections.Generic" />
-    <Import Include="System.Data" />
-    <Import Include="System.Diagnostics" />
-    <Import Include="System.Linq" />
-    <Import Include="System.Xml.Linq" />
-    <Import Include="System.Threading.Tasks" />
-    <PackageReference Include="AutoCAD2021.Base" Version="1.0.0" />
-    <PackageReference Include="AutoCAD2021.Interop.Base" Version="1.0.0" />
-    <PackageReference Include="AutoCAD2022.Base" Version="1.0.0" />
-    <PackageReference Include="AutoCAD2022.Interop.Base" Version="1.0.0" />
-    <PackageReference Include="cadwiki.CadDevTools" Version="4.0.0.1" />
-    <PackageReference Include="Handlebars.Net" Version="2.1.2" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Microsoft.TestApi" Version="0.6.0.0" />
-    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
+    <PackageReference Include="cadwiki.CadDevTools" Version="25.0.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="Handlebars.Net" Version="2.1.6" />
     <PackageReference Include="PDFsharp" Version="6.2.4" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
+
+  <!-- AutoCAD references -->
   <ItemGroup>
-    <Compile Update="My Project\Application.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
-    </Compile>
-    <Compile Update="Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Update="My Project\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
+    <Reference Include="AcCoreMgd">
+      <HintPath>..\..\..\cadwiki-nuget\_libs\AutoCAD 2025\AcCoreMgd.dll</HintPath>
+    </Reference>
+
+    <Reference Include="AcDbMgd">
+      <HintPath>..\..\..\cadwiki-nuget\_libs\AutoCAD 2025\AcDbMgd.dll</HintPath>
+    </Reference>
+
+    <Reference Include="AcMgd">
+      <HintPath>..\..\..\cadwiki-nuget\_libs\AutoCAD 2025\AcMgd.dll</HintPath>
+    </Reference>
+
+    <Reference Include="AdWindows">
+      <HintPath>..\..\..\cadwiki-nuget\_libs\AutoCAD 2025\AdWindows.dll</HintPath>
+    </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>buildThisFirst.My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.cs</LastGenOutput>
-    </None>
-    <None Update="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <CustomToolNamespace>buildThisFirst.My</CustomToolNamespace>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
+
 </Project>

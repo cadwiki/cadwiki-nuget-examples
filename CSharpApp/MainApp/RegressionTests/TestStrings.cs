@@ -11,7 +11,7 @@ namespace MainApp.RegressionTests
         {
             string expected = "Hello";
             string actual = "Hello";
-            Assert.AreEqual(expected, actual, "Input strings don't match");
+            Assert.That(expected, Is.EqualTo(actual), "Input strings don't match");
         }
 
         [Test]
@@ -19,7 +19,7 @@ namespace MainApp.RegressionTests
         {
             string expected = "Hello";
             string actual = "World";
-            Assert.AreEqual(expected, actual, "Input strings don't match");
+            Assert.That(expected, Is.EqualTo(actual), "Input strings don't match");
         }
 
 

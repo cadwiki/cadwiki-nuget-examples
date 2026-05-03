@@ -1,156 +1,123 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Target Name="GetAssmeblyVersion" AfterTargets="PostBuildEvent">
-    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="MyAssemblyIdentities" />
-    </GetAssemblyIdentity>
-    <Exec Command="echo Assembly Info: @(MyAssemblyIdentities)" />
-    <Exec Command="echo Version Number: %(MyAssemblyIdentities.Version)" />
-  </Target>
-  <Target Name="CopyAllDllsToBinSubFolder" AfterTargets="PostBuildEvent">
-    <CallTarget Targets="GetAssmeblyVersion" />
-    <Exec Command="echo Copying dlls after build into \bin subfolder for this version number" />
-    <ItemGroup>
-      <Reference Include="Microsoft.VisualBasic" />
-      <SrcFiles Include="$(TargetDir)\*" />
-    </ItemGroup>
-    <Copy SourceFiles="@(SrcFiles)" DestinationFolder="$(TargetDir)_v%(MyAssemblyIdentities.Version)\" />
-    <ItemGroup>
-      <CopiedFiles Include="$(TargetDir)_v%(MyAssemblyIdentities.Version)\**\*.*;" />
-    </ItemGroup>
-    <Exec Command="echo @(CopiedFiles)..." />
-    <Touch Files="@(CopiedFiles)">
-      <Output TaskParameter="TouchedFiles" ItemName="FilesTouched" />
-    </Touch>
-  </Target>
-  <Target Name="CreateAcadBootloadScript" AfterTargets="PostBuildEvent">
-    <Exec Command="echo creating AutoCAD $(BuildRoot)\bootload.scr that contains one LISP command call to netload the .dll below:" />
-    <PropertyGroup>
-      <script_path>"$(TargetDir)_v%(MyAssemblyIdentities.Version)\$(TargetName).dll"</script_path>
-      <lisp_path_for_script>$([System.String]::Copy('$(script_path)').Replace('\','\\'))</lisp_path_for_script>
-      <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.vb</DefaultItemExcludes>
-      <LangVersion>9.0</LangVersion>
-    </PropertyGroup>
-    <Exec Command="echo $(script_path)..." />
-    <Exec Command="echo $(lisp_path_for_script)..." />
-    <ItemGroup>
-      <CmdLine Include="(setvar &quot;secureload&quot; 0)" />
-      <CmdLine Include="(command &quot;netload&quot; $(lisp_path_for_script))" />
-      <CmdLine Include="(setvar &quot;secureload&quot; 1)" />
-    </ItemGroup>
-    <WriteLinesToFile File="$(BuildRoot)\bootload.scr" Lines="@(CmdLine)" Overwrite="true" Encoding="Unicode" />
-  </Target>
-  <Target Name="PrintAllReferencesToCommandLine" DependsOnTargets="ResolveReferences" AfterTargets="PostBuildEvent">
-    <ItemGroup>
-      <MyReferencedAssemblies Include="@(ReferencePath)" />
-    </ItemGroup>
-    <Exec Command="echo Ref assemblies: @(MyReferencedAssemblies)" />
-  </Target>
-  <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <BuildRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.root))</BuildRoot>
-    <UseWindowsForms>true</UseWindowsForms>
-    <UseWPF>true</UseWPF>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <OutputType>Library</OutputType>
-    <MyType>Windows</MyType>
-    <OptionExplicit>On</OptionExplicit>
-    <OptionCompare>Binary</OptionCompare>
-    <OptionStrict>Off</OptionStrict>
-    <OptionInfer>Off</OptionInfer>
-    <AssemblyTitle>MainApp</AssemblyTitle>
-    <Product>MainApp</Product>
-    <Copyright>Copyright ©  2022</Copyright>
-    <AssemblyVersion>1.0.0103.10</AssemblyVersion>
-    <FileVersion>1.0.0103.10</FileVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>bin\x64\Debug\MainApp.xml</DocumentationFile>
-    <NoWarn>1591,41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>bin\x64\Release\MainApp.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-  </PropertyGroup>
-  <ItemGroup>
-    <Import Include="Microsoft.VisualBasic" />
-    <Import Include="System" />
-    <Import Include="System.Collections" />
-    <Import Include="System.Collections.Generic" />
-    <Import Include="System.Data" />
-    <Import Include="System.Diagnostics" />
-    <Import Include="System.Linq" />
-    <Import Include="System.Xml.Linq" />
-    <Import Include="System.Threading.Tasks" />
-    <PackageReference Include="cadwiki.CadDevTools" Version="25.0.0.2" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
-    <PackageReference Include="PDFsharp" Version="6.2.4" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="Handlebars.Net" Version="2.1.6" />
-    <PackageReference Include="ILMerge.MSBuild.Tasks" Version="1.0.0.3" />
-    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageReference Include="NUnit" Version="4.6.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="accoremgd">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcCoreMgd.dll</HintPath>
-    </Reference>
-    <Reference Include="AcCui">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcCui.dll</HintPath>
-    </Reference>
-    <Reference Include="Acdbmgd">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcDbMgd.dll</HintPath>
-    </Reference>
-    <Reference Include="acdbmgdbrep">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\acdbmgdbrep.dll</HintPath>
-    </Reference>
-    <Reference Include="AcDx">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcDx.dll</HintPath>
-    </Reference>
-    <Reference Include="acmgd">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcMgd.dll</HintPath>
-    </Reference>
-    <Reference Include="AcMr">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcMr.dll</HintPath>
-    </Reference>
-    <Reference Include="AcSeamless">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcSeamless.dll</HintPath>
-    </Reference>
-    <Reference Include="AcTcMgd">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcTcMgd.dll</HintPath>
-    </Reference>
-    <Reference Include="AcWindows">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AcWindows.dll</HintPath>
-    </Reference>
-    <Reference Include="AdUIMgd">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AdUIMgd.dll</HintPath>
-    </Reference>
-    <Reference Include="AdUiPalettes">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AdUiPalettes.dll</HintPath>
-    </Reference>
-    <Reference Include="AdWindows">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\AdWindows.dll</HintPath>
-    </Reference>
-    <Reference Include="Autodesk.AutoCAD.Interop">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\Autodesk.AutoCAD.Interop.dll</HintPath>
-    </Reference>
-    <Reference Include="Autodesk.AutoCAD.Interop.Common">
-      <HintPath>..\..\..\cadwiki-nuget\cadwiki-nuget\_libs\AutoCAD 2025\Autodesk.AutoCAD.Interop.Common.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
-  </ItemGroup>
+
+	<PropertyGroup>
+
+		<!-- Target -->
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+		<UseWPF>true</UseWPF>
+
+		<!-- Build -->
+		<OutputType>Library</OutputType>
+		<PlatformTarget>x64</PlatformTarget>
+		<Platforms>x64</Platforms>
+
+		<!-- Assembly info -->
+		<AssemblyTitle>MainApp</AssemblyTitle>
+		<Product>MainApp</Product>
+		<Copyright>Copyright © 2022</Copyright>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<FileVersion>1.0.0.0</FileVersion>
+
+		<!-- Lang -->
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+
+	</PropertyGroup>
+
+	<!-- Debug -->
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+		<OutputPath>bin\x64\Debug\</OutputPath>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<DebugType>full</DebugType>
+	</PropertyGroup>
+
+	<!-- Release -->
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+		<OutputPath>bin\x64\Release\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
+		<Optimize>true</Optimize>
+	</PropertyGroup>
+
+	<!-- ===================== -->
+	<!-- Post-build automation -->
+	<!-- ===================== -->
+
+	<Target Name="GetAssemblyVersion" AfterTargets="Build">
+		<GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+			<Output TaskParameter="Assemblies" ItemName="AssemblyInfo" />
+		</GetAssemblyIdentity>
+
+		<PropertyGroup>
+			<AssemblyVersionNumber>%(AssemblyInfo.Version)</AssemblyVersionNumber>
+		</PropertyGroup>
+
+		<Message Text="Assembly Version: $(AssemblyVersionNumber)" Importance="high" />
+	</Target>
+
+	<Target Name="CopyVersionedOutput" AfterTargets="Build" DependsOnTargets="GetAssemblyVersion">
+
+		<PropertyGroup>
+			<VersionedDir>$(TargetDir)_v$(AssemblyVersionNumber)\</VersionedDir>
+		</PropertyGroup>
+
+		<ItemGroup>
+			<AllOutputFiles Include="$(TargetDir)*.*" />
+		</ItemGroup>
+
+		<Copy SourceFiles="@(AllOutputFiles)" DestinationFolder="$(VersionedDir)" />
+
+		<ItemGroup>
+			<CopiedFiles Include="$(VersionedDir)**\*.*" />
+		</ItemGroup>
+
+	</Target>
+
+	<Target Name="CreateAcadBootloadScript" AfterTargets="Build" DependsOnTargets="GetAssemblyVersion">
+
+		<PropertyGroup>
+			<DllPath>$(TargetDir)_v$(AssemblyVersionNumber)\$(AssemblyName).dll</DllPath>
+			<EscapedDllPath>$([System.String]::Copy('$(DllPath)').Replace('\','\\'))</EscapedDllPath>
+		</PropertyGroup>
+
+		<ItemGroup>
+			<CmdLine Include="(setvar &quot;secureload&quot; 0)" />
+			<CmdLine Include="(command &quot;netload&quot; &quot;$(EscapedDllPath)&quot;)" />
+			<CmdLine Include="(setvar &quot;secureload&quot; 1)" />
+		</ItemGroup>
+
+		<WriteLinesToFile File="$(ProjectDir)bootload.scr" Lines="@(CmdLine)" Overwrite="true" Encoding="Unicode" />
+
+	</Target>
+
+	<!-- ===================== -->
+	<!-- Dependencies -->
+	<!-- ===================== -->
+
+	<ItemGroup>
+		<PackageReference Include="cadwiki.CadDevTools" Version="25.0.0.2" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+		<PackageReference Include="Handlebars.Net" Version="2.1.6" />
+		<PackageReference Include="PDFsharp" Version="6.2.4" />
+	</ItemGroup>
+
+	<!-- AutoCAD references -->
+	<ItemGroup>
+		<Reference Include="AcCoreMgd">
+			<HintPath>..\..\..\cadwiki-nuget\_libs\AutoCAD 2025\AcCoreMgd.dll</HintPath>
+		</Reference>
+
+		<Reference Include="AcDbMgd">
+			<HintPath>..\..\..\cadwiki-nuget\_libs\AutoCAD 2025\AcDbMgd.dll</HintPath>
+		</Reference>
+
+		<Reference Include="AcMgd">
+			<HintPath>..\..\..\cadwiki-nuget\_libs\AutoCAD 2025\AcMgd.dll</HintPath>
+		</Reference>
+
+		<Reference Include="AdWindows">
+			<HintPath>..\..\..\cadwiki-nuget\_libs\AutoCAD 2025\AdWindows.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
 </Project>

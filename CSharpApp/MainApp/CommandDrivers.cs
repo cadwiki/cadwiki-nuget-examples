@@ -19,7 +19,7 @@ namespace MainApp
         {
             var doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
             doc.Editor.WriteMessage("Hello from the command drivers class" + Microsoft.VisualBasic.Constants.vbLf);
-            BusinessLogic.Commands.Example.Run();
+            //BusinessLogic.Commands.Example.Run();
         }
 
         [CommandMethod(Constants.GroupName, "MyTests", CommandFlags.Session)]

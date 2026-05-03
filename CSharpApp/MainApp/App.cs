@@ -31,7 +31,7 @@ namespace MainApp
             doc.Editor.WriteMessage(Constants.vbLf + "App " + iExtensionAppVersion.ToString() + " initialized...");
             doc.Editor.WriteMessage(Constants.vbLf);
             UiRibbon.Tabs.TabCreator.AddTabs(doc);
-            BusinessLogic.App.Initialize();
+            //BusinessLogic.App.Initialize();
         }
 
 
